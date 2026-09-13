@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260911_v31_acetyl_dl_leucine";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260913_v32_hepagold";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -38567,6 +38567,58 @@ export const DRUGS_DATABASE = [
     "lactation": "Tránh dùng trong thời kỳ mang thai và cho con bú do dữ liệu an toàn lâm sàng trên người mẹ và trẻ sơ sinh còn hạn chế.",
     "tdmTarget": "Đánh giá sự cải thiện của triệu chứng chóng mặt, cảm giác thăng bằng, rung giật nhãn cầu (nystagmus) và theo dõi phản ứng quá mẫn khi tiêm truyền.",
     "clinicalPearls": "1. Cơ chế tác dụng: Acetyl-DL-leucine là dẫn xuất acid amin có tác dụng tái phân cực màng tế bào thần kinh tiền đình và tế bào Purkinje ở tiểu não đang bị khử cực, điều hòa hoạt động của thụ thể glutamate/glycine, giúp dập tắt phóng điện bất thường mà không gây an thần buồn ngủ như nhóm kháng histamin H1 (cinnarizin, flunarizin).\n2. Cảnh báo quan trọng: Dạng tiêm bắt buộc phải tiêm tĩnh mạch thật chậm (2-3 phút); tuyệt đối không tiêm bắp.\n3. Nếu triệu chứng chóng mặt không cải thiện sau vài ngày điều trị, cần thăm khám lại chuyên khoa thần kinh để loại trừ các nguyên nhân tổn thương hệ thần kinh trung ương (nhồi máu tiểu não, u góc cầu tiểu não).",
+    "attachments": []
+  },
+  {
+    "id": "hepagold",
+    "name": "Hepagold (Dung dịch Acid amin 8% cho bệnh nhân bệnh gan)",
+    "inn": "Dung dịch Acid amin 8% giàu BCAA (L-Leucin, L-Isoleucin, L-Valin)",
+    "atcGroup": "B",
+    "atcCode": "B05BA01",
+    "category": "Dung dịch dinh dưỡng ngoài đường tiêu hóa (Parenteral Nutrition / Amino Acids)",
+    "brandNames": [
+      "Hepagold 250ml",
+      "Hepagold 500ml",
+      "Morihepamin",
+      "Aminoleban",
+      "Hepatosol"
+    ],
+    "dosageForm": "Dung dịch tiêm truyền tĩnh mạch 8% (Túi 250ml, 500ml)",
+    "indications": [
+      "Điều trị và hỗ trợ cải thiện hội chứng bệnh não gan (hôn mê gan / tiền hôn mê gan) ở bệnh nhân xơ gan hoặc viêm gan nặng.",
+      "Cung cấp dinh dưỡng tĩnh mạch (nuôi dưỡng ngoài đường tiêu hóa) cho bệnh nhân mắc bệnh lý gan mạn tính hoặc suy gan cần bù protein mà không dung nạp các chế phẩm acid amin thông thường."
+    ],
+    "contraindications": [
+      "Bệnh nhân vô niệu hoặc suy thận nặng không thể lọc máu.",
+      "Rối loạn chuyển hóa acid amin bẩm sinh, đặc biệt là chuỗi chuyển hóa acid amin phân nhánh (như bệnh siro niệu - Maple Syrup Urine Disease, rối loạn chuyển hóa acid isovaleric).",
+      "Quá mẫn với bất kỳ thành phần acid amin hoặc tá dược nào (đặc biệt tá dược Natri bisulfit ở bệnh nhân có cơ địa hen phế quản)."
+    ],
+    "standardDosage": {
+      "adult": "Liều thông thường: 80 - 120 gam acid amin (tương đương 1000 - 1500 ml Hepagold 8%, cung cấp 12 - 18g nitơ)/ngày. Thường pha tỷ lệ 1:1 (500ml Hepagold + 500ml Dextrose 50% kèm điện giải, vitamin) truyền liên tục trong 8 - 12 giờ. Tổng lượng dịch hàng ngày 2 - 3 lít (giới hạn 1 - 2 lít ở bệnh nhân hạn chế dịch/phù cổ trướng).",
+      "pediatric": "2 - 3 g acid amin/kg thể trọng/ngày kèm năng lượng không chứa protein thích hợp. Tốc độ truyền chậm và áp lực thẩm thấu dung dịch truyền ngoại vi không được vượt quá 718 mOsmol/L.",
+      "elderly": "Bắt đầu từ liều thấp nhất của khoảng liều (ví dụ 500ml/ngày), đánh giá cẩn thận chức năng tim mạch, gan, thận trước khi tăng liều."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": "Bình thường",
+        "dose": "80 - 120 g acid amin/ngày (theo dõi BUN)"
+      },
+      {
+        "crcl": "CrCl < 30 mL/phút hoặc Tăng Urê máu",
+        "dose": "Giảm liều và hạn chế tổng lượng nitơ nạp vào; theo dõi sát nồng độ urê máu (BUN) và creatinine. Chống chỉ định khi vô niệu."
+      }
+    ],
+    "hepaticAdjustment": "Thuốc được thiết kế đặc thù cho bệnh nhân suy gan / bệnh não gan (tỷ lệ BCAA/AAA cao); điều chỉnh liều theo đáp ứng tinh thần, điện não đồ và mức độ dung nạp nitơ.",
+    "administration": "Đường dùng: Tiêm truyền tĩnh mạch.\n- Vị trí truyền: Dung dịch ưu trương đậm đặc nên ưu tiên truyền qua Catheter tĩnh mạch trung tâm (CVC với đầu ống nằm ở tĩnh mạch chủ trên). Tốc độ truyền khởi đầu chậm, sau đó tăng dần đến 60 - 125 ml/giờ.\n- Truyền ngoại vi: Chỉ truyền tĩnh mạch ngoại vi khi đã pha loãng với nước pha tiêm vô khuẩn hoặc Dextrose 5% - 10% để giảm áp lực thẩm thấu (< 718 mOsmol/L) và bắt buộc phải đi kèm năng lượng không chứa protein (carbohydrate).\n- Lưu ý: Không dừng truyền dextrose ưu trương đột ngột để tránh hạ đường huyết dội ngược (cần gối Glucose 5%).",
+    "blackBoxWarning": "",
+    "adr": {
+      "common": "Tăng urê máu (BUN) tạm thời, hạ natri máu hòa loãng, cảm giác ớn lạnh, sốt nhẹ hoặc kích ứng tĩnh mạch tại vị trí truyền.",
+      "serious": "Phản vệ hoặc co thắt phế quản cấp do tá dược natri bisulfit; quá tải dịch gây phù phổi cấp hoặc suy tim ứ huyết; nhiễm độc nhôm tích lũy ở bệnh nhân suy thận kéo dài; rối loạn chuyển hóa glucose (tăng áp lực thẩm thấu máu hoặc hạ đường huyết dội ngược)."
+    },
+    "pregnancyCategory": "C",
+    "lactation": "Thận trọng khi sử dụng cho phụ nữ có thai hoặc đang cho con bú; chỉ dùng khi lợi ích điều trị của người mẹ vượt trội nguy cơ đối với thai nhi/trẻ bú.",
+    "tdmTarget": "Theo dõi sát tri giác (thang điểm Glasgow / West Haven về bệnh não gan), xét nghiệm đường huyết mao mạch, điện giải đồ (Na+, K+, Phosphat, Mg2+), Urê máu (BUN), Creatinine, Bilirubin, Amoniac máu (NH3), và áp lực tĩnh mạch.",
+    "clinicalPearls": "1. Cơ chế đặc thù: Bệnh nhân xơ gan/suy gan nặng bị sụt giảm nồng độ acid amin phân nhánh (BCAA: Leucin, Isoleucin, Valin) do cơ tiêu thụ nhiều, trong khi nồng độ acid amin thơm (AAA: Phenylalanin, Tryptophan) và Methionin tăng cao do gan giảm thanh thải, dẫn đến các chất dẫn truyền thần kinh giả xâm nhập qua hàng rào máu não gây hôn mê gan. Hepagold có công thức BCAA cao (tới 35.5% tổng acid amin) và AAA cực thấp giúp bình thường hóa tỷ lệ Fischer (BCAA/AAA), ức chế dẫn truyền thần kinh giả và kích thích tổng hợp protein tại cơ mà không làm tăng amoniac máu.\n2. Phối hợp năng lượng: Phải luôn cung cấp đủ calo ngoài protein (thường từ Glucose ưu trương) để các acid amin được dùng cho quá trình đồng hóa tạo mô mà không bị đốt cháy để tạo năng lượng (làm tăng ure máu).\n3. Bổ sung điện giải nội bào: Quá trình đồng hóa bắt buộc cần Kali, Phosphat và Magie. Cần bổ sung khoảng 60-180 mEq K+, 10-40 mmol Phosphat và 10-30 mEq Mg2+ mỗi ngày để tối ưu hóa chuyển hóa.\n4. Độc tính nhôm & Sulfit: Chú ý bệnh nhân hen dị ứng với tá dược bisulfit, và bệnh nhân suy thận kéo dài có nguy cơ tích lũy nhôm.",
     "attachments": []
   }
 ];
