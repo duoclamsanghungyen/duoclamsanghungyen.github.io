@@ -2,14 +2,14 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260913_v33_fix_update_drug_btn";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260913_v33_fix_update_drug_btn";
-import { initCalculators } from "./modules/calculators.js?v=20260913_v33_fix_update_drug_btn";
-import { initConsultationModule } from "./modules/consultation.js?v=20260913_v33_fix_update_drug_btn";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260913_v33_fix_update_drug_btn";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260913_v33_fix_update_drug_btn";
-import { initAuthModule } from "./modules/auth.js?v=20260913_v33_fix_update_drug_btn";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260913_v33_fix_update_drug_btn";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260913_v34_vinorelbine";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260913_v34_vinorelbine";
+import { initCalculators } from "./modules/calculators.js?v=20260913_v34_vinorelbine";
+import { initConsultationModule } from "./modules/consultation.js?v=20260913_v34_vinorelbine";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260913_v34_vinorelbine";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260913_v34_vinorelbine";
+import { initAuthModule } from "./modules/auth.js?v=20260913_v34_vinorelbine";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260913_v34_vinorelbine";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

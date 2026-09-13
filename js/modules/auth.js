@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20260913_v33_fix_update_drug_btn";
+} from "../data/drugs.js?v=20260913_v34_vinorelbine";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260913_v33_fix_update_drug_btn";
+} from "../data/pdfStorage.js?v=20260913_v34_vinorelbine";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [

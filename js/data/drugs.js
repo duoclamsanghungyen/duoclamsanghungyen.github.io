@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260913_v33_fix_update_drug_btn";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260913_v34_vinorelbine";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -38619,6 +38619,64 @@ export const DRUGS_DATABASE = [
     "lactation": "Thận trọng khi sử dụng cho phụ nữ có thai hoặc đang cho con bú; chỉ dùng khi lợi ích điều trị của người mẹ vượt trội nguy cơ đối với thai nhi/trẻ bú.",
     "tdmTarget": "Theo dõi sát tri giác (thang điểm Glasgow / West Haven về bệnh não gan), xét nghiệm đường huyết mao mạch, điện giải đồ (Na+, K+, Phosphat, Mg2+), Urê máu (BUN), Creatinine, Bilirubin, Amoniac máu (NH3), và áp lực tĩnh mạch.",
     "clinicalPearls": "1. Cơ chế đặc thù: Bệnh nhân xơ gan/suy gan nặng bị sụt giảm nồng độ acid amin phân nhánh (BCAA: Leucin, Isoleucin, Valin) do cơ tiêu thụ nhiều, trong khi nồng độ acid amin thơm (AAA: Phenylalanin, Tryptophan) và Methionin tăng cao do gan giảm thanh thải, dẫn đến các chất dẫn truyền thần kinh giả xâm nhập qua hàng rào máu não gây hôn mê gan. Hepagold có công thức BCAA cao (tới 35.5% tổng acid amin) và AAA cực thấp giúp bình thường hóa tỷ lệ Fischer (BCAA/AAA), ức chế dẫn truyền thần kinh giả và kích thích tổng hợp protein tại cơ mà không làm tăng amoniac máu.\n2. Phối hợp năng lượng: Phải luôn cung cấp đủ calo ngoài protein (thường từ Glucose ưu trương) để các acid amin được dùng cho quá trình đồng hóa tạo mô mà không bị đốt cháy để tạo năng lượng (làm tăng ure máu).\n3. Bổ sung điện giải nội bào: Quá trình đồng hóa bắt buộc cần Kali, Phosphat và Magie. Cần bổ sung khoảng 60-180 mEq K+, 10-40 mmol Phosphat và 10-30 mEq Mg2+ mỗi ngày để tối ưu hóa chuyển hóa.\n4. Độc tính nhôm & Sulfit: Chú ý bệnh nhân hen dị ứng với tá dược bisulfit, và bệnh nhân suy thận kéo dài có nguy cơ tích lũy nhôm.",
+    "attachments": []
+  },
+  {
+    "id": "vinorelbine",
+    "name": "Vinorelbin (Vinorelbine ditartrate)",
+    "inn": "Vinorelbine",
+    "atcGroup": "L",
+    "atcCode": "L01CA04",
+    "category": "Thuốc chống ung thư, vinca alkaloid bán tổng hợp",
+    "brandNames": [
+      "Navelbine",
+      "Vinorelsin",
+      "Vinorelbine Bidiphar",
+      "Vinorelbine Alvogen"
+    ],
+    "dosageForm": "Dung dịch đậm đặc tiêm truyền tĩnh mạch: 10 mg/ml (lọ 1 ml, 5 ml); Viên nang mềm: 20 mg, 30 mg, 80 mg (dưới dạng Vinorelbine ditartrate)",
+    "indications": [
+      "Ung thư phổi không tế bào nhỏ (NSCLC): Đơn trị liệu hoặc phối hợp hóa trị (với Cisplatin) ở giai đoạn tiến triển, không phẫu thuật được (giai đoạn III/IV); hoặc phác đồ hóa trị tân bổ trợ / bổ trợ sau phẫu thuật.",
+      "Ung thư vú tiến triển hoặc di căn: Đơn trị liệu hoặc phối hợp với Trastuzumab khi đã thất bại hoặc kháng với phác đồ hóa trị chuẩn có chứa anthracyclin hoặc taxan."
+    ],
+    "contraindications": [
+      "Quá mẫn với vinorelbin hoặc các alkaloid cây dừa cạn khác (vinca alkaloids).",
+      "Số lượng bạch cầu hạt (neutrophil) < 1.500/mm³ đối với thuốc tiêm tĩnh mạch; hoặc < 1.000/mm³ và/hoặc tiểu cầu < 75.000/mm³ đối với thuốc uống.",
+      "Nhiễm khuẩn nặng đang tiến triển hoặc mới mắc trong vòng 2 tuần gần đây.",
+      "Phụ nữ đang mang thai và phụ nữ đang trong thời kỳ cho con bú.",
+      "Chống chỉ định riêng đối với dạng viên uống: Người bệnh đang xạ trị vùng gan; người đang sử dụng liệu pháp oxy dài hạn; người đã phẫu thuật cắt bỏ phần lớn ruột non hoặc dạ dày; bệnh nhân có bệnh lý kém hấp thu tiêu hóa nghiêm trọng.",
+      "TUYỆT ĐỐI NGHIÊM CẤM TIÊM VÀO KHOANG NỘI TỦY (INTRATHECAL) - GÂY TỬ VONG 100% DO LIỆT VÀ ĐỘC TÍNH THẦN KINH KHÔNG HỒI PHỤC."
+    ],
+    "standardDosage": {
+      "adult": "1. ĐƯỜNG TIÊM TRUYỀN TĨNH MẠCH:\n- Ung thư phổi không tế bào nhỏ (NSCLC):\n  + Đơn trị liệu: 25 - 30 mg/m² da, tiêm truyền tĩnh mạch mỗi tuần 1 lần.\n  + Phối hợp với Cisplatin (phác đồ chuẩn 21 hoặc 28 ngày): Vinorelbin 25 - 30 mg/m² vào ngày 1, 8 (hoặc ngày 1, 8, 15, 22) kết hợp Cisplatin 75 - 100 mg/m² ngày 1; chu kỳ lặp lại mỗi 3 - 4 tuần (tối đa 4 - 6 chu kỳ).\n- Ung thư vú tiến triển / di căn:\n  + Đơn trị liệu: 25 - 30 mg/m²/tuần, truyền tĩnh mạch trong 6 - 10 phút hoặc 20 - 30 phút.\n  + Phối hợp với Trastuzumab: Vinorelbin 30 - 35 mg/m² tiêm truyền ngày 1 và ngày 8 mỗi 3 tuần một lần; Trastuzumab liều tấn công 8 mg/kg, sau đó duy trì 6 mg/kg mỗi 3 tuần.\n\n2. ĐƯỜNG UỐNG (Viên nang mềm):\n- Hóa trị chuẩn: Khởi đầu 60 mg/m²/tuần (tối đa 120 mg/lần) trong 3 tuần đầu. Nếu dung nạp tốt (bạch cầu trung tính không giảm < 500/mm³), từ tuần thứ 4 có thể tăng liều lên 80 mg/m²/tuần (tối đa 160 mg/lần).\n- Hóa trị Metronomic (cho bệnh nhân không phù hợp hóa trị chuẩn): 30 - 50 mg/ngày, uống vào các ngày thứ 2, 4, 6 hàng tuần.",
+      "pediatric": "Độ an toàn và hiệu quả điều trị ở trẻ em chưa được thiết lập; khuyến cáo không sử dụng vinorelbin cho bệnh nhi.",
+      "elderly": "Không cần điều chỉnh liều khởi đầu theo tuổi tác đơn thuần ở người cao tuổi; tuy nhiên cần theo dõi sát sao độc tính tủy xương (giảm bạch cầu trung tính) và độc tính đường tiêu hóa."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": "Bình thường (CrCl >= 50 mL/phút)",
+        "dose": "100% liều thông thường."
+      },
+      {
+        "crcl": "CrCl 15 - 49 mL/phút",
+        "dose": "Thải trừ qua thận chỉ chiếm khoảng 10 - 20%; thường không cần giảm liều nhưng phải theo dõi chặt chẽ công thức máu và độc tính tủy xương."
+      },
+      {
+        "crcl": "CrCl < 15 mL/phút hoặc Lọc máu chu kỳ",
+        "dose": "Dữ liệu lâm sàng còn hạn chế; thận trọng tối đa, theo dõi sát tác dụng phụ huyết học và cân nhắc giảm liều tùy đáp ứng cá thể."
+      }
+    ],
+    "hepaticAdjustment": "Vinorelbin chuyển hóa chủ yếu qua gan và bài tiết qua mật (46% qua phân). Hiệu chỉnh liều theo chức năng gan:\n- Bilirubin toàn phần <= 1.5 x ULN và transaminase 1.5 - 2.5 x ULN: Dùng 100% liều tiêm (hoặc 60 mg/m² đường uống).\n- Bilirubin toàn phần 1.5 - 3.0 x ULN: Giảm 50% liều tiêm (hoặc dùng 50 mg/m² đường uống).\n- Bilirubin toàn phần > 3.0 x ULN hoặc khối u gan to > 75% thể tích: Giảm 67 - 75% liều tiêm hoặc chống chỉ định dạng uống.",
+    "administration": "ĐƯỜNG DÙNG: TIÊM TRUYỀN TĨNH MẠCH HOẶC ĐƯỜNG UỐNG.\n1. Tiêm truyền tĩnh mạch:\n- CHỈ TIÊM/TRUYỀN TĨNH MẠCH. Tuyệt đối không tiêm bắp, tiêm dưới da (gây đau đớn và hoại tử mô) và TUYỆT ĐỐI KHÔNG TIÊM NỘI TỦY (gây tử vong).\n- Dung môi pha loãng: Natri clorid 0.9% hoặc Glucose 5%.\n- Kỹ thuật tiêm: Tiêm tĩnh mạch trực tiếp (bolus) trong 6 - 10 phút sau khi pha loãng với 20 - 50 ml dịch truyền; hoặc truyền tĩnh mạch ngắn 20 - 30 phút với 100 - 250 ml dịch truyền. Tránh truyền quá lâu (> 30 phút) để hạn chế kích ứng và viêm tĩnh mạch.\n- Bắt buộc tráng đường truyền với ít nhất 250 - 500 ml NaCl 0.9% ngay sau khi kết thúc truyền vinorelbin.\n- QUY TRÌNH XỬ TRÍ THOÁT MẠCH (Vesicant Extravasation): Vinorelbin là chất kích ứng hoại tử mô mạnh. Nếu nghi ngờ rò rỉ dịch, NGỪNG TRUYỀN NGAY LẬP TỨC. Hút ngược dịch tối đa qua catheter, tháo bỏ kim. CHƯỜM ẤM (khô) 15 - 20 phút x 4 lần/ngày trong 24 - 48 giờ (KHÔNG ĐƯỢC CHƯỜM LẠNH vì làm tăng độc tính vinca alkaloid). Tiêm dưới da Hyaluronidase 150 - 300 IU (nồng độ 15 IU/ml) chia 4 - 6 vị trí quanh rìa ổ thoát mạch.\n\n2. Đường uống (Viên nang mềm):\n- Uống viên nang nguyên vẹn với một cốc nước đầy sau bữa ăn.\n- KHÔNG ĐƯỢC nhai nát, bẻ vỡ hoặc ngậm mút viên nang (dịch thuốc bên trong gây bỏng loét niêm mạc miệng và thực quản).\n- Nếu nôn sau khi uống thuốc, không được uống thêm liều bổ sung mà phải đợi đến lịch uống kế tiếp.",
+    "blackBoxWarning": "CẢNH BÁO NGUY HIỂM TÍNH MẠNG (BLACK BOX WARNING):\n1. CHỈ TIÊM TĨNH MẠCH HOẶC ĐƯỜNG UỐNG - NGHIÊM CẤM TIÊM VÀO KHOANG NỘI TỦY (FOR INTRAVENOUS / ORAL USE ONLY - FATAL IF GIVEN BY OTHER ROUTES): Tiêm vào khoang tủy sống gây nhiễm độc thần kinh trung ương cấp tính dẫn đến liệt tiến triển và tử vong 100% không thể cứu vãn.\n2. ĐỘC TÍNH SUY TỦY XƯƠNG NẶNG: Đặc biệt là hạ bạch cầu hạt trung tính (nadir từ ngày 7-10) dẫn đến nhiễm trùng huyết đe dọa tính mạng. Bắt buộc kiểm tra công thức máu toàn phần trước mỗi liều. Chỉ truyền khi số lượng bạch cầu trung tính >= 1.500/mm³.\n3. NGUY CƠ HOẠI TỬ LOÉT MÔ NẶNG KHI THOÁT MẠCH (VESICANT): Đảm bảo kiểm tra độ thông suốt của tĩnh mạch trước khi bơm thuốc. Nếu thoát mạch, áp dụng ngay phác đồ chườm ấm và tiêm hyaluronidase.",
+    "adr": {
+      "common": "Rất thường gặp: Giảm bạch cầu trung tính có phục hồi (nadir ở ngày 7-10, hồi phục ngày 14-21), thiếu máu, giảm tiểu cầu; Buồn nôn, nôn, viêm miệng/viêm thực quản, táo bón (do độc tính thần kinh thực vật), tiêu chảy, chán ăn; Kích ứng đau rát tại chỗ tiêm, viêm tĩnh mạch huyết khối; Rụng tóc (lên tới 35%); Mệt mỏi, sốt suy nhược; Tăng men gan (AST, ALT, Bilirubin, Phosphatase kiềm); Giảm hoặc mất phản xạ gân xương sâu, dị cảm đầu chi.",
+      "serious": "Nghiêm trọng: Sốc phản vệ, co thắt phế quản cấp tính, suy hô hấp cấp (ARDS), viêm phổi kẽ; Thoát mạch gây hoại tử mô sâu và viêm cân hoại tử; Nhiễm khuẩn huyết nặng do giảm bạch cầu trung tính có sốt; Tắc ruột do liệt ruột cơ năng, thủng ruột non hoặc hoại tử ruột; Độc tính thần kinh ngoại biên tiến triển, hội chứng Guillain-Barré; Thiếu máu cục bộ cơ tim, đau thắt ngực, nhồi máu cơ tim cấp; Hội chứng tiết hormone chống bài niệu không thích hợp (SIADH) gây hạ natri máu nặng; Viêm bàng quang xuất huyết."
+    },
+    "pregnancyCategory": "D",
+    "lactation": "Chống chỉ định. Chưa rõ mức độ bài tiết vào sữa mẹ, nhưng do nguy cơ gây độc tính tế bào nghiêm trọng cho trẻ bú, bắt buộc phải ngừng cho con bú hoàn toàn trước khi bắt đầu điều trị bằng vinorelbin.",
+    "tdmTarget": "Giám sát xét nghiệm bắt buộc trước mỗi đợt truyền:\n- Bạch cầu hạt trung tính (ANC >= 1.500/mm³ đối với thuốc tiêm, >= 1.000/mm³ đối với thuốc uống).\n- Số lượng tiểu cầu (>= 75.000 - 100.000/mm³), Hemoglobin/Hematocrit.\n- Chức năng gan: Bilirubin toàn phần, AST, ALT, Phosphatase kiềm trước mỗi chu kỳ.\n- Điện giải đồ: Theo dõi Natri huyết thanh để phát hiện sớm hội chứng SIADH.",
+    "clinicalPearls": "1. An toàn dán nhãn & phòng ngừa nhầm lẫn: Bắt buộc dán nhãn cảnh báo nổi bật trên túi/bơm tiêm truyền: 'CHỈ DÙNG ĐƯỜNG TĨNH MẠCH - DÙNG ĐƯỜNG KHÁC GÂY TỬ VONG'. Quy trình kiểm tra kép (Double-check) trước khi tiêm.\n2. Phân biệt xử trí thoát mạch Vinca Alkaloid: Trong khi đa số thuốc chống ung thư khác (như Doxorubicin) cần chườm lạnh, các thuốc nhóm Vinca alkaloid (Vinorelbin, Vincristin, Vinblastin) BẮT BUỘC CHƯỜM ẤM KHÔ (37 - 40°C) và tiêm giải độc bằng Hyaluronidase. Chườm lạnh sẽ làm co mạch, giữ thuốc tại chỗ và làm tăng hoại tử mô tế bào!\n3. Độc tính thần kinh & Quản lý táo bón: Vinorelbin gắn với tubulin của tế bào thần kinh, gây suy giảm nhu động ruột. Táo bón nặng có thể dẫn đến liệt ruột cơ năng và tắc ruột. Khuyến cáo dùng thuốc nhuận tràng thẩm thấu (Macrogol/Lactulose) dự phòng hàng ngày cho bệnh nhân.\n4. Giảm kích ứng tĩnh mạch: Ưu tiên truyền qua đường truyền trung tâm (PICC/Port-a-cath) hoặc tĩnh mạch lớn ở cẳng tay; tránh tĩnh mạch mu bàn tay/cổ tay. Truyền nhanh dịch muối trước và sau truyền thuốc giúp giảm thiểu viêm tĩnh mạch huyết khối.\n5. Thao tác an toàn thuốc độc tế bào: Điều dưỡng và dược sĩ bắt buộc mang trang bị bảo hộ cá nhân (PPE: găng tay kép, áo choàng chống thấm, kính bảo hộ). Thuốc rơi vào mắt phải rửa ngay bằng NaCl 0.9% trong 15 phút.",
     "attachments": []
   }
 ];
