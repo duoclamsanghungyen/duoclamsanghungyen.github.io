@@ -2,8 +2,8 @@
  * PHARMAVITA / CLINICALRX - MODULE KIỂM TRA TƯƠNG TÁC ĐA THUỐC
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=full743";
-import { DRUG_INTERACTIONS } from "../data/interactions.js?v=full743";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260913_v33_fix_update_drug_btn";
+import { DRUG_INTERACTIONS } from "../data/interactions.js?v=20260913_v33_fix_update_drug_btn";
 
 let selectedDrugs = [];
 

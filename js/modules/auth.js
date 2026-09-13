@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=pdf_section7_v4";
+} from "../data/drugs.js?v=20260913_v33_fix_update_drug_btn";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=pdf_section7_v4";
+} from "../data/pdfStorage.js?v=20260913_v33_fix_update_drug_btn";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [
@@ -1145,6 +1145,9 @@ function renderAdminDrugTable() {
 let currentFormAttachments = [];
 
 export function openAddDrugModal() {
+  if (!currentUser) {
+    loadSavedUserSession();
+  }
   if (!currentUser || currentUser.role !== "admin") {
     alert("Quyền truy cập bị từ chối: Chỉ Quản trị viên (Admin) mới có quyền thêm chuyên luận thuốc vào cơ sở dữ liệu!");
     return;
@@ -1155,6 +1158,9 @@ export function openAddDrugModal() {
 }
 
 export function openEditDrugModal(drugId) {
+  if (!currentUser) {
+    loadSavedUserSession();
+  }
   if (!currentUser || currentUser.role !== "admin") {
     alert("Quyền truy cập bị từ chối: Chỉ Quản trị viên (Admin) mới có quyền chỉnh sửa cơ sở dữ liệu thuốc!");
     return;
@@ -1205,7 +1211,7 @@ function renderDrugFormModal(drug) {
           </button>
         </div>
 
-        <form onsubmit="window.handleSaveDrugForm(event)" class="p-6 overflow-y-auto space-y-5 text-xs">
+        <form id="adminDrugForm" novalidate onsubmit="window.handleSaveDrugForm(event); return false;" class="p-6 overflow-y-auto space-y-5 text-xs">
           <input type="hidden" id="formDrugId" value="${drug ? drug.id : ''}">
           
           <!-- THANH ĐIỀU HƯỚNG NHANH & NÚT TỚI PHẦN 7 -->
@@ -1480,7 +1486,7 @@ function renderDrugFormModal(drug) {
             <button type="button" onclick="window.closeDrugFormModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-colors cursor-pointer">
               Hủy
             </button>
-            <button type="submit" class="px-6 py-2.5 bg-rose-700 hover:bg-rose-800 text-white rounded-xl font-bold shadow-md flex items-center gap-2 transition-all cursor-pointer">
+            <button type="button" id="saveDrugFormSubmitBtn" onclick="window.handleSaveDrugForm(event)" class="px-6 py-2.5 bg-rose-700 hover:bg-rose-800 text-white rounded-xl font-bold shadow-md flex items-center gap-2 transition-all cursor-pointer">
               <i data-lucide="save" class="w-4 h-4"></i>
               <span>${isEdit ? 'Cập Nhật Chuyên Luận' : 'Lưu Chuyên Luận Mới'}</span>
             </button>
@@ -1894,50 +1900,77 @@ export function openQuickPdfModal(drugId) {
     const saveBtn = document.getElementById("quickSavePdfBtn");
     if (saveBtn) {
       saveBtn.onclick = async () => {
-        const attachmentsMeta = [];
-        for (const att of quickAttachments) {
-          if (att.dataUrl) {
-            await savePdfAttachment({ ...att, drugId: drug.id });
-          }
-
-          let cloudUrl = att.fileUrl || "";
-          if (!cloudUrl) {
-            let sourceData = att.dataUrl;
-            if (!sourceData && typeof window !== "undefined" && window.getPdfAttachmentById) {
+        const origText = saveBtn.innerHTML;
+        try {
+          saveBtn.disabled = true;
+          saveBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-1.5 h-3.5 w-3.5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Đang lưu tài liệu...</span>
+          `;
+          const attachmentsMeta = [];
+          for (let i = 0; i < quickAttachments.length; i++) {
+            const att = quickAttachments[i];
+            if (att.dataUrl) {
               try {
-                const localAtt = await window.getPdfAttachmentById(att.id);
-                if (localAtt && localAtt.dataUrl) sourceData = localAtt.dataUrl;
-              } catch (e) {}
-            }
-            if (sourceData && typeof window !== "undefined" && window.uploadPdfToSupabaseStorage) {
-              try {
-                const uploaded = await window.uploadPdfToSupabaseStorage(sourceData, drug.id, att.fileName);
-                if (uploaded) cloudUrl = uploaded;
-              } catch (upErr) {
-                console.warn("Không thể upload PDF lên cloud:", upErr);
+                await savePdfAttachment({ ...att, drugId: drug.id });
+              } catch (saveErr) {
+                console.warn("Lỗi lưu PDF IndexedDB:", saveErr);
               }
             }
-          }
 
-          attachmentsMeta.push({
-            id: att.id,
-            title: att.title || att.fileName,
-            fileName: att.fileName,
-            fileSize: att.fileSize || 0,
-            fileType: att.fileType || "application/pdf",
-            fileUrl: cloudUrl,
-            uploadedAt: att.uploadedAt || new Date().toISOString()
-          });
-        }
-        drug.attachments = attachmentsMeta;
-        const res = saveOrUpdateDrug(drug);
-        if (res.success) {
-          showToast(`Đã cập nhật ${attachmentsMeta.length} tài liệu PDF cho ${drug.name}!`, "success");
-          window.closeQuickPdfModal();
-          renderAdminDrugTable();
-          if (window.renderDrugList) window.renderDrugList();
-        } else {
-          alert("Lỗi khi lưu PDF: " + res.error);
+            let cloudUrl = att.fileUrl || "";
+            if (!cloudUrl) {
+              let sourceData = att.dataUrl;
+              if (!sourceData && typeof window !== "undefined" && window.getPdfAttachmentById) {
+                try {
+                  const localAtt = await window.getPdfAttachmentById(att.id);
+                  if (localAtt && localAtt.dataUrl) sourceData = localAtt.dataUrl;
+                } catch (e) {}
+              }
+              if (sourceData && typeof window !== "undefined" && window.uploadPdfToSupabaseStorage) {
+                try {
+                  const uploadPromise = window.uploadPdfToSupabaseStorage(sourceData, drug.id, att.fileName);
+                  const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(null), 15000));
+                  const uploaded = await Promise.race([uploadPromise, timeoutPromise]);
+                  if (uploaded) cloudUrl = uploaded;
+                } catch (upErr) {
+                  console.warn("Không thể upload PDF lên cloud:", upErr);
+                }
+              }
+            }
+
+            attachmentsMeta.push({
+              id: att.id,
+              title: att.title || att.fileName,
+              fileName: att.fileName,
+              fileSize: att.fileSize || 0,
+              fileType: att.fileType || "application/pdf",
+              fileUrl: cloudUrl,
+              uploadedAt: att.uploadedAt || new Date().toISOString()
+            });
+          }
+          drug.attachments = attachmentsMeta;
+          const res = saveOrUpdateDrug(drug);
+          if (res && res.success) {
+            showToast(`Đã cập nhật ${attachmentsMeta.length} tài liệu PDF cho ${drug.name}!`, "success");
+            window.closeQuickPdfModal();
+            try { renderAdminDrugTable(); } catch (e) {}
+            if (window.renderDrugList) {
+              try { window.renderDrugList(); } catch (e) {}
+            }
+          } else {
+            alert("Lỗi khi lưu PDF: " + (res?.error || "Không thể cập nhật"));
+          }
+        } catch (saveErr) {
+          console.error("Lỗi quickSavePdfBtn:", saveErr);
+          alert("Lỗi khi lưu tài liệu: " + saveErr.message);
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = origText;
+          if (window.lucide) window.lucide.createIcons();
         }
       };
     }
@@ -1952,152 +1985,212 @@ export function closeQuickPdfModal() {
 }
 
 export async function handleSaveDrugForm(event) {
-  if (event) event.preventDefault();
-  if (!currentUser || currentUser.role !== "admin") {
-    alert("Quyền truy cập bị từ chối: Chỉ Quản trị viên (Admin) mới có quyền lưu chỉnh sửa cơ sở dữ liệu!");
-    return;
+  if (event) {
+    try { event.preventDefault(); } catch (e) {}
   }
 
-  const idInput = document.getElementById("formDrugId");
-  const nameInput = document.getElementById("formDrugName");
-  const innInput = document.getElementById("formDrugInn");
-  const atcGroupInput = document.getElementById("formDrugAtcGroup");
-  const atcCodeInput = document.getElementById("formDrugAtcCode");
-  const categoryInput = document.getElementById("formDrugCategory");
-  const brandsInput = document.getElementById("formDrugBrands");
-  const dosageFormInput = document.getElementById("formDrugDosageForm");
+  const submitBtn = document.getElementById("saveDrugFormSubmitBtn");
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : "";
 
-  const adultDoseInput = document.getElementById("formDrugAdultDose");
-  const pedDoseInput = document.getElementById("formDrugPediatricDose");
-  const eldDoseInput = document.getElementById("formDrugElderlyDose");
-
-  const indicationsInput = document.getElementById("formDrugIndications");
-  const contraindicationsInput = document.getElementById("formDrugContraindications");
-  const renalInput = document.getElementById("formDrugRenal");
-  const hepaticInput = document.getElementById("formDrugHepatic");
-  const blackBoxInput = document.getElementById("formDrugBlackBox");
-
-  const pregnancyInput = document.getElementById("formDrugPregnancy");
-  const lactationInput = document.getElementById("formDrugLactation");
-  const adrCommonInput = document.getElementById("formDrugAdrCommon");
-  const adrSeriousInput = document.getElementById("formDrugAdrSerious");
-  const adminInput = document.getElementById("formDrugAdministration");
-  const pearlsInput = document.getElementById("formDrugClinicalPearls");
-  const tdmTargetInput = document.getElementById("formDrugTdmTarget");
-
-  const name = nameInput.value.trim();
-  const inn = innInput.value.trim();
-  let id = idInput ? idInput.value.trim() : "";
-
-  if (!id) {
-    // Tạo slug ID từ tên thuốc
-    id = name.toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]/g, "_")
-      .replace(/_+/g, "_")
-      .replace(/^_|_$/g, "");
-    if (!id) id = "drug_" + Date.now();
-  }
-
-  // Tìm thuốc cũ nếu đang sửa để bảo lưu các thuộc tính mở rộng
-  const allDrugs = getActiveDrugsDatabase();
-  const existingDrug = allDrugs.find(d => d.id === id);
-
-  const brandNames = brandsInput.value ? brandsInput.value.split(",").map(s => s.trim()).filter(Boolean) : [];
-  const indications = indicationsInput.value ? indicationsInput.value.split("\n").map(s => s.trim()).filter(Boolean) : [];
-  const contraindications = contraindicationsInput.value ? contraindicationsInput.value.split("\n").map(s => s.trim()).filter(Boolean) : [];
-
-  // Parse renal lines
-  let renalAdjustment = [];
-  if (renalInput.value) {
-    const lines = renalInput.value.split("\n").map(s => s.trim()).filter(Boolean);
-    renalAdjustment = lines.map(line => {
-      const parts = line.split(":");
-      if (parts.length >= 2) {
-        return { crcl: parts[0].trim(), dose: parts.slice(1).join(":").trim() };
-      }
-      return { crcl: "Tiêu chuẩn", dose: line };
-    });
-  }
-
-  // Lưu các file PDF có dataUrl vào IndexedDB & Cloud Storage
-  const attachmentsMeta = [];
-  for (const att of currentFormAttachments) {
-    if (att.dataUrl) {
-      await savePdfAttachment({ ...att, drugId: id });
+  try {
+    if (!currentUser) {
+      loadSavedUserSession();
+    }
+    if (!currentUser || currentUser.role !== "admin") {
+      alert("Quyền truy cập bị từ chối: Chỉ Quản trị viên (Admin) mới có quyền lưu chỉnh sửa cơ sở dữ liệu!");
+      return;
     }
 
-    let cloudUrl = att.fileUrl || "";
-    if (!cloudUrl) {
-      let sourceData = att.dataUrl;
-      if (!sourceData && typeof window !== "undefined" && window.getPdfAttachmentById) {
-        try {
-          const localAtt = await window.getPdfAttachmentById(att.id);
-          if (localAtt && localAtt.dataUrl) sourceData = localAtt.dataUrl;
-        } catch (e) {}
-      }
-      if (sourceData && typeof window !== "undefined" && window.uploadPdfToSupabaseStorage) {
-        try {
-          const uploaded = await window.uploadPdfToSupabaseStorage(sourceData, id, att.fileName);
-          if (uploaded) cloudUrl = uploaded;
-        } catch (upErr) {
-          console.warn("Không thể upload PDF lên cloud:", upErr);
+    const idInput = document.getElementById("formDrugId");
+    const nameInput = document.getElementById("formDrugName");
+    const innInput = document.getElementById("formDrugInn");
+    const atcGroupInput = document.getElementById("formDrugAtcGroup");
+    const atcCodeInput = document.getElementById("formDrugAtcCode");
+    const categoryInput = document.getElementById("formDrugCategory");
+    const brandsInput = document.getElementById("formDrugBrands");
+    const dosageFormInput = document.getElementById("formDrugDosageForm");
+
+    const adultDoseInput = document.getElementById("formDrugAdultDose");
+    const pedDoseInput = document.getElementById("formDrugPediatricDose");
+    const eldDoseInput = document.getElementById("formDrugElderlyDose");
+
+    const indicationsInput = document.getElementById("formDrugIndications");
+    const contraindicationsInput = document.getElementById("formDrugContraindications");
+    const renalInput = document.getElementById("formDrugRenal");
+    const hepaticInput = document.getElementById("formDrugHepatic");
+    const blackBoxInput = document.getElementById("formDrugBlackBox");
+
+    const pregnancyInput = document.getElementById("formDrugPregnancy");
+    const lactationInput = document.getElementById("formDrugLactation");
+    const adrCommonInput = document.getElementById("formDrugAdrCommon");
+    const adrSeriousInput = document.getElementById("formDrugAdrSerious");
+    const adminInput = document.getElementById("formDrugAdministration");
+    const pearlsInput = document.getElementById("formDrugClinicalPearls");
+    const tdmTargetInput = document.getElementById("formDrugTdmTarget");
+
+    const name = nameInput ? nameInput.value.trim() : "";
+    if (!name) {
+      alert("Vui lòng nhập Tên thuốc (Phần 1: Định danh)!");
+      document.getElementById("formSection1")?.scrollIntoView({ behavior: "smooth" });
+      if (nameInput) nameInput.focus();
+      return;
+    }
+
+    let inn = innInput ? innInput.value.trim() : "";
+    if (!inn) inn = name;
+
+    let id = idInput ? idInput.value.trim() : "";
+    if (!id) {
+      // Tạo slug ID từ tên thuốc
+      id = name.toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "_")
+        .replace(/_+/g, "_")
+        .replace(/^_|_$/g, "");
+      if (!id) id = "drug_" + Date.now();
+    }
+
+    // Hiển thị trạng thái đang lưu trên nút
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Đang lưu chuyên luận...</span>
+      `;
+    }
+
+    // Tìm thuốc cũ nếu đang sửa để bảo lưu các thuộc tính mở rộng
+    const allDrugs = getActiveDrugsDatabase();
+    const existingDrug = allDrugs.find(d => d.id === id);
+
+    const brandNames = brandsInput && brandsInput.value ? brandsInput.value.split(",").map(s => s.trim()).filter(Boolean) : [];
+    const indications = indicationsInput && indicationsInput.value ? indicationsInput.value.split("\n").map(s => s.trim()).filter(Boolean) : [];
+    const contraindications = contraindicationsInput && contraindicationsInput.value ? contraindicationsInput.value.split("\n").map(s => s.trim()).filter(Boolean) : [];
+
+    // Parse renal lines
+    let renalAdjustment = [];
+    if (renalInput && renalInput.value) {
+      const lines = renalInput.value.split("\n").map(s => s.trim()).filter(Boolean);
+      renalAdjustment = lines.map(line => {
+        const parts = line.split(":");
+        if (parts.length >= 2) {
+          return { crcl: parts[0].trim(), dose: parts.slice(1).join(":").trim() };
         }
+        return { crcl: "Tiêu chuẩn", dose: line };
+      });
+    }
+
+    // Lưu các file PDF có dataUrl vào IndexedDB & Cloud Storage
+    const attachmentsMeta = [];
+    if (Array.isArray(currentFormAttachments) && currentFormAttachments.length > 0) {
+      for (let i = 0; i < currentFormAttachments.length; i++) {
+        const att = currentFormAttachments[i];
+        if (att.dataUrl) {
+          try {
+            await savePdfAttachment({ ...att, drugId: id });
+          } catch (saveErr) {
+            console.warn("Lỗi lưu PDF vào IndexedDB:", saveErr);
+          }
+        }
+
+        let cloudUrl = att.fileUrl || "";
+        if (!cloudUrl) {
+          let sourceData = att.dataUrl;
+          if (!sourceData && typeof window !== "undefined" && window.getPdfAttachmentById) {
+            try {
+              const localAtt = await window.getPdfAttachmentById(att.id);
+              if (localAtt && localAtt.dataUrl) sourceData = localAtt.dataUrl;
+            } catch (e) {}
+          }
+          if (sourceData && typeof window !== "undefined" && window.uploadPdfToSupabaseStorage) {
+            try {
+              if (submitBtn) {
+                submitBtn.innerHTML = `
+                  <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>Tải lên Cloud (${i + 1}/${currentFormAttachments.length})...</span>
+                `;
+              }
+              const uploadPromise = window.uploadPdfToSupabaseStorage(sourceData, id, att.fileName);
+              const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(null), 15000));
+              const uploaded = await Promise.race([uploadPromise, timeoutPromise]);
+              if (uploaded) cloudUrl = uploaded;
+            } catch (upErr) {
+              console.warn("Không thể upload PDF lên cloud:", upErr);
+            }
+          }
+        }
+
+        attachmentsMeta.push({
+          id: att.id,
+          title: att.title || att.fileName,
+          fileName: att.fileName,
+          fileSize: att.fileSize || 0,
+          fileType: att.fileType || "application/pdf",
+          fileUrl: cloudUrl,
+          uploadedAt: att.uploadedAt || new Date().toISOString()
+        });
       }
     }
 
-    attachmentsMeta.push({
-      id: att.id,
-      title: att.title || att.fileName,
-      fileName: att.fileName,
-      fileSize: att.fileSize || 0,
-      fileType: att.fileType || "application/pdf",
-      fileUrl: cloudUrl,
-      uploadedAt: att.uploadedAt || new Date().toISOString()
-    });
-  }
+    const drugData = {
+      ...(existingDrug || {}),
+      id,
+      name,
+      inn,
+      atcGroup: (atcGroupInput && atcGroupInput.value) || (existingDrug?.atcGroup || "OTHER"),
+      atcCode: (atcCodeInput && atcCodeInput.value.trim()) || (atcGroupInput && atcGroupInput.value) || (existingDrug?.atcCode || "OTHER"),
+      category: (categoryInput && categoryInput.value.trim()) || (existingDrug?.category || "Chuyên luận nội viện"),
+      brandNames: brandNames.length ? brandNames : (Array.isArray(existingDrug?.brandNames) ? existingDrug.brandNames : []),
+      dosageForm: (dosageFormInput && dosageFormInput.value.trim()) || (existingDrug?.dosageForm || "Chưa cập nhật"),
+      indications: indications.length ? indications : (Array.isArray(existingDrug?.indications) && existingDrug.indications.length ? existingDrug.indications : ["Theo chỉ định của Bác sĩ điều trị"]),
+      contraindications: contraindications.length ? contraindications : (Array.isArray(existingDrug?.contraindications) && existingDrug.contraindications.length ? existingDrug.contraindications : ["Quá mẫn với thành phần của thuốc"]),
+      standardDosage: {
+        adult: (adultDoseInput && adultDoseInput.value.trim()) || (existingDrug?.standardDosage?.adult || "Theo y lệnh"),
+        pediatric: (pedDoseInput && pedDoseInput.value.trim()) || (existingDrug?.standardDosage?.pediatric || "Theo cân nặng và hướng dẫn bác sĩ"),
+        elderly: (eldDoseInput && eldDoseInput.value.trim()) || (existingDrug?.standardDosage?.elderly || "Đánh giá chức năng thận trước khi dùng")
+      },
+      renalAdjustment: renalAdjustment.length ? renalAdjustment : (Array.isArray(existingDrug?.renalAdjustment) && existingDrug.renalAdjustment.length ? existingDrug.renalAdjustment : [{ crcl: "Bình thường", dose: "Không cần chỉnh liều" }]),
+      hepaticAdjustment: (hepaticInput && hepaticInput.value.trim()) || (existingDrug?.hepaticAdjustment || "Theo dõi men gan"),
+      administration: (adminInput && adminInput.value.trim()) || (existingDrug?.administration || "Dùng đường toàn thân theo quy trình điều dưỡng chuẩn"),
+      blackBoxWarning: (blackBoxInput && blackBoxInput.value.trim()) || (existingDrug?.blackBoxWarning || ""),
+      adr: {
+        common: (adrCommonInput && adrCommonInput.value.trim()) || (existingDrug?.adr?.common || "Rối loạn tiêu hóa nhẹ, buồn nôn"),
+        serious: (adrSeriousInput && adrSeriousInput.value.trim()) || (existingDrug?.adr?.serious || "Sốc phản vệ, dị ứng nặng")
+      },
+      pregnancyCategory: (pregnancyInput && pregnancyInput.value) || (existingDrug?.pregnancyCategory || "C"),
+      lactation: (lactationInput && lactationInput.value.trim()) || (existingDrug?.lactation || "Thận trọng"),
+      tdmTarget: (tdmTargetInput && tdmTargetInput.value.trim()) || (existingDrug?.tdmTarget || "Theo dõi lâm sàng"),
+      clinicalPearls: (pearlsInput && pearlsInput.value.trim()) || (existingDrug?.clinicalPearls || "Thuốc được cập nhật bởi Quản trị viên Khoa Dược BVĐK tỉnh Hưng Yên."),
+      attachments: attachmentsMeta
+    };
 
-  const drugData = {
-    ...(existingDrug || {}),
-    id,
-    name,
-    inn,
-    atcGroup: atcGroupInput.value,
-    atcCode: atcCodeInput.value.trim() || atcGroupInput.value,
-    category: categoryInput.value.trim() || "Chuyên luận nội viện",
-    brandNames: brandNames.length ? brandNames : (existingDrug?.brandNames || []),
-    dosageForm: dosageFormInput.value.trim() || "Chưa cập nhật",
-    indications: indications.length ? indications : ["Theo chỉ định của Bác sĩ điều trị"],
-    contraindications: contraindications.length ? contraindications : ["Quá mẫn với thành phần của thuốc"],
-    standardDosage: {
-      adult: adultDoseInput.value.trim() || "Theo y lệnh",
-      pediatric: (pedDoseInput && pedDoseInput.value.trim()) || (existingDrug?.standardDosage?.pediatric || "Theo cân nặng và hướng dẫn bác sĩ"),
-      elderly: (eldDoseInput && eldDoseInput.value.trim()) || (existingDrug?.standardDosage?.elderly || "Đánh giá chức năng thận trước khi dùng")
-    },
-    renalAdjustment: renalAdjustment.length ? renalAdjustment : [{ crcl: "Bình thường", dose: "Không cần chỉnh liều" }],
-    hepaticAdjustment: hepaticInput.value.trim() || "Theo dõi men gan",
-    administration: (adminInput && adminInput.value.trim()) || (existingDrug?.administration || "Dùng đường toàn thân theo quy trình điều dưỡng chuẩn"),
-    blackBoxWarning: blackBoxInput.value.trim() || "",
-    adr: {
-      common: (adrCommonInput && adrCommonInput.value.trim()) || (existingDrug?.adr?.common || "Rối loạn tiêu hóa nhẹ, buồn nôn"),
-      serious: (adrSeriousInput && adrSeriousInput.value.trim()) || (existingDrug?.adr?.serious || "Sốc phản vệ, dị ứng nặng")
-    },
-    pregnancyCategory: (pregnancyInput && pregnancyInput.value) || (existingDrug?.pregnancyCategory || "C"),
-    lactation: (lactationInput && lactationInput.value.trim()) || (existingDrug?.lactation || "Thận trọng"),
-    tdmTarget: (tdmTargetInput && tdmTargetInput.value.trim()) || existingDrug?.tdmTarget || "Theo dõi lâm sàng",
-    clinicalPearls: (pearlsInput && pearlsInput.value.trim()) || (existingDrug?.clinicalPearls || "Thuốc được cập nhật bởi Quản trị viên Khoa Dược BVĐK tỉnh Hưng Yên."),
-    attachments: attachmentsMeta
-  };
-
-  const res = saveOrUpdateDrug(drugData);
-  if (res.success) {
-    const pdfCountText = attachmentsMeta.length > 0 ? ` cùng ${attachmentsMeta.length} tài liệu PDF` : "";
-    showToast(`Đã lưu thành công chuyên luận: ${name}${pdfCountText}`, "success");
-    closeDrugFormModal();
-    renderAdminDrugTable();
-    if (window.renderDrugList) window.renderDrugList(); // Cập nhật ngay ngoài giao diện Dược thư!
-  } else {
-    alert("Lỗi khi lưu thuốc: " + res.error);
+    const res = saveOrUpdateDrug(drugData);
+    if (res && res.success) {
+      const pdfCountText = attachmentsMeta.length > 0 ? ` cùng ${attachmentsMeta.length} tài liệu PDF` : "";
+      showToast(`Đã lưu thành công chuyên luận: ${name}${pdfCountText}`, "success");
+      closeDrugFormModal();
+      try { renderAdminDrugTable(); } catch (e) { console.warn(e); }
+      if (window.renderDrugList) {
+        try { window.renderDrugList(); } catch (e) { console.warn(e); }
+      }
+    } else {
+      alert("Lỗi khi lưu thuốc: " + (res?.error || "Không thể lưu dữ liệu"));
+    }
+  } catch (err) {
+    console.error("Lỗi khi thực hiện lưu chuyên luận:", err);
+    alert("Đã xảy ra lỗi khi lưu chuyên luận: " + err.message);
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHtml || `<span>Lưu Chuyên Luận</span>`;
+      if (window.lucide) window.lucide.createIcons();
+    }
   }
 }
 

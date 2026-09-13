@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260913_v32_hepagold";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260913_v33_fix_update_drug_btn";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -38720,7 +38720,23 @@ export function saveOrUpdateDrug(drugData) {
       sortDrugsAlphabetical(store.addedDrugs);
     }
 
-    localStorage.setItem(CUSTOM_DRUGS_STORAGE_KEY, JSON.stringify(store));
+    try {
+      localStorage.setItem(CUSTOM_DRUGS_STORAGE_KEY, JSON.stringify(store));
+    } catch (storageErr) {
+      console.warn("Lỗi lưu vào localStorage (có thể do quá dung lượng):", storageErr);
+      try {
+        if (store.modified) {
+          Object.values(store.modified).forEach(d => {
+            if (Array.isArray(d.attachments)) {
+              d.attachments.forEach(a => { delete a.dataUrl; });
+            }
+          });
+        }
+        localStorage.setItem(CUSTOM_DRUGS_STORAGE_KEY, JSON.stringify(store));
+      } catch (retryErr) {
+        console.warn("Vẫn không thể lưu localStorage, tiếp tục đồng bộ Cloud:", retryErr);
+      }
+    }
 
     // Đồng bộ tự động lên Supabase Cloud Database nếu có kết nối
     if (window.supabase) {
