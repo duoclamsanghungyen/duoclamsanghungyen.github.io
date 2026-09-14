@@ -4,8 +4,8 @@
  * THEO QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260914_v37_full_633_qd5948";
-import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20260914_v37_full_633_qd5948";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260914_v38_drugs_com";
+import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20260914_v38_drugs_com";
 
 let selectedDrugs = [];
 let qdVisibleLimit = 50;
@@ -242,11 +242,11 @@ function runInteractionAnalysis() {
             <i data-lucide="scale" class="w-4 h-4 text-rose-600"></i>
             <span>Xem Đầy Đủ 633 Cặp Chống Chỉ Định (QĐ 5948/QĐ-BYT)</span>
           </button>
-          <a href="https://reference.medscape.com/drug-interactionchecker" 
+          <a href="https://www.drugs.com/drug_interactions.html" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="inline-flex items-center gap-1.5 text-xs text-teal-700 hover:text-teal-800 font-semibold hover:underline bg-white px-3.5 py-2 rounded-xl border border-slate-200 shadow-2xs transition-colors">
-            <span>Medscape Drug Interaction Checker</span>
+            <span>Drugs.com Drug Interaction Checker</span>
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
           </a>
         </div>
@@ -322,7 +322,7 @@ function runInteractionAnalysis() {
           </div>
         </div>
 
-        <!-- Tra cứu mở rộng Medscape -->
+        <!-- Tra cứu mở rộng Drugs.com -->
         <div class="mt-4 pt-4 border-t border-emerald-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/70 p-4 rounded-xl border border-emerald-200/60">
           <div class="text-xs text-slate-700 space-y-0.5">
             <div class="font-bold text-slate-900 flex items-center gap-1.5">
@@ -330,14 +330,14 @@ function runInteractionAnalysis() {
               <span>Tra cứu mở rộng trên cơ sở dữ liệu quốc tế:</span>
             </div>
             <p class="text-slate-500">
-              Đối chiếu thêm ma trận tương tác đa thuốc trên Medscape Drug Interaction Checker (WebMD).
+              Đối chiếu thêm ma trận tương tác đa thuốc trên Drugs.com Drug Interaction Checker.
             </p>
           </div>
-          <a href="https://reference.medscape.com/drug-interactionchecker" 
+          <a href="https://www.drugs.com/drug_interactions.html" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl shadow-xs transition-all shrink-0 hover:shadow-md hover:scale-[1.02]">
-            <span>Mở Medscape Interaction Checker</span>
+            <span>Mở Drugs.com Interaction Checker</span>
             <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
           </a>
         </div>
@@ -487,17 +487,17 @@ function runInteractionAnalysis() {
         `;
       }).join("")}
 
-      <!-- Footer hỗ trợ tra cứu mở rộng Medscape -->
+      <!-- Footer hỗ trợ tra cứu mở rộng Drugs.com -->
       <div class="p-4 bg-slate-50/90 rounded-2xl border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
         <div class="flex items-center gap-2">
           <i data-lucide="info" class="w-4 h-4 text-slate-500 shrink-0"></i>
           <span>Cần đối chiếu mở rộng thêm với dữ liệu quốc tế hoặc kiểm tra các hoạt chất ngoài danh mục?</span>
         </div>
-        <a href="https://reference.medscape.com/drug-interactionchecker" 
+        <a href="https://www.drugs.com/drug_interactions.html" 
            target="_blank" 
            rel="noopener noreferrer" 
            class="inline-flex items-center gap-1.5 font-bold text-teal-700 hover:text-teal-800 bg-white hover:bg-teal-50 border border-slate-200 px-3 py-1.5 rounded-xl shadow-2xs shrink-0 transition-all">
-          <span>Medscape Interaction Checker</span>
+          <span>Drugs.com Interaction Checker</span>
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
