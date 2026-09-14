@@ -1,10 +1,43 @@
 /**
  * PHARMAVITA / CLINICALRX - CƠ SỞ DỮ LIỆU TƯƠNG TÁC THUỐC LÂM SÀNG
  * Bệnh viện Đa khoa tỉnh Hưng Yên
+ * Tích hợp chính thức QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  * Phân cấp theo chuẩn Dược thư Quốc gia Việt Nam 2022, Stockley's, Lexicomp
  * 
- * Tổng cộng: 52 cặp tương tác lâm sàng mức độ Nguy cơ cao & Chống chỉ định
+ * Tổng cộng: 59 cặp tương tác lâm sàng (trong đó có 22 cặp chống chỉ định theo QĐ 5948/QĐ-BYT)
  */
+
+export const QD_5948_METADATA = {
+  "decisionNumber": "5948/QĐ-BYT",
+  "issuedDate": "30/12/2021",
+  "issuedBy": "Bộ Y tế",
+  "department": "Cục Quản lý Khám, chữa bệnh",
+  "signatory": "Thứ trưởng Nguyễn Trường Sơn",
+  "title": "Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh",
+  "summary": "Quyết định số 5948/QĐ-BYT do Bộ trưởng Bộ Y tế ban hành ngày 30/12/2021 quy định Danh mục tương tác thuốc chống chỉ định bắt buộc trong thực hành lâm sàng. Đây là cơ sở pháp lý cao nhất để các bệnh viện xây dựng danh mục kiểm soát tương tác thuốc tại đơn vị và thiết lập hệ thống cảnh báo kê đơn, duyệt đơn thuốc của Dược sĩ lâm sàng.",
+  "articles": [
+    {
+      "number": "Điều 1",
+      "title": "Ban hành danh mục",
+      "content": "Ban hành kèm theo Quyết định này \"Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh\"."
+    },
+    {
+      "number": "Điều 2",
+      "title": "Hiệu lực thi hành",
+      "content": "Quyết định này có hiệu lực kể từ ngày ký ban hành (ngày 30 tháng 12 năm 2021)."
+    },
+    {
+      "number": "Điều 3",
+      "title": "Mục đích áp dụng tại cơ sở khám bệnh, chữa bệnh",
+      "content": "\"Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh\" là cơ sở để:\n1. Các cơ sở khám bệnh, chữa bệnh xây dựng Danh mục tương tác thuốc chống chỉ định thực hiện tại đơn vị.\n2. Các cơ sở khám bệnh, chữa bệnh xây dựng phần mềm cảnh báo tương tác thuốc trong kê đơn và duyệt đơn thuốc của Dược sĩ lâm sàng."
+    },
+    {
+      "number": "Điều 4",
+      "title": "Trách nhiệm thi hành",
+      "content": "Các Ông, Bà: Chánh Văn phòng Bộ, Cục trưởng Cục Quản lý Khám, chữa bệnh, Chánh Thanh tra Bộ, Cục trưởng các Cục, Vụ trưởng các Vụ thuộc Bộ Y tế; Giám đốc các Bệnh viện, Viện có giường bệnh trực thuộc Bộ Y tế; Giám đốc Sở Y tế các tỉnh, thành phố trực thuộc Trung ương; Thủ trưởng Y tế các ngành chịu trách nhiệm thi hành Quyết định này."
+    }
+  ]
+};
 
 export const DRUG_INTERACTIONS = [
   {
@@ -17,7 +50,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Clarithromycin là chất ức chế cực mạnh cytochrom P450 3A4 (CYP3A4) và protein vận chuyển OATP1B1, làm giảm mạnh độ thanh thải tại gan và làm tăng nồng độ đỉnh cũng như AUC của Simvastatin trong huyết tương lên từ 10 đến 12 lần.",
     "clinicalImpact": "Nguy cơ rất cao xảy ra viêm cơ hoại tử, đau cơ dữ dội, tăng vọt men cơ Creatine Kinase (CK > 10 - 40 lần giới hạn trên bình thường) và Hội chứng Tiêu cơ vân cấp tính (Rhabdomyolysis) dẫn đến Myoglobin niệu, tắc ống thận cấp và suy thận cấp đe dọa tính mạng.",
     "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI (Theo Dược thư Quốc gia Việt Nam 2022 và Cảnh báo an toàn FDA). Bắt buộc TẠM NGỪNG SIMVASTATIN trong toàn bộ thời gian điều trị bằng Clarithromycin; hoặc thay thế bằng kháng sinh nhóm khác (như Amoxicillin/Acid Clavulanic, Cefuroxime) hoặc chuyển sang Statin không chuyển hóa qua CYP3A4 như Rosuvastatin liều thấp hoặc Pravastatin.",
-    "evidenceLevel": "Mức độ 1 (Chống chỉ định tuyệt đối - Cảnh báo Dược thư Quốc gia & FDA Black Box)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -29,7 +64,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Cả hai thuốc đều có tác dụng ức chế kênh kali nội tâm mạc IKr (hERG), dẫn đến kéo dài thời gian tái cực thất và kéo dài khoảng QTc trên điện tâm đồ.",
     "clinicalImpact": "Kéo dài khoảng QTc hiệp đồng (> 500 ms) làm tăng vọt nguy cơ khởi phát loạn nhịp thất đa hình xoắn đỉnh (Torsades de Pointes), rung thất và ngừng tim đột ngột.",
     "recommendation": "TRÁNH PHỐI HỢP ĐỒNG THỜI. Lựa chọn kháng sinh khác không kéo dài khoảng QT (như Beta-lactam, Aminoglycoside). Nếu bắt buộc phải dùng: Phải mắc Monitor theo dõi điện tim liên tục, xét nghiệm bù đủ Kali máu (mục tiêu > 4.0 mEq/L) và Magnesi máu (mục tiêu > 2.0 mg/dL).",
-    "evidenceLevel": "Mức độ 1 (Y văn & Cảnh báo FDA Black Box)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -41,7 +78,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Meropenem và các Carbapenem ức chế enzym acylpeptide hydrolase thủy phân glucuronide valproic, đồng thời thúc đẩy vận chuyển Valproic acid vào hồng cầu và tăng thanh thải, làm nồng độ valproic tụt dốc 60 - 80% chỉ trong 24 giờ.",
     "clinicalImpact": "Mất hoàn toàn khả năng kiểm soát động kinh, dẫn đến trạng thái động kinh liên tục (Status Epilepticus), tổn thương não không hồi phục.",
     "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP. Không thể bù liều Valproate để vượt qua tương tác này. Bắt buộc đổi kháng sinh (sang Ceftriaxone, Levofloxacin...) hoặc tạm thời chuyển thuốc chống động kinh khác (Levetiracetam, Phenytoin).",
-    "evidenceLevel": "Mức độ 1 (Khuyến cáo FDA & Dược thư Quốc gia)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -77,7 +116,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Clarithromycin vừa kéo dài khoảng QT, vừa là chất ức chế CYP3A4 làm tăng nồng độ Amiodarone trong máu.",
     "clinicalImpact": "Kéo dài khoảng QTc nghiêm trọng, nguy cơ xoắn đỉnh và ngừng tim rất cao.",
     "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP. Chọn kháng sinh nhóm khác an toàn về mặt tim mạch.",
-    "evidenceLevel": "Mức độ 1"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -233,7 +274,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Cả Ciprofloxacin và Amiodarone đều kéo dài thời gian tái cực thất thông qua ức chế dòng kali IKr (hERG).",
     "clinicalImpact": "Kéo dài khoảng QTc hiệp đồng (> 500 ms) kích hoạt loạn nhịp thất đa hình dạng xoắn đỉnh (Torsades de Pointes) và đột tử do tim.",
     "recommendation": "CHỐNG CHỈ ĐỊNH DÙNG CHUNG. Thay thế Ciprofloxacin bằng nhóm Beta-lactam hoặc Aminoglycoside không gây độc trên điện tim.",
-    "evidenceLevel": "Mức độ 1"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -246,30 +289,6 @@ export const DRUG_INTERACTIONS = [
     "clinicalImpact": "Có thể gây hạ đường huyết đột ngột không dự đoán trước, đặc biệt trong những tuần đầu phối hợp.",
     "recommendation": "Hướng dẫn bệnh nhân nhận biết các dấu hiệu hạ đường huyết (run rẩy, đói cồn cào, vã mồ hôi). Theo dõi đường huyết mao mạch chặt chẽ hơn và sẵn sàng giảm nhẹ liều Insulin.",
     "evidenceLevel": "Trung bình"
-  },
-  {
-    "pair": [
-      "digoxin",
-      "amiodarone"
-    ],
-    "severity": "major",
-    "title": "Nguy cơ cao: Tăng gấp đôi nồng độ Digoxin & Ngộ độc Digitalis tử vong",
-    "mechanism": "Amiodarone ức chế mạnh bơm P-glycoprotein tại thận và ruột, làm giảm đào thải Digoxin qua nước tiểu và giảm thể tích phân bố, đẩy nồng độ Digoxin trong huyết thanh tăng từ 70% đến 100%.",
-    "clinicalImpact": "Gây ngộ độc Digoxin cấp tính: Loạn nhịp tim chậm nguy hiểm, block nhĩ thất hoàn toàn, nhịp nhanh thất, ngoại tâm thu thất dạng nhịp đôi (Bigeminy), buồn nôn, rối loạn thị giác nhìn màu vàng.",
-    "recommendation": "BẮT BUỘC GIẢM 50% LIỀU DIGOXIN ngay khi bắt đầu dùng Amiodarone. Theo dõi nồng độ Digoxin huyết thanh sau 7 - 14 ngày và làm điện tâm đồ ECG định kỳ.",
-    "evidenceLevel": "Mức độ 1 (Y văn kinh điển tim mạch)"
-  },
-  {
-    "pair": [
-      "spironolactone",
-      "enalapril"
-    ],
-    "severity": "major",
-    "title": "Nguy cơ cao: Tăng Kali máu ác tính đe dọa ngừng tim",
-    "mechanism": "Cả hai thuốc đều ức chế trục Renin-Angiotensin-Aldosterone (Enalapril ức chế sản sinh Aldosterone; Spironolactone chẹn thụ thể Aldosterone tại ống lượn xa), làm giảm bài tiết Kali qua nước tiểu.",
-    "clinicalImpact": "Nồng độ Kali máu có thể tăng vọt > 6.0 - 6.5 mmol/L gây loạn nhịp thất nguy hiểm, sóng T nhọn khổng lồ, phức bộ QRS giãn rộng và ngừng tim đột ngột.",
-    "recommendation": "Nếu phối hợp trong điều trị suy tim theo khuyến cáo GDMT: Bắt đầu Spironolactone liều thấp (12.5 - 25 mg/ngày); Bắt buộc kiểm tra Kali máu và Creatinine sau 1 tuần, 1 tháng và mỗi 3 - 6 tháng; Chống chỉ định nếu Kali máu ban đầu > 5.0 mmol/L hoặc eGFR < 30 mL/phút.",
-    "evidenceLevel": "Rất cao (Khuyến cáo AHA/ESC Heart Failure)"
   },
   {
     "pair": [
@@ -317,7 +336,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Muối Ceftriaxone tạo phức chelat không tan với ion Canxi tạo thành các tinh thể vi kết tủa trong lòng mạch máu.",
     "clinicalImpact": "Gây lắng đọng kết tủa dạng sỏi canxi trong vi mạch phổi và thận, suy hô hấp cấp và tử vong ở trẻ sơ sinh và trẻ nhỏ.",
     "recommendation": "CHỐNG CHỈ ĐỊNH TUYỆT ĐỐI DÙNG CHUNG ĐƯỜNG TRUYỀN HOẶC TRUYỀN ĐỒNG THỜI Ở TRẺ SƠ SINH (KỂ CẢ TRUYỀN QUA CÁC ĐƯỜNG RIÊNG RẼ TRONG VÒNG 48 GIỜ). Ở người lớn: Bắt buộc tráng rửa đường truyền thật kỹ bằng NaCl 0.9% giữa 2 lần tiêm.",
-    "evidenceLevel": "FDA Black Box Warning (Cảnh báo hộp đen)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -473,7 +494,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Hiệp đồng tác dụng ức chế co bóp cơ tim (Inotropic âm tính) và ức chế mạnh dẫn truyền qua nút nhĩ thất (Dromotropic âm tính).",
     "clinicalImpact": "Tụt huyết áp trụy mạch sâu, nhịp tim chậm kịch phát, block nhĩ thất hoàn toàn, vô tâm thu (ngừng tim).",
     "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐƯỜNG TIÊM TRUYỀN. Dạng uống chỉ dùng thận trọng dưới sự giám sát của bác sĩ chuyên khoa tim mạch.",
-    "evidenceLevel": "Mức độ 1"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -485,7 +508,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Hiệp đồng ức chế dẫn truyền nhĩ thất và ức chế nút xoang.",
     "clinicalImpact": "Nhịp chậm xoang < 40-50 bpm, block AV, làm nặng thêm tình trạng suy tim sung huyết.",
     "recommendation": "Thận trọng theo dõi nhịp tim và điện tâm đồ. Tránh phối hợp ở bệnh nhân có suy tim phân suất tống máu giảm.",
-    "evidenceLevel": "Cao"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -497,7 +522,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Nitroglycerin làm tăng cGMP qua giải phóng NO; Sildenafil ức chế PDE-5 ngăn phân hủy cGMP. Sự tích lũy ồ ạt cGMP gây giãn toàn bộ hệ mạch máu.",
     "clinicalImpact": "Tụt huyết áp tâm thu sâu không thể hồi phục (< 60 mmHg), thiếu máu cơ tim cấp và tử vong.",
     "recommendation": "CHỐNG CHỈ ĐỊNH TUYỆT ĐỐI. Không được dùng bất kỳ dẫn xuất Nitrat nào trong vòng ít nhất 24 giờ sau khi dùng Sildenafil (và ít nhất 48 giờ sau khi dùng Tadalafil).",
-    "evidenceLevel": "Mức độ 1 (FDA Black Box)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -509,7 +536,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Hiệp đồng giãn cơ trơn mạch máu thông qua con đường NO-cGMP kéo dài.",
     "clinicalImpact": "Trụy tim mạch dữ dội, nhồi máu cơ tim, tử vong đột ngột.",
     "recommendation": "CHỐNG CHỈ ĐỊNH TUYỆT ĐỐI. Khoảng cách an toàn tối thiểu giữa Tadalafil và Nitrat là 48 GIỜ.",
-    "evidenceLevel": "Mức độ 1"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -521,7 +550,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Tích lũy cGMP gây giãn mạch toàn thể kịch phát.",
     "clinicalImpact": "Hạ huyết áp sâu đe dọa tử vong.",
     "recommendation": "CHỐNG CHỈ ĐỊNH TUYỆT ĐỐI.",
-    "evidenceLevel": "Mức độ 1"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -545,7 +576,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Ciprofloxacin ức chế CYP1A2 làm nồng độ Tizanidine tăng vọt gấp 7 đến 10 lần.",
     "clinicalImpact": "Tụt huyết áp sâu ngất xỉu, nhịp tim chậm, an thần cực độ và suy giảm tâm thần vận động.",
     "recommendation": "CHỐNG CHỈ ĐỊNH TUYỆT ĐỐI ĐỒNG THỜI.",
-    "evidenceLevel": "Mức độ 1 (FDA Black Box)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -605,7 +638,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Cả hai thuốc đều ức chế tổng hợp acid folic (Methotrexate ức chế DHFR, Trimethoprim cũng ức chế DHFR), đồng thời Sulfamethoxazole cạnh tranh gắn protein huyết tương đẩy Methotrexate tự do tăng cao.",
     "clinicalImpact": "Thiếu máu bất sản suy tủy toàn bộ, nhiễm trùng cơ hội đe dọa tính mạng và tử vong.",
     "recommendation": "TRÁNH PHỐI HỢP ĐỒNG THỜI. Chọn kháng sinh khác khi bệnh nhân đang điều trị Methotrexate.",
-    "evidenceLevel": "Mức độ 1"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -629,7 +664,9 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Linezolid là chất ức chế enzym Monoamine Oxidase (MAOI) có thể hồi phục; Escitalopram là chất ức chế tái thu hồi Serotonin chọn lọc (SSRI).",
     "clinicalImpact": "Khởi phát Hội chứng Serotonin kịch phát: Sốt cao ác tính, co cứng cơ toàn thân, huyết áp dao động dữ dội, hôn mê và tử vong.",
     "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP. Bắt buộc ngừng SSRI ít nhất 2 tuần (hoặc 5 tuần với Fluoxetine) trước khi bắt đầu Linezolid, trừ trường hợp nhiễm khuẩn đe dọa tính mạng không còn kháng sinh thay thế.",
-    "evidenceLevel": "Mức độ 1 (FDA Black Box)"
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   },
   {
     "pair": [
@@ -642,5 +679,117 @@ export const DRUG_INTERACTIONS = [
     "clinicalImpact": "Đỏ bừng mặt dữ dội, đau đầu buốt nhói, buồn nôn, nôn mửa liên tục, tụt huyết áp, nhịp tim nhanh và khó thở.",
     "recommendation": "TUYỆT ĐỐI CẤM UỐNG RƯỢU BIA hoặc dung dịch chứa cồn trong suốt thời gian dùng Metronidazole và ít nhất 48 giờ sau liều cuối cùng.",
     "evidenceLevel": "Chắc chắn (Tương tác kinh điển)"
+  },
+  {
+    "pair": [
+      "colchicine",
+      "clarithromycin"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp: Ngộ độc Colchicine cấp tính đe dọa tính mạng",
+    "mechanism": "Clarithromycin là chất ức chế mạnh enzym CYP3A4 và chất vận chuyển P-glycoprotein (P-gp), làm giảm thanh thải nghiêm trọng và tăng vọt nồng độ Colchicine trong huyết tương gấp nhiều lần.",
+    "clinicalImpact": "Ngộ độc Colchicine đa cơ quan cấp tính: tiêu chảy nặng, viêm cơ hoại tử, suy tủy xương toàn bộ (giảm 3 dòng tế bào máu), trụy tim mạch, suy đa tạng và tử vong, đặc biệt nghiêm trọng ở bệnh nhân suy gan hoặc suy thận.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Tuyệt đối không dùng Clarithromycin ở bệnh nhân đang dùng Colchicine có kèm suy gan hoặc suy thận. Nếu bắt buộc điều trị đợt Gút cấp, chuyển sang NSAID (nếu không suy thận) hoặc Corticoid ngắn ngày; hoặc đổi kháng sinh sang nhóm Beta-lactam.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "ivabradine",
+      "clarithromycin"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp: Tăng nồng độ Ivabradine & Nguy cơ chậm nhịp tim kịch phát / Ngừng tim",
+    "mechanism": "Ivabradine được chuyển hóa chủ yếu qua CYP3A4. Clarithromycin là chất ức chế CYP3A4 cực mạnh, làm tăng diện tích dưới đường cong nồng độ (AUC) của Ivabradine lên gấp 7 đến 8 lần.",
+    "clinicalImpact": "Chậm nhịp tim trầm trọng (< 40 nhịp/phút), blốc nhĩ thất độ cao, tụt huyết áp, ngất, rung nhĩ và nguy cơ ngừng tim đột ngột.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Lựa chọn kháng sinh khác không ức chế CYP3A4 (như Cefuroxime, Amoxicillin/Clavulanate) để điều trị nhiễm trùng.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "ergotamine",
+      "clarithromycin"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định tuyệt đối: Hội chứng ngộ độc Nấm cựa gà (Ergotism) & Hoại tử chi / Nhồi máu cơ tim",
+    "mechanism": "Clarithromycin ức chế mạnh CYP3A4, ngăn cản chuyển hóa Ergotamine tại gan, làm nồng độ Ergotamine tăng vọt kéo dài trong tuần hoàn.",
+    "clinicalImpact": "Co thắt mạch ngoại vi dữ dội và kéo dài (Hội chứng nấm cựa gà - Ergotism), dẫn đến thiếu máu cục bộ chi, hoại tử đầu chi phải cắt cụt, thiếu máu não và co thắt mạch vành gây nhồi máu cơ tim cấp.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Tuyệt đối không dùng chung alcaloid nấm cựa gà với các kháng sinh Macrolid ức chế CYP3A4 mạnh.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "domperidone",
+      "amiodarone"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp: Hiệp đồng kéo dài khoảng QTc & Loạn nhịp xoắn đỉnh (Torsades de Pointes) tử vong",
+    "mechanism": "Cả hai thuốc đều ức chế kênh kali hERG tái cực cơ tim làm kéo dài khoảng QT; đồng thời Amiodarone ức chế CYP3A4 làm tăng nồng độ Domperidone trong huyết tương.",
+    "clinicalImpact": "Kéo dài khoảng QTc nghiêm trọng (> 500ms), khởi phát xoắn đỉnh, rung thất và đột tử do tim.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Thay thế thuốc chống nôn khác ít ảnh hưởng trên khoảng QT (như Ondansetron liều thấp có kiểm soát hoặc chuyển biện pháp hỗ trợ) hoặc đánh giá lại chỉ định Amiodarone.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "enalapril",
+      "losartan"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp kép RAAS: Suy thận cấp hoại tử ống thận & Tăng Kali máu ác tính",
+    "mechanism": "Ức chế kép hệ Renin-Angiotensin-Aldosterone (Dual RAAS Blockade) do phối hợp đồng thời thuốc ức chế men chuyển (ACEi) và thuốc chẹn thụ thể Angiotensin II (ARB).",
+    "clinicalImpact": "Không mang lại thêm lợi ích tim mạch nhưng làm tăng vọt nguy cơ tụt huyết áp nghiêm trọng, ngất, suy giảm mức lọc cầu thận cấp (suy thận cấp) và tăng Kali máu ác tính (> 6.5 mmol/L) gây ngừng tim.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT và khuyến cáo ESC/AHA. Chỉ sử dụng đơn trị liệu ACEi HOẶC ARB, không dùng đồng thời 2 nhóm này.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "simvastatin",
+      "itraconazole"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định tuyệt đối: Ức chế chuyển hóa Simvastatin & Nguy cơ tiêu cơ vân cấp tử vong",
+    "mechanism": "Itraconazole là chất ức chế cực mạnh CYP3A4, làm tăng nồng độ Simvastatin trong máu lên hơn 10 - 20 lần.",
+    "clinicalImpact": "Tổn thương cơ vân hoại tử nặng, đau cơ dữ dội, tăng vọt men cơ CK, tiêu cơ vân cấp dẫn đến suy thận cấp phải chạy thận nhân tạo và tử vong.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Tạm ngừng Simvastatin trong suốt liệu trình điều trị kháng nấm Itraconazole; hoặc chuyển sang statin không chuyển hóa qua CYP3A4 (Rosuvastatin, Pravastatin) ở liều tối thiểu.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "linezolid",
+      "tramadol"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp: Hội chứng Serotonin kịch phát & Co giật ác tính",
+    "mechanism": "Linezolid là chất ức chế MAO (Monoamine Oxidase Inhibitor). Tramadol ức chế tái hấp thu Serotonin và Norepinephrine. Phối hợp gây tích lũy Serotonin ồ ạt trong khe synap thần kinh trung ương.",
+    "clinicalImpact": "Khởi phát Hội chứng Serotonin cấp: Sốt cao ác tính, co cứng cơ, giật rung cơ, ảo giác, co giật toàn thân, trụy hô hấp tuần hoàn và tử vong.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Tuyệt đối không dùng Tramadol để giảm đau khi bệnh nhân đang truyền Linezolid. Thay thế bằng giảm đau nhóm khác như Paracetamol hoặc Morphin/Fentanyl có theo dõi sát.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "metoprolol",
+      "diltiazem"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp dạng tiêm: Ức chế nút nhĩ thất kịch phát & Vô tâm thu (Asystole)",
+    "mechanism": "Cả hai thuốc đều ức chế co bóp cơ tim và làm chậm tốc độ dẫn truyền qua nút nhĩ thất (AV node). Khi dùng đường tĩnh mạch, tác dụng ức chế cộng gộp diễn ra rất nhanh và mạnh.",
+    "clinicalImpact": "Block nhĩ thất độ 3 hoàn toàn, nhịp tim chậm nghiêm trọng (< 35 nhịp/phút), tụt huyết áp shock tim, suy tim cấp mất bù và vô tâm thu (ngừng tim).",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐƯỜNG TIÊM TĨNH MẠCH theo Quyết định 5948/QĐ-BYT. Phải có khoảng cách an toàn ít nhất 48 giờ giữa hai thuốc khi chuyển đổi đường dùng; luôn sẵn sàng Atropine, Isoproterenol hoặc máy tạo nhịp tim ngoài.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   }
 ];

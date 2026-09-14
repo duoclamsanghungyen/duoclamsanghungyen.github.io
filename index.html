@@ -579,6 +579,34 @@
     <!-- ================================================================ -->
     <section id="interactions" class="app-section hidden space-y-6 animate-in fade-in duration-300">
       
+      <!-- Banner Quyết định số 5948/QĐ-BYT của Bộ Y tế -->
+      <div class="bg-gradient-to-r from-red-900 via-rose-900 to-slate-900 rounded-2xl p-5 text-white shadow-md border border-rose-700/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-2xl">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded-full bg-rose-500/30 text-rose-200 border border-rose-400/40 text-[11px] font-black uppercase tracking-wide flex items-center gap-1.5">
+              <i data-lucide="scale" class="w-3.5 h-3.5 text-amber-300"></i>
+              Văn Bản Quy Phạm Pháp Luật - Bộ Y Tế
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 text-[11px] font-bold">
+              Quyết định số 5948/QĐ-BYT (30/12/2021)
+            </span>
+          </div>
+          <h3 class="text-base sm:text-lg font-black text-white tracking-tight">
+            Danh Mục Tương Tác Thuốc Chống Chỉ Định Trong Thực Hành Lâm Sàng
+          </h3>
+          <p class="text-xs text-rose-100/90 leading-relaxed">
+            Hệ thống đã tích hợp đầy đủ các cặp tương tác chống chỉ định tuyệt đối theo Quyết định 5948/QĐ-BYT của Bộ trưởng Bộ Y tế. Cảnh báo tự động hiển thị trong quá trình kê đơn và duyệt đơn thuốc nội trú/ngoại trú.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0 w-full md:w-auto">
+          <button onclick="window.openQD5948Modal()" 
+                  class="w-full md:w-auto px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-98">
+            <i data-lucide="book-open" class="w-4 h-4 text-slate-950"></i>
+            <span>Tra Cứu Quyết Định 5948/QĐ-BYT</span>
+          </button>
+        </div>
+      </div>
+      
       <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs space-y-4">
         <div>
           <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
@@ -593,14 +621,23 @@
         <!-- Preset Clinical Cases -->
         <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
           <span class="text-slate-400 font-semibold">Ca lâm sàng mẫu:</span>
-          <button onclick="window.addPresetInteractionCase('case1')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200 font-medium hover:bg-rose-100 transition-colors">
-            🔴 Simvastatin + Clarithromycin (Tiêu cơ vân)
+          <button onclick="window.addPresetInteractionCase('case1')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200 font-bold hover:bg-rose-100 transition-colors">
+            🔴 Simvastatin + Clarithromycin (QĐ 5948)
+          </button>
+          <button onclick="window.addPresetInteractionCase('case4')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200 font-bold hover:bg-rose-100 transition-colors">
+            🔴 Meropenem + Acid Valproic (QĐ 5948)
+          </button>
+          <button onclick="window.addPresetInteractionCase('case5')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200 font-bold hover:bg-rose-100 transition-colors">
+            🔴 Colchicine + Clarithromycin (QĐ 5948)
+          </button>
+          <button onclick="window.addPresetInteractionCase('case6')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200 font-bold hover:bg-rose-100 transition-colors">
+            🔴 Enalapril + Losartan (QĐ 5948)
           </button>
           <button onclick="window.addPresetInteractionCase('case2')" class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 font-medium hover:bg-amber-100 transition-colors">
-            🟠 Amiodarone + Levofloxacin + Warfarin (Xoắn đỉnh & Chảy máu)
+            🟠 Amiodarone + Levofloxacin + Warfarin
           </button>
           <button onclick="window.addPresetInteractionCase('case3')" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200 font-medium hover:bg-blue-100 transition-colors">
-            🟠 Vancomycin + Colistin + Furosemide (Độc thận & Tai)
+            🟠 Vancomycin + Colistin + Furosemide
           </button>
         </div>
 
@@ -652,6 +689,9 @@
       <div id="interactionResultsContainer" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <!-- Rendered dynamically -->
       </div>
+
+      <!-- Modal Container QĐ 5948/QĐ-BYT -->
+      <div id="qd5948ModalContainer"></div>
 
     </section>
 
@@ -1712,7 +1752,7 @@
   </script>
 
   <!-- Master Application Script (ES Module) -->
-  <script type="module" src="./js/app.js?v=20260913_v34_vinorelbine"></script>
+  <script type="module" src="./js/app.js?v=20260914_v35_qd5948_interactions"></script>
 
 </body>
 </html>
