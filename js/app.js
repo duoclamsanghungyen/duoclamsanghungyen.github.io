@@ -2,14 +2,14 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260914_v36_aceno_tamoxifen";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260914_v36_aceno_tamoxifen";
-import { initCalculators } from "./modules/calculators.js?v=20260914_v36_aceno_tamoxifen";
-import { initConsultationModule } from "./modules/consultation.js?v=20260914_v36_aceno_tamoxifen";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260914_v36_aceno_tamoxifen";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260914_v36_aceno_tamoxifen";
-import { initAuthModule } from "./modules/auth.js?v=20260914_v36_aceno_tamoxifen";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260914_v36_aceno_tamoxifen";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260914_v37_full_633_qd5948";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260914_v37_full_633_qd5948";
+import { initCalculators } from "./modules/calculators.js?v=20260914_v37_full_633_qd5948";
+import { initConsultationModule } from "./modules/consultation.js?v=20260914_v37_full_633_qd5948";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260914_v37_full_633_qd5948";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260914_v37_full_633_qd5948";
+import { initAuthModule } from "./modules/auth.js?v=20260914_v37_full_633_qd5948";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260914_v37_full_633_qd5948";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

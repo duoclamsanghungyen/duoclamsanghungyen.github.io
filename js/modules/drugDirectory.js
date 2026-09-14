@@ -3,7 +3,7 @@
  * Hỗ trợ lọc 14 nhóm ATC, lọc chữ cái A-Z, tìm kiếm không dấu và phân trang mượt mà
  */
 
-import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260914_v36_aceno_tamoxifen";
+import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260914_v37_full_633_qd5948";
 import {
   getPdfAttachmentById,
   getPdfAttachmentsByDrugId,
@@ -11,7 +11,7 @@ import {
   downloadPdfAttachment,
   openPdfInNewWindow,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260914_v36_aceno_tamoxifen";
+} from "../data/pdfStorage.js?v=20260914_v37_full_633_qd5948";
 
 let currentAtcGroup = "all";
 let currentLetterFilter = "all";

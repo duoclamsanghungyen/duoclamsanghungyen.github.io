@@ -1,12 +1,39 @@
 /**
  * PHARMAVITA / CLINICALRX - MODULE KIỂM TRA TƯƠNG TÁC ĐA THUỐC
- * Tích hợp chuẩn hóa Quyết định số 5948/QĐ-BYT (30/12/2021) của Bộ Y tế
+ * TÍCH HỢP TOÀN DIỆN ĐẦY ĐỦ 633 CẶP TƯƠNG TÁC CHỐNG CHỈ ĐỊNH
+ * THEO QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260914_v36_aceno_tamoxifen";
-import { DRUG_INTERACTIONS, QD_5948_METADATA } from "../data/interactions.js?v=20260914_v36_aceno_tamoxifen";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260914_v37_full_633_qd5948";
+import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20260914_v37_full_633_qd5948";
 
 let selectedDrugs = [];
+let qdVisibleLimit = 50;
+let currentQDList = [];
+
+// Helper normalization for string matching
+function normalizeDrugStr(str) {
+  if (!str) return "";
+  return str.toLowerCase()
+    .replace(/đ/g, "d")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function matchDrugObjectWithQDName(drugObj, qdDrugName) {
+  if (!drugObj || !qdDrugName) return false;
+  const cleanQD = normalizeDrugStr(qdDrugName.replace(/\(.*?\)/g, ""));
+  const idNorm = normalizeDrugStr(drugObj.id || "");
+  const nameNorm = normalizeDrugStr(drugObj.name || "");
+  const innNorm = normalizeDrugStr(drugObj.inn || "");
+
+  if (idNorm === cleanQD || innNorm === cleanQD) return true;
+  if (nameNorm.includes(cleanQD) || (cleanQD.length >= 4 && idNorm.includes(cleanQD))) return true;
+  if (cleanQD.length >= 4 && cleanQD.includes(idNorm)) return true;
+  if (innNorm && (innNorm.includes(cleanQD) || cleanQD.includes(innNorm))) return true;
+  return false;
+}
 
 export function initInteractionChecker() {
   const selectElement = document.getElementById("interactionDrugSelect");
@@ -41,7 +68,7 @@ export function initInteractionChecker() {
     addBtn.addEventListener("click", addSelectedDrug);
   }
 
-  // Also support pressing Enter in the dropdown to add immediately
+  // Also support pressing Enter in dropdown
   selectElement.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -65,11 +92,10 @@ export function initInteractionChecker() {
         return;
       }
 
-      // Visual feedback on button
       const originalHtml = checkBtn.innerHTML;
       checkBtn.innerHTML = `
         <i data-lucide="loader-2" class="w-4 h-4 text-white animate-spin"></i>
-        <span>Đang phân tích tương tác...</span>
+        <span>Đang phân tích 633 tương tác QĐ 5948 & CSDL lâm sàng...</span>
       `;
       if (window.lucide) window.lucide.createIcons();
 
@@ -79,7 +105,6 @@ export function initInteractionChecker() {
         updateBasketUI();
         if (window.lucide) window.lucide.createIcons();
 
-        // Cuộn mượt đến bảng kết quả
         const resEl = document.getElementById("interactionResultsContainer");
         if (resEl) {
           resEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -88,7 +113,7 @@ export function initInteractionChecker() {
     });
   }
 
-  // Pre-load a sample case (Simvastatin + Clarithromycin - QĐ 5948) for initial presentation
+  // Pre-load sample case (Simvastatin + Clarithromycin - QĐ 5948)
   selectedDrugs = ["simvastatin", "clarithromycin"];
   updateBasketUI();
   runInteractionAnalysis();
@@ -134,12 +159,8 @@ function updateBasketUI() {
   const btnSelectedCount = document.getElementById("btnSelectedCount");
   if (!basketContainer) return;
 
-  if (countBadge) {
-    countBadge.textContent = selectedDrugs.length;
-  }
-  if (btnSelectedCount) {
-    btnSelectedCount.textContent = `${selectedDrugs.length} thuốc`;
-  }
+  if (countBadge) countBadge.textContent = selectedDrugs.length;
+  if (btnSelectedCount) btnSelectedCount.textContent = `${selectedDrugs.length} thuốc`;
 
   if (selectedDrugs.length === 0) {
     basketContainer.innerHTML = `
@@ -150,9 +171,13 @@ function updateBasketUI() {
     return;
   }
 
+  const currentDrugs = getActiveDrugsDatabase();
+
   basketContainer.innerHTML = selectedDrugs.map(drugId => {
-    const drug = getActiveDrugsDatabase().find(d => d.id === drugId);
-    const name = drug ? drug.name : (drugId === "alcohol" ? "Rượu (Alcohol/Ethanol)" : drugId);
+    const drug = currentDrugs.find(d => d.id === drugId);
+    let name = drug ? drug.name : drugId;
+    if (drugId === "alcohol") name = "Rượu (Alcohol/Ethanol)";
+
     return `
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200/80 shadow-xs">
         <i data-lucide="pill" class="w-3.5 h-3.5 text-teal-600"></i>
@@ -173,8 +198,23 @@ export function removeDrugFromBasket(drugId) {
   runInteractionAnalysis();
 }
 
+// Find or dynamically resolve drug object
+function resolveDrugObject(drugIdOrName) {
+  const currentDrugs = getActiveDrugsDatabase();
+  let found = currentDrugs.find(d => d.id === drugIdOrName || d.name === drugIdOrName);
+  if (!found) {
+    const norm = normalizeDrugStr(drugIdOrName);
+    found = currentDrugs.find(d => normalizeDrugStr(d.id) === norm || normalizeDrugStr(d.inn || "") === norm || normalizeDrugStr(d.name).includes(norm));
+  }
+  if (found) return found;
+  return { id: drugIdOrName, name: drugIdOrName, inn: drugIdOrName };
+}
+
 export function loadPairAndCheck(d1, d2) {
-  selectedDrugs = [d1, d2];
+  const obj1 = resolveDrugObject(d1);
+  const obj2 = resolveDrugObject(d2);
+
+  selectedDrugs = [obj1.id, obj2.id];
   updateBasketUI();
   runInteractionAnalysis();
   closeQD5948Modal();
@@ -194,13 +234,13 @@ function runInteractionAnalysis() {
         <i data-lucide="shield-question" class="w-12 h-12 mx-auto text-slate-400 mb-3"></i>
         <h4 class="text-base font-semibold text-slate-700 mb-1">Cần tối thiểu 2 thuốc để phân tích tương tác</h4>
         <p class="text-xs text-slate-500 max-w-md mx-auto mb-3">
-          Hệ thống sẽ đối chiếu ma trận cặp đôi tất cả các thuốc trong đơn để phát hiện tương tác theo Quyết định 5948/QĐ-BYT, Dược thư Quốc gia và cơ sở dữ liệu quốc tế.
+          Hệ thống sẽ đối chiếu ma trận cặp đôi tất cả các thuốc trong đơn với toàn bộ 633 cặp tương tác chống chỉ định của Quyết định 5948/QĐ-BYT và Dược thư Quốc gia.
         </p>
         <div class="flex items-center justify-center gap-3 flex-wrap">
           <button onclick="window.openQD5948Modal()" 
                   class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-700 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 px-3.5 py-2 rounded-xl border border-rose-200 shadow-2xs transition-colors">
             <i data-lucide="scale" class="w-4 h-4 text-rose-600"></i>
-            <span>Xem Danh mục chống chỉ định QĐ 5948/QĐ-BYT</span>
+            <span>Xem Đầy Đủ 633 Cặp Chống Chỉ Định (QĐ 5948/QĐ-BYT)</span>
           </button>
           <a href="https://reference.medscape.com/drug-interactionchecker" 
              target="_blank" 
@@ -216,26 +256,52 @@ function runInteractionAnalysis() {
     return;
   }
 
-  // Find all pairs
+  // Find all interaction pairs across both DRUG_INTERACTIONS and QD_5948_633_INTERACTIONS
   const foundInteractions = [];
+  const currentDrugs = getActiveDrugsDatabase();
+
   for (let i = 0; i < selectedDrugs.length; i++) {
     for (let j = i + 1; j < selectedDrugs.length; j++) {
       const d1 = selectedDrugs[i];
       const d2 = selectedDrugs[j];
 
-      const match = DRUG_INTERACTIONS.find(item => 
+      const drugObj1 = currentDrugs.find(d => d.id === d1) || resolveDrugObject(d1);
+      const drugObj2 = currentDrugs.find(d => d.id === d2) || resolveDrugObject(d2);
+
+      // 1. First search in curated DRUG_INTERACTIONS
+      const curatedMatch = DRUG_INTERACTIONS.find(item => 
         (item.pair[0] === d1 && item.pair[1] === d2) ||
         (item.pair[0] === d2 && item.pair[1] === d1)
       );
 
-      if (match) {
-        const drugObj1 = getActiveDrugsDatabase().find(d => d.id === d1) || { name: d1 === "alcohol" ? "Rượu / Cồn (Alcohol)" : d1 };
-        const drugObj2 = getActiveDrugsDatabase().find(d => d.id === d2) || { name: d2 === "alcohol" ? "Rượu / Cồn (Alcohol)" : d2 };
+      if (curatedMatch) {
         foundInteractions.push({
-          ...match,
+          ...curatedMatch,
           drugName1: drugObj1.name,
           drugName2: drugObj2.name
         });
+      } else {
+        // 2. Search in official QD_5948_633_INTERACTIONS
+        const qdMatch = QD_5948_633_INTERACTIONS.find(item => 
+          (matchDrugObjectWithQDName(drugObj1, item.drug1) && matchDrugObjectWithQDName(drugObj2, item.drug2)) ||
+          (matchDrugObjectWithQDName(drugObj1, item.drug2) && matchDrugObjectWithQDName(drugObj2, item.drug1))
+        );
+
+        if (qdMatch) {
+          foundInteractions.push({
+            pair: [d1, d2],
+            severity: "contraindicated",
+            isQD5948: true,
+            sttQD5948: qdMatch.stt,
+            title: `Chống chỉ định (QĐ 5948/QĐ-BYT - STT ${qdMatch.stt}): ${qdMatch.drug1} ⟷ ${qdMatch.drug2}`,
+            mechanism: qdMatch.mechanism,
+            clinicalImpact: qdMatch.clinicalImpact,
+            recommendation: qdMatch.recommendation,
+            evidenceLevel: `Mức độ 1 - Quyết định số 5948/QĐ-BYT (STT ${qdMatch.stt})`,
+            drugName1: drugObj1.name,
+            drugName2: drugObj2.name
+          });
+        }
       }
     }
   }
@@ -248,15 +314,15 @@ function runInteractionAnalysis() {
             <i data-lucide="shield-check" class="w-6 h-6"></i>
           </div>
           <div class="flex-1">
-            <h4 class="text-base font-bold text-emerald-950 mb-1">Không có dữ liệu tương tác nguy hiểm trong CSDL nội viện & QĐ 5948/QĐ-BYT</h4>
+            <h4 class="text-base font-bold text-emerald-950 mb-1">Không phát hiện tương tác chống chỉ định trong CSDL & Toàn bộ 633 cặp QĐ 5948</h4>
             <p class="text-xs leading-relaxed text-emerald-800">
-              Hệ thống chưa tìm thấy dữ liệu cảnh báo tương tác mức độ Nghiêm trọng hoặc Chống chỉ định giữa các cặp thuốc được chọn trong cơ sở dữ liệu nội viện và Danh mục Quyết định 5948/QĐ-BYT của Bộ Y tế.
-              Người thực hành lâm sàng luôn cần đối chiếu tổng thể tình trạng chức năng gan, thận, điện giải và cá thể hóa điều trị trên từng bệnh nhân.
+              Hệ thống đã đối chiếu với toàn bộ 633 cặp tương tác chống chỉ định theo Quyết định số 5948/QĐ-BYT của Bộ Y tế và cơ sở dữ liệu nội viện, không ghi nhận tương tác nguy hiểm giữa các thuốc đã chọn.
+              Người thực hành lâm sàng luôn cần cá thể hóa điều trị, đối chiếu chức năng gan, thận và tiền sử dị ứng của bệnh nhân.
             </p>
           </div>
         </div>
 
-        <!-- Khối liên kết mở rộng tra cứu trên Medscape -->
+        <!-- Tra cứu mở rộng Medscape -->
         <div class="mt-4 pt-4 border-t border-emerald-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/70 p-4 rounded-xl border border-emerald-200/60">
           <div class="text-xs text-slate-700 space-y-0.5">
             <div class="font-bold text-slate-900 flex items-center gap-1.5">
@@ -320,14 +386,14 @@ function runInteractionAnalysis() {
                 <span class="px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black text-[10px] uppercase">Chống chỉ định</span>
               </div>
               <p class="text-rose-100/90 leading-relaxed">
-                Đơn thuốc chứa <strong>${qd5948Count} cặp tương tác chống chỉ định bắt buộc</strong> theo Danh mục do Bộ Y tế ban hành. Căn cứ Điều 3 QĐ 5948/QĐ-BYT, Dược sĩ lâm sàng cần can thiệp dừng thuốc hoặc chuyển phác đồ thay thế trước khi duyệt phát thuốc.
+                Đơn thuốc chứa <strong>${qd5948Count} cặp tương tác chống chỉ định bắt buộc</strong> theo Danh mục 633 cặp do Bộ Y tế ban hành. Căn cứ Điều 3 QĐ 5948/QĐ-BYT, Dược sĩ lâm sàng cần can thiệp dừng thuốc hoặc đổi phác đồ ngay lập tức trước khi duyệt phát thuốc.
               </p>
             </div>
           </div>
           <button onclick="window.openQD5948Modal()" 
                   class="shrink-0 px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs rounded-xl shadow-xs transition-all flex items-center gap-1.5 hover:scale-105 active:scale-95">
             <i data-lucide="book-open" class="w-4 h-4"></i>
-            <span>Xem QĐ 5948</span>
+            <span>Tra cứu 633 cặp QĐ 5948</span>
           </button>
         </div>
       ` : ""}
@@ -363,7 +429,7 @@ function runInteractionAnalysis() {
                 ${item.isQD5948 ? `
                   <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-rose-600 text-white border border-rose-700 shadow-2xs animate-pulse">
                     <i data-lucide="scale" class="w-3.5 h-3.5 text-amber-300"></i>
-                    QĐ 5948/QĐ-BYT (BỘ Y TẾ)
+                    QĐ 5948/QĐ-BYT ${item.sttQD5948 ? `(STT ${item.sttQD5948})` : "(BỘ Y TẾ)"}
                   </span>
                 ` : ""}
               </div>
@@ -401,11 +467,11 @@ function runInteractionAnalysis() {
                     <i data-lucide="file-badge-2" class="w-4 h-4 text-rose-700 shrink-0 mt-0.5"></i>
                     <div>
                       <strong>Căn cứ pháp lý Quyết định số 5948/QĐ-BYT:</strong>
-                      <span> Cặp tương tác này thuộc Danh mục chống chỉ định bắt buộc trong thực hành lâm sàng do Bộ Y tế ban hành. Phần mềm kê đơn và duyệt đơn bệnh viện cần tự động khóa/cảnh báo mức cao nhất.</span>
+                      <span> Thuộc Danh mục 633 tương tác chống chỉ định trong thực hành lâm sàng do Bộ Y tế ban hành. Phần mềm kê đơn và thẩm định đơn nội viện bắt buộc cảnh báo và can thiệp mức cao nhất.</span>
                     </div>
                   </div>
                   <button onclick="window.openQD5948Modal()" class="shrink-0 text-rose-800 hover:text-rose-950 font-bold underline text-[11px] inline-flex items-center gap-0.5">
-                    <span>Xem QĐ 5948</span>
+                    <span>Xem bảng 633 cặp</span>
                     <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
                   </button>
                 </div>
@@ -442,7 +508,7 @@ function runInteractionAnalysis() {
 }
 
 // =========================================================================
-// MODAL QUYẾT ĐỊNH 5948/QĐ-BYT - BỘ Y TẾ
+// MODAL QUYẾT ĐỊNH 5948/QĐ-BYT - ĐẦY ĐỦ 633 CẶP TƯƠNG TÁC
 // =========================================================================
 
 export function openQD5948Modal() {
@@ -453,11 +519,12 @@ export function openQD5948Modal() {
     document.body.appendChild(modalContainer);
   }
 
-  const allQDInteractions = DRUG_INTERACTIONS.filter(item => item.isQD5948);
+  currentQDList = QD_5948_633_INTERACTIONS;
+  qdVisibleLimit = 50;
 
   modalContainer.innerHTML = `
-    <div id="qd5948Backdrop" class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 overflow-y-auto animate-in fade-in duration-200">
-      <div class="bg-white w-full max-w-5xl max-h-[92vh] rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-in zoom-in-95 duration-200" onclick="event.stopPropagation()">
+    <div id="qd5948Backdrop" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-2 sm:p-5 overflow-y-auto animate-in fade-in duration-200">
+      <div class="bg-white w-full max-w-5xl max-h-[94vh] rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden animate-in zoom-in-95 duration-200" onclick="event.stopPropagation()">
         
         <!-- Modal Header -->
         <div class="px-6 py-4 bg-gradient-to-r from-red-900 via-rose-900 to-slate-900 text-white flex items-start justify-between gap-4 border-b border-rose-800/60 shrink-0">
@@ -470,12 +537,15 @@ export function openQD5948Modal() {
               <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 text-[10px] font-bold">
                 Quyết định số 5948/QĐ-BYT (30/12/2021)
               </span>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 text-[10px] font-extrabold">
+                Đầy đủ 633 Cặp Tương Tác
+              </span>
             </div>
             <h3 class="text-base sm:text-xl font-black tracking-tight text-white">
-              Danh Mục Tương Tác Thuốc Chống Chỉ Định Trong Thực Hành Lâm Sàng
+              Bảng 3.1: Danh Mục Tương Tác Thuốc Chống Chỉ Định Theo Từng Hoạt Chất
             </h3>
             <p class="text-xs text-rose-100/90 leading-relaxed">
-              Cơ sở pháp lý bắt buộc trong thẩm định kê đơn và cảnh báo tương tác thuốc tại các cơ sở khám bệnh, chữa bệnh
+              Toàn văn 633 cặp tương tác chống chỉ định trong thực hành lâm sàng ban hành kèm theo Quyết định số 5948/QĐ-BYT của Bộ trưởng Bộ Y tế
             </p>
           </div>
           <button onclick="window.closeQD5948Modal()" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors">
@@ -489,7 +559,7 @@ export function openQD5948Modal() {
             <button id="qdTabBtn1" onclick="window.switchQD5948Tab('catalog')" 
                     class="px-4 py-2.5 text-xs font-extrabold border-b-2 border-rose-600 text-rose-700 transition-colors flex items-center gap-2">
               <i data-lucide="table" class="w-4 h-4"></i>
-              <span>Danh Mục Chống Chỉ Định (${allQDInteractions.length} cặp tương tác)</span>
+              <span>Danh Mục Chống Chỉ Định (Đủ 633 cặp)</span>
             </button>
             <button id="qdTabBtn2" onclick="window.switchQD5948Tab('fulltext')" 
                     class="px-4 py-2.5 text-xs font-extrabold border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2">
@@ -500,26 +570,46 @@ export function openQD5948Modal() {
         </div>
 
         <!-- Tab 1: Catalog Content -->
-        <div id="qdTabContentCatalog" class="flex-1 overflow-y-auto p-6 space-y-4">
+        <div id="qdTabContentCatalog" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
           <!-- Search & Filter Controls -->
           <div class="flex flex-col sm:flex-row gap-3 items-center justify-between bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-            <div class="relative w-full sm:w-80">
+            <div class="relative w-full sm:w-96">
               <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
               <input type="text" id="qdSearchInput" oninput="window.filterQD5948List()" 
-                     placeholder="Tìm hoạt chất, cơ chế hoặc độc tính..." 
-                     class="w-full pl-9 pr-8 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none">
+                     placeholder="Tìm theo STT (1-633), tên hoạt chất, cơ chế hoặc hậu quả..." 
+                     class="w-full pl-9 pr-8 py-2 text-xs bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:outline-none shadow-2xs">
               <button onclick="document.getElementById('qdSearchInput').value=''; window.filterQD5948List();" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
                 <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
               </button>
             </div>
-            <div class="text-xs text-slate-500 font-medium">
-              Hiển thị: <span id="qdFilteredCount" class="font-bold text-rose-700">${allQDInteractions.length}</span> / ${allQDInteractions.length} cặp tương tác
+            <div class="text-xs text-slate-600 font-medium">
+              Đang hiển thị: <span id="qdFilteredCount" class="font-extrabold text-rose-700">50</span> / <span class="font-bold text-slate-900">${QD_5948_633_INTERACTIONS.length}</span> cặp tương tác
             </div>
+          </div>
+
+          <!-- Quick search pills -->
+          <div class="flex flex-wrap items-center gap-1.5 text-xs">
+            <span class="text-slate-400 text-[11px] font-semibold">Gợi ý tra nhanh:</span>
+            <button onclick="window.quickSearchQD('Acenocoumarol')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Acenocoumarol</button>
+            <button onclick="window.quickSearchQD('Simvastatin')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Simvastatin</button>
+            <button onclick="window.quickSearchQD('Amiodaron')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Amiodaron</button>
+            <button onclick="window.quickSearchQD('Ketorolac')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Ketorolac</button>
+            <button onclick="window.quickSearchQD('Linezolid')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Linezolid</button>
+            <button onclick="window.quickSearchQD('Methotrexat')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Methotrexat</button>
+            <button onclick="window.quickSearchQD('Tamoxifen')" class="px-2 py-0.5 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-medium text-[11px]">Tamoxifen</button>
           </div>
 
           <!-- Interaction List Items -->
           <div id="qdInteractionsList" class="space-y-3.5">
             <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Load More Button -->
+          <div id="qdLoadMoreBox" class="text-center pt-2 pb-4">
+            <button id="qdLoadMoreBtn" onclick="window.loadMoreQD()" 
+                    class="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl border border-slate-300 shadow-2xs transition-all">
+              Hiển thị thêm 50 cặp tiếp theo...
+            </button>
           </div>
         </div>
 
@@ -537,7 +627,7 @@ export function openQD5948Modal() {
             <div class="text-center py-2">
               <h4 class="font-black text-base sm:text-lg text-slate-900 uppercase">QUYẾT ĐỊNH</h4>
               <p class="text-xs font-semibold text-slate-600 mt-1">
-                Ban hành "Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh"
+                Ban hành "Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh" (Bao gồm 633 cặp tương tác)
               </p>
               <div class="w-16 h-0.5 bg-rose-600 mx-auto mt-3"></div>
             </div>
@@ -552,7 +642,7 @@ export function openQD5948Modal() {
             <div class="space-y-4">
               <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
                 <strong class="text-slate-900 font-bold block mb-1">Điều 1. Ban hành danh mục</strong>
-                <p>Ban hành kèm theo Quyết định này "Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh".</p>
+                <p>Ban hành kèm theo Quyết định này "Danh mục tương tác thuốc chống chỉ định trong thực hành lâm sàng tại các cơ sở khám bệnh, chữa bệnh" (Bảng 3.1 gồm 633 cặp tương tác thuốc theo từng hoạt chất và Bảng 3.2 theo nhóm đặc tính dược lý).</p>
               </div>
 
               <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
@@ -601,7 +691,7 @@ export function openQD5948Modal() {
         <div class="px-6 py-3.5 bg-slate-100 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
           <div class="text-xs text-slate-600 flex items-center gap-1.5">
             <i data-lucide="info" class="w-4 h-4 text-rose-600 shrink-0"></i>
-            <span>Bấm nút "Đưa vào đơn kiểm tra ngay" ở bất kỳ cặp tương tác nào để nạp tự động vào hệ thống kiểm tra</span>
+            <span>Bấm nút "Đưa vào đơn kiểm tra ngay" ở bất kỳ cặp tương tác nào trong 633 cặp để nạp tự động vào giỏ phân tích</span>
           </div>
           <button onclick="window.closeQD5948Modal()" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs transition-colors shadow-xs">
             Đóng cửa sổ
@@ -612,8 +702,7 @@ export function openQD5948Modal() {
     </div>
   `;
 
-  renderQDInteractions(allQDInteractions);
-
+  renderQDInteractions();
   if (window.lucide) window.lucide.createIcons();
 
   const backdrop = document.getElementById("qd5948Backdrop");
@@ -624,58 +713,56 @@ export function openQD5948Modal() {
   }
 }
 
-function renderQDInteractions(items) {
+function renderQDInteractions() {
   const container = document.getElementById("qdInteractionsList");
+  const countBadge = document.getElementById("qdFilteredCount");
+  const loadMoreBox = document.getElementById("qdLoadMoreBox");
   if (!container) return;
 
-  const currentDrugs = getActiveDrugsDatabase();
+  const itemsToRender = currentQDList.slice(0, qdVisibleLimit);
+  if (countBadge) countBadge.textContent = itemsToRender.length;
 
-  if (items.length === 0) {
+  if (loadMoreBox) {
+    loadMoreBox.style.display = currentQDList.length > qdVisibleLimit ? "block" : "none";
+  }
+
+  if (itemsToRender.length === 0) {
     container.innerHTML = `
       <div class="text-center py-10 bg-slate-50 rounded-2xl border border-dashed border-slate-200 text-slate-400 text-xs">
         <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i>
-        Không tìm thấy cặp tương tác nào phù hợp với từ khóa tra cứu.
+        Không tìm thấy cặp tương tác nào trong 633 cặp phù hợp với từ khóa tra cứu.
       </div>
     `;
     if (window.lucide) window.lucide.createIcons();
     return;
   }
 
-  container.innerHTML = items.map((item, idx) => {
-    const d1 = item.pair[0];
-    const d2 = item.pair[1];
-    const drug1 = currentDrugs.find(d => d.id === d1) || { name: d1 === "alcohol" ? "Rượu (Alcohol)" : d1 };
-    const drug2 = currentDrugs.find(d => d.id === d2) || { name: d2 === "alcohol" ? "Rượu (Alcohol)" : d2 };
-
+  container.innerHTML = itemsToRender.map((item) => {
     return `
       <div class="p-4 sm:p-5 rounded-2xl border border-rose-200 bg-rose-50/40 hover:bg-rose-50/70 transition-all shadow-xs space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div class="flex items-center gap-2 flex-wrap">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-600 text-white border border-rose-700 shadow-2xs">
               <i data-lucide="alert-octagon" class="w-3 h-3 text-amber-300"></i>
-              #${idx + 1} - CHỐNG CHỈ ĐỊNH (QĐ 5948)
+              STT ${item.stt} - CHỐNG CHỈ ĐỊNH (QĐ 5948)
             </span>
-            <div class="text-xs font-bold text-slate-800 bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-2xs">
-              ${drug1.name} ⟷ ${drug2.name}
+            <div class="text-xs font-black text-slate-800 bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+              ${item.drug1} ⟷ ${item.drug2}
             </div>
           </div>
-          <button onclick="window.loadPairAndCheck('${d1}', '${d2}')" 
+          <button onclick="window.loadPairAndCheck('${item.drug1.replace(/'/g, "\\'")}', '${item.drug2.replace(/'/g, "\\'")}')" 
                   class="self-start sm:self-auto px-3 py-1.5 bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center gap-1.5 hover:scale-[1.02] active:scale-98">
             <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-300"></i>
             <span>Đưa vào đơn kiểm tra ngay</span>
           </button>
         </div>
 
-        <h4 class="text-sm font-bold text-slate-900 leading-snug">
-          ${item.title}
-        </h4>
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs text-slate-700">
-          <div class="bg-white/80 p-3 rounded-xl border border-slate-200/80">
+          <div class="bg-white/90 p-3 rounded-xl border border-slate-200/80">
             <strong class="text-slate-900 block mb-0.5">Cơ chế tương tác:</strong>
             <p class="leading-relaxed text-slate-600">${item.mechanism}</p>
           </div>
-          <div class="bg-white/80 p-3 rounded-xl border border-slate-200/80">
+          <div class="bg-white/90 p-3 rounded-xl border border-slate-200/80">
             <strong class="text-rose-900 block mb-0.5">Hậu quả lâm sàng nghiêm trọng:</strong>
             <p class="leading-relaxed text-rose-900/90 font-medium">${item.clinicalImpact}</p>
           </div>
@@ -684,7 +771,7 @@ function renderQDInteractions(items) {
         <div class="bg-white p-3 rounded-xl border border-rose-200 text-xs">
           <strong class="text-teal-900 block mb-1 flex items-center gap-1 font-bold">
             <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-teal-600"></i>
-            Khuyến cáo xử trí & thay thế thuốc:
+            Khuyến cáo xử trí & hướng dẫn Bộ Y tế:
           </strong>
           <p class="text-slate-700 leading-relaxed">${item.recommendation}</p>
         </div>
@@ -693,6 +780,11 @@ function renderQDInteractions(items) {
   }).join("");
 
   if (window.lucide) window.lucide.createIcons();
+}
+
+export function loadMoreQD() {
+  qdVisibleLimit += 50;
+  renderQDInteractions();
 }
 
 export function closeQD5948Modal() {
@@ -708,6 +800,15 @@ window.addPresetInteractionCase = addPresetInteractionCase;
 window.loadPairAndCheck = loadPairAndCheck;
 window.openQD5948Modal = openQD5948Modal;
 window.closeQD5948Modal = closeQD5948Modal;
+window.loadMoreQD = loadMoreQD;
+
+window.quickSearchQD = function(keyword) {
+  const input = document.getElementById("qdSearchInput");
+  if (input) {
+    input.value = keyword;
+    window.filterQD5948List();
+  }
+};
 
 window.switchQD5948Tab = function(tabName) {
   const catEl = document.getElementById("qdTabContentCatalog");
@@ -739,24 +840,26 @@ window.switchQD5948Tab = function(tabName) {
 
 window.filterQD5948List = function() {
   const q = (document.getElementById("qdSearchInput")?.value || "").trim().toLowerCase();
-  const currentDrugs = getActiveDrugsDatabase();
-  const allQDInteractions = DRUG_INTERACTIONS.filter(item => item.isQD5948);
   
-  const filtered = allQDInteractions.filter(item => {
-    if (!q) return true;
-    const d1 = item.pair[0];
-    const d2 = item.pair[1];
-    const drug1 = currentDrugs.find(d => d.id === d1) || { name: d1 };
-    const drug2 = currentDrugs.find(d => d.id === d2) || { name: d2 };
-    const textToSearch = [
-      d1, d2, drug1.name, drug2.name,
-      item.title, item.mechanism, item.clinicalImpact, item.recommendation
-    ].join(" ").toLowerCase();
-    return textToSearch.includes(q);
-  });
+  if (!q) {
+    currentQDList = QD_5948_633_INTERACTIONS;
+  } else {
+    const qNorm = normalizeDrugStr(q);
+    const qNum = parseInt(q, 10);
+    
+    currentQDList = QD_5948_633_INTERACTIONS.filter(item => {
+      if (!isNaN(qNum) && item.stt === qNum) return true;
+      const d1Norm = normalizeDrugStr(item.drug1);
+      const d2Norm = normalizeDrugStr(item.drug2);
+      if (d1Norm.includes(qNorm) || d2Norm.includes(qNorm)) return true;
+      const textToSearch = [
+        item.drug1, item.drug2,
+        item.mechanism, item.clinicalImpact, item.recommendation
+      ].join(" ").toLowerCase();
+      return textToSearch.includes(q);
+    });
+  }
 
-  const countBadge = document.getElementById("qdFilteredCount");
-  if (countBadge) countBadge.textContent = filtered.length;
-
-  renderQDInteractions(filtered);
+  qdVisibleLimit = 50;
+  renderQDInteractions();
 };
