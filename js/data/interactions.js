@@ -4,7 +4,7 @@
  * Tích hợp chính thức QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  * Phân cấp theo chuẩn Dược thư Quốc gia Việt Nam 2022, Stockley's, Lexicomp
  * 
- * Tổng cộng: 59 cặp tương tác lâm sàng (trong đó có 22 cặp chống chỉ định theo QĐ 5948/QĐ-BYT)
+ * Tổng cộng: 61 cặp tương tác lâm sàng (trong đó có 24 cặp chống chỉ định theo QĐ 5948/QĐ-BYT)
  */
 
 export const QD_5948_METADATA = {
@@ -790,6 +790,34 @@ export const DRUG_INTERACTIONS = [
     "mechanism": "Cả hai thuốc đều ức chế co bóp cơ tim và làm chậm tốc độ dẫn truyền qua nút nhĩ thất (AV node). Khi dùng đường tĩnh mạch, tác dụng ức chế cộng gộp diễn ra rất nhanh và mạnh.",
     "clinicalImpact": "Block nhĩ thất độ 3 hoàn toàn, nhịp tim chậm nghiêm trọng (< 35 nhịp/phút), tụt huyết áp shock tim, suy tim cấp mất bù và vô tâm thu (ngừng tim).",
     "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐƯỜNG TIÊM TĨNH MẠCH theo Quyết định 5948/QĐ-BYT. Phải có khoảng cách an toàn ít nhất 48 giờ giữa hai thuốc khi chuyển đổi đường dùng; luôn sẵn sàng Atropine, Isoproterenol hoặc máy tạo nhịp tim ngoài.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "acenocoumarol",
+      "tamoxifen"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp (QĐ 5948/QĐ-BYT): Ức chế chuyển hóa Acenocoumarol & Tăng vọt nguy cơ xuất huyết kịch phát",
+    "mechanism": "Tamoxifen là chất ức chế các enzym cytochrom P450 CYP2C9 và CYP3A4 tại gan - đây là con đường chuyển hóa chính đào thải Acenocoumarol (Sintrom). Sự ức chế này làm giảm độ thanh thải của Acenocoumarol, kéo dài thời gian bán thải và làm nồng độ thuốc tự do trong huyết tương tăng vọt gấp nhiều lần.",
+    "clinicalImpact": "Tăng mạnh tác dụng chống đông máu, chỉ số INR tăng vọt mất kiểm soát (thường vượt ngưỡng 6.0 - 10.0), dẫn đến nguy cơ xuất huyết nghiêm trọng đe dọa tính mạng: xuất huyết tiêu hóa ồ ạt, xuất huyết nội sọ (đột quỵ xuất huyết não), tụ máu cơ sâu và tử vong.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định số 5948/QĐ-BYT ngày 30/12/2021 của Bộ Y tế. Đối với bệnh nhân ung thư vú có chỉ định chống đông (rung nhĩ, huyết khối tĩnh mạch sâu, van tim cơ học): Cân nhắc lựa chọn liệu pháp nội tiết thay thế (nhóm ức chế Aromatase như Anastrozol, Letrozol ở phụ nữ mãn kinh) hoặc thay thế thuốc chống đông bằng Heparin trọng lượng phân tử thấp (LMWH). Nếu bắt buộc phải phối hợp: Phải chủ động giảm 30% - 50% liều Acenocoumarol ngay từ đầu, xét nghiệm INR 2 - 3 ngày/lần cho đến khi chỉ số ổn định và giáo dục bệnh nhân phát hiện sớm các dấu hiệu xuất huyết bất thường.",
+    "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
+  },
+  {
+    "pair": [
+      "warfarin",
+      "tamoxifen"
+    ],
+    "severity": "contraindicated",
+    "isQD5948": true,
+    "source": "Quyết định 5948/QĐ-BYT (Bộ Y tế)",
+    "title": "Chống chỉ định phối hợp (QĐ 5948/QĐ-BYT): Ức chế chuyển hóa Warfarin qua CYP2C9 & Xuất huyết nặng",
+    "mechanism": "Tamoxifen ức chế mạnh isoenzyme CYP2C9 tại gan - enzym chính chịu trách nhiệm chuyển hóa đồng phân có hoạt tính mạnh S-warfarin, làm tăng mạnh AUC và thời gian bán thải của Warfarin.",
+    "clinicalImpact": "Kéo dài thời gian prothrombin, chỉ số INR tăng vọt mất kiểm soát, làm tăng nguy cơ xuất huyết tiêu hóa, xuất huyết não đe dọa tính mạng.",
+    "recommendation": "CHỐNG CHỈ ĐỊNH PHỐI HỢP ĐỒNG THỜI theo Quyết định 5948/QĐ-BYT. Lựa chọn liệu pháp nội tiết thay thế (ức chế Aromatase) hoặc thay thế thuốc chống đông đường tiêm (LMWH) có kiểm soát chặt chẽ.",
     "evidenceLevel": "Mức độ 1 - Chống chỉ định theo Quyết định 5948/QĐ-BYT (Bộ Y tế)"
   }
 ];

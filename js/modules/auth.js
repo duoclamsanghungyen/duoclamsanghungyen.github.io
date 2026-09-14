@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20260914_v35_qd5948_interactions";
+} from "../data/drugs.js?v=20260914_v36_aceno_tamoxifen";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260914_v35_qd5948_interactions";
+} from "../data/pdfStorage.js?v=20260914_v36_aceno_tamoxifen";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [

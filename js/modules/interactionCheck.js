@@ -3,8 +3,8 @@
  * Tích hợp chuẩn hóa Quyết định số 5948/QĐ-BYT (30/12/2021) của Bộ Y tế
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260914_v35_qd5948_interactions";
-import { DRUG_INTERACTIONS, QD_5948_METADATA } from "../data/interactions.js?v=20260914_v35_qd5948_interactions";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260914_v36_aceno_tamoxifen";
+import { DRUG_INTERACTIONS, QD_5948_METADATA } from "../data/interactions.js?v=20260914_v36_aceno_tamoxifen";
 
 let selectedDrugs = [];
 
@@ -116,6 +116,9 @@ export function addPresetInteractionCase(caseId) {
   } else if (caseId === "case7") {
     // Sildenafil + Nitroglycerin (QĐ 5948)
     selectedDrugs = ["sildenafil", "nitroglycerin"];
+  } else if (caseId === "case8") {
+    // Acenocoumarol + Tamoxifen (QĐ 5948)
+    selectedDrugs = ["acenocoumarol", "tamoxifen"];
   }
   updateBasketUI();
   runInteractionAnalysis();
