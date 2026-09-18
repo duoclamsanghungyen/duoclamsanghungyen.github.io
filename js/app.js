@@ -2,14 +2,14 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260914_v38_drugs_com";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260914_v38_drugs_com";
-import { initCalculators } from "./modules/calculators.js?v=20260914_v38_drugs_com";
-import { initConsultationModule } from "./modules/consultation.js?v=20260914_v38_drugs_com";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260914_v38_drugs_com";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260914_v38_drugs_com";
-import { initAuthModule } from "./modules/auth.js?v=20260914_v38_drugs_com";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260914_v38_drugs_com";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260918_v39_desloratadine";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260918_v39_desloratadine";
+import { initCalculators } from "./modules/calculators.js?v=20260918_v39_desloratadine";
+import { initConsultationModule } from "./modules/consultation.js?v=20260918_v39_desloratadine";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260918_v39_desloratadine";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260918_v39_desloratadine";
+import { initAuthModule } from "./modules/auth.js?v=20260918_v39_desloratadine";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260918_v39_desloratadine";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

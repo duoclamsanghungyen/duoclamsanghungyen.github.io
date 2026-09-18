@@ -3,7 +3,7 @@
  * Hỗ trợ lọc 14 nhóm ATC, lọc chữ cái A-Z, tìm kiếm không dấu và phân trang mượt mà
  */
 
-import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260914_v38_drugs_com";
+import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260918_v39_desloratadine";
 import {
   getPdfAttachmentById,
   getPdfAttachmentsByDrugId,
@@ -11,7 +11,7 @@ import {
   downloadPdfAttachment,
   openPdfInNewWindow,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260914_v38_drugs_com";
+} from "../data/pdfStorage.js?v=20260918_v39_desloratadine";
 
 let currentAtcGroup = "all";
 let currentLetterFilter = "all";

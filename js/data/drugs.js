@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260914_v38_drugs_com";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260918_v39_desloratadine";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -38677,6 +38677,69 @@ export const DRUGS_DATABASE = [
     "lactation": "Chống chỉ định. Chưa rõ mức độ bài tiết vào sữa mẹ, nhưng do nguy cơ gây độc tính tế bào nghiêm trọng cho trẻ bú, bắt buộc phải ngừng cho con bú hoàn toàn trước khi bắt đầu điều trị bằng vinorelbin.",
     "tdmTarget": "Giám sát xét nghiệm bắt buộc trước mỗi đợt truyền:\n- Bạch cầu hạt trung tính (ANC >= 1.500/mm³ đối với thuốc tiêm, >= 1.000/mm³ đối với thuốc uống).\n- Số lượng tiểu cầu (>= 75.000 - 100.000/mm³), Hemoglobin/Hematocrit.\n- Chức năng gan: Bilirubin toàn phần, AST, ALT, Phosphatase kiềm trước mỗi chu kỳ.\n- Điện giải đồ: Theo dõi Natri huyết thanh để phát hiện sớm hội chứng SIADH.",
     "clinicalPearls": "1. An toàn dán nhãn & phòng ngừa nhầm lẫn: Bắt buộc dán nhãn cảnh báo nổi bật trên túi/bơm tiêm truyền: 'CHỈ DÙNG ĐƯỜNG TĨNH MẠCH - DÙNG ĐƯỜNG KHÁC GÂY TỬ VONG'. Quy trình kiểm tra kép (Double-check) trước khi tiêm.\n2. Phân biệt xử trí thoát mạch Vinca Alkaloid: Trong khi đa số thuốc chống ung thư khác (như Doxorubicin) cần chườm lạnh, các thuốc nhóm Vinca alkaloid (Vinorelbin, Vincristin, Vinblastin) BẮT BUỘC CHƯỜM ẤM KHÔ (37 - 40°C) và tiêm giải độc bằng Hyaluronidase. Chườm lạnh sẽ làm co mạch, giữ thuốc tại chỗ và làm tăng hoại tử mô tế bào!\n3. Độc tính thần kinh & Quản lý táo bón: Vinorelbin gắn với tubulin của tế bào thần kinh, gây suy giảm nhu động ruột. Táo bón nặng có thể dẫn đến liệt ruột cơ năng và tắc ruột. Khuyến cáo dùng thuốc nhuận tràng thẩm thấu (Macrogol/Lactulose) dự phòng hàng ngày cho bệnh nhân.\n4. Giảm kích ứng tĩnh mạch: Ưu tiên truyền qua đường truyền trung tâm (PICC/Port-a-cath) hoặc tĩnh mạch lớn ở cẳng tay; tránh tĩnh mạch mu bàn tay/cổ tay. Truyền nhanh dịch muối trước và sau truyền thuốc giúp giảm thiểu viêm tĩnh mạch huyết khối.\n5. Thao tác an toàn thuốc độc tế bào: Điều dưỡng và dược sĩ bắt buộc mang trang bị bảo hộ cá nhân (PPE: găng tay kép, áo choàng chống thấm, kính bảo hộ). Thuốc rơi vào mắt phải rửa ngay bằng NaCl 0.9% trong 15 phút.",
+    "attachments": []
+  }
+,
+  {
+    "id": "desloratadine",
+    "name": "Desloratadin",
+    "inn": "Desloratadine",
+    "atcGroup": "R",
+    "brandNames": [
+      "Aerius",
+      "Clarinex",
+      "Desloratad",
+      "Destac",
+      "Neocilor"
+    ],
+    "atcCode": "R06AX27",
+    "category": "Thuốc kháng histamin H1 thế hệ 2 không gây buồn ngủ",
+    "dosageForm": "Viên nén bao phim 5mg; Viên nén phân tán trong miệng 2.5mg, 5mg; Siro / Dung dịch uống 0.5mg/ml",
+    "indications": [
+      "Viêm mũi dị ứng theo mùa và viêm mũi dị ứng quanh năm (hắt hơi, sổ mũi, ngứa mũi, nghẹt mũi, ngứa mắt, chảy nước mắt, đỏ mắt, ngứa họng)",
+      "Mày đay mạn tính tự phát (làm giảm ngứa, giảm kích thước và số lượng ban sẩn mày đay)",
+      "Viêm kết mạc dị ứng"
+    ],
+    "contraindications": [
+      "Quá mẫn với desloratadin, loratadin hoặc bất kỳ tá dược nào của thuốc",
+      "Trẻ em dưới 6 tháng tuổi (đối với dạng siro) hoặc dưới 12 tuổi (đối với viên nén 5mg)"
+    ],
+    "standardDosage": {
+      "adult": "5mg (1 viên 5mg hoặc 10ml siro 0.5mg/ml) uống 1 lần duy nhất trong ngày, cùng hoặc không cùng bữa ăn.",
+      "pediatric": "Trẻ >= 12 tuổi: 5mg/ngày (1 viên 5mg hoặc 10ml siro). Trẻ 6 - 11 tuổi: 2.5mg/ngày (5ml siro). Trẻ 1 - 5 tuổi: 1.25mg/ngày (2.5ml siro). Trẻ 6 - 11 tháng: 1mg/ngày (2ml siro). Uống 1 lần/ngày.",
+      "elderly": "5mg/ngày; dùng liều tương tự người lớn, thận trọng nếu có suy giảm chức năng gan hoặc thận phối hợp."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": "< 30",
+        "dose": "5mg uống cách ngày (mỗi 48 giờ một lần)"
+      },
+      {
+        "crcl": "Thẩm phân máu (Hemodialysis)",
+        "dose": "5mg uống cách ngày; thuốc không bị loại bỏ đáng kể bằng thẩm phân máu"
+      }
+    ],
+    "hepaticAdjustment": "Suy gan nặng: Khởi đầu 5mg uống cách ngày (mỗi 48 giờ một lần) do giảm độ thanh thải thuốc.",
+    "administration": "Uống 1 lần duy nhất trong ngày cùng một cốc nước, cùng hoặc không cùng bữa ăn (thức ăn không ảnh hưởng đến sinh khả dụng).",
+    "blackBoxWarning": "Không có.",
+    "adr": {
+      "common": [
+        "Mệt mỏi, khô miệng, nhức đầu. Ở trẻ em: sốt, tiêu chảy, mất ngủ"
+      ],
+      "serious": [
+        "Phản ứng phản vệ, phù mạch, khó thở, co giật, viêm gan, tăng men gan, tim đập nhanh, kéo dài khoảng QT (rất hiếm)"
+      ]
+    },
+    "pregnancyCategory": "C - Dữ liệu trên người mang thai còn hạn chế. Nghiên cứu trên động vật không thấy độc tính sinh sản trực tiếp. Khuyến cáo tránh dùng trong thai kỳ trừ khi lợi ích cho mẹ vượt trội nguy cơ đối với thai nhi.",
+    "lactation": "Desloratadin bài tiết qua sữa mẹ. Không khuyến cáo sử dụng ở phụ nữ đang cho con bú hoặc phải tạm ngừng cho con bú nếu dùng thuốc.",
+    "tdmTarget": "Không cần theo dõi nồng độ thuốc trong máu (TDM).",
+    "clinicalPearls": [
+      "CHẤT CHUYỂN HÓA CÓ HOẠT TÍNH CỦA LORATADIN: Desloratadin là chất chuyển hóa có hoạt tính chủ yếu của loratadin, có ái lực với thụ thể H1 ngoại vi mạnh gấp 3-4 lần so với loratadin và tác dụng khởi phát nhanh.",
+      "TÍNH KHÁNG VIÊM BỔ SUNG: Ngoài tác dụng kháng histamin, desloratadin còn ức chế giải phóng các cytokine tiền viêm (IL-4, IL-6, IL-8, IL-13) từ tế bào mast và bạch cầu ái kiềm, giảm kết dính tế bào P-selectin.",
+      "HẦU NHƯ KHÔNG GÂY BUỒN NGỦ: Thuốc phân bố rất kém vào hệ thần kinh trung ương ở liều điều trị, tỷ lệ gây buồn ngủ trên thử nghiệm lâm sàng tương đương nhóm dùng giả dược (placebo). Không ảnh hưởng đến khả năng lái xe và vận hành máy móc.",
+      "AN TOÀN TIM MẠCH: Không gây độc tính trên tim, không ức chế kênh kali IKr/hERG và không kéo dài khoảng QTc ở liều điều trị lên đến 9 lần liều khuyến cáo (45mg/ngày).",
+      "LƯU Ý KHI LÀM TEST DỊ ỨNG: Cần ngừng desloratadin ít nhất 48 giờ (tốt nhất là 3 - 5 ngày do thời gian bán thải T1/2 khoảng 27 giờ) trước khi thực hiện các thử nghiệm test dị nguyên trên da (prick test)."
+    ],
     "attachments": []
   }
 ];

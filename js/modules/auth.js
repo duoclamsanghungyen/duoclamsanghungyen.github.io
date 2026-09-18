@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20260914_v38_drugs_com";
+} from "../data/drugs.js?v=20260918_v39_desloratadine";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260914_v38_drugs_com";
+} from "../data/pdfStorage.js?v=20260918_v39_desloratadine";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [
