@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20260922_v40_video_library";
+} from "../data/drugs.js?v=20260922_v41_video_admin_only";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260922_v40_video_library";
+} from "../data/pdfStorage.js?v=20260922_v41_video_admin_only";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [
@@ -146,6 +146,12 @@ function executeLogin(userObj) {
   // Cập nhật lại giao diện Dược thư hiển thị nút admin
   if (window.renderDrugList) {
     try { window.renderDrugList(); } catch (err) { console.warn(err); }
+  }
+  if (window.renderVideoList) {
+    try { window.renderVideoList(); } catch (err) { console.warn(err); }
+  }
+  if (window.renderVideoList) {
+    try { window.renderVideoList(); } catch (err) { console.warn(err); }
   }
 
   // Cập nhật phân quyền Cổng Hội Chẩn DIC

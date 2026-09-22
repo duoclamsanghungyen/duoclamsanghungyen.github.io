@@ -3,7 +3,7 @@
  * Hỗ trợ lọc 14 nhóm ATC, lọc chữ cái A-Z, tìm kiếm không dấu và phân trang mượt mà
  */
 
-import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260922_v40_video_library";
+import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260922_v41_video_admin_only";
 import {
   getPdfAttachmentById,
   getPdfAttachmentsByDrugId,
@@ -11,7 +11,7 @@ import {
   downloadPdfAttachment,
   openPdfInNewWindow,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260922_v40_video_library";
+} from "../data/pdfStorage.js?v=20260922_v41_video_admin_only";
 
 let currentAtcGroup = "all";
 let currentLetterFilter = "all";

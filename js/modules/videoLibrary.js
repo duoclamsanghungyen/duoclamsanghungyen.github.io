@@ -2,6 +2,7 @@
  * PHARMAVITA / CLINICALRX - PHÂN HỆ THƯ VIỆN VIDEO LÂM SÀNG (VIDEO LIBRARY)
  * Bệnh viện Đa khoa tỉnh Hưng Yên
  * Hiển thị danh mục video, trình phát video chuyên dụng và tải lên tệp MP4
+ * Phân quyền: Tính năng Thêm / Tải lên và Xóa video CHỈ DÀNH CHO ADMIN
  */
 
 import {
@@ -11,11 +12,37 @@ import {
   uploadVideoFileToSupabase,
   syncVideosFromCloud,
   formatVideoFileSize
-} from "../data/videoStorage.js?v=20260922_v40_video_library";
+} from "../data/videoStorage.js?v=20260922_v41_video_admin_only";
 
 let currentCategory = "all";
 let searchQuery = "";
 let selectedFile = null;
+
+/**
+ * Kiểm tra xem người dùng hiện tại có quyền Quản trị viên (Admin) hay không
+ */
+export function isUserAdmin() {
+  if (typeof window !== "undefined" && window.getCurrentUser) {
+    const u = window.getCurrentUser();
+    return !!(u && (u.role === "admin" || u.role === "Admin"));
+  }
+  return false;
+}
+
+/**
+ * Xử lý khi tài khoản không phải admin bấm vào nút thêm video
+ */
+export function handleNonAdminUploadClick() {
+  const u = typeof window !== "undefined" && window.getCurrentUser ? window.getCurrentUser() : null;
+  if (!u) {
+    alert("Quyền tải lên và thêm video lâm sàng ĐƯỢC BẢO MẬT và CHỈ DÀNH CHO TÀI KHOẢN ADMIN (Quản trị viên).\n\nVui lòng đăng nhập bằng tài khoản Quản trị viên để thực hiện tính năng này!");
+    if (window.openLoginModal) {
+      window.openLoginModal();
+    }
+  } else {
+    alert(`Tài khoản hiện tại của bạn: ${u.fullName} (${u.roleLabel || u.role})\n\nTính năng thêm và tải video lên hệ thống chỉ dành riêng cho Quản trị viên (Admin). Vui lòng liên hệ Trưởng khoa Dược hoặc đăng xuất để đăng nhập bằng tài khoản Quản trị viên!`);
+  }
+}
 
 export function initVideoLibrary() {
   const searchInput = document.getElementById("videoSearchInput");
@@ -41,7 +68,7 @@ export function initVideoLibrary() {
   // Nạp danh sách thuốc vào thẻ chọn trong form tải lên
   populateDrugSelectOptions();
 
-  // Hiển thị danh sách ban đầu
+  // Hiển thị danh sách ban đầu và render nút admin
   renderVideoList();
 
   // Đồng bộ đám mây Supabase chạy ngầm
@@ -66,12 +93,44 @@ export function filterVideoCategory(category) {
   renderVideoList();
 }
 
+/**
+ * Cập nhật hiển thị nút Thêm Video trên Hero Banner theo quyền Admin
+ */
+function renderAdminHeaderControls() {
+  const container = document.getElementById("videoAdminUploadBtnContainer");
+  if (!container) return;
+
+  const admin = isUserAdmin();
+
+  if (admin) {
+    container.innerHTML = `
+      <button onclick="window.openVideoUploadModal()" 
+        class="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-rose-600 via-rose-700 to-pink-700 hover:from-rose-700 hover:to-pink-800 text-white font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center gap-2 ring-2 ring-rose-400/40">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+        <span>+ THÊM VIDEO MP4 (ADMIN)</span>
+      </button>
+    `;
+  } else {
+    container.innerHTML = `
+      <button onclick="window.handleNonAdminUploadClick()" 
+        class="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-rose-200 hover:text-white border border-white/20 font-bold text-xs sm:text-sm backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2" 
+        title="Tính năng thêm video được giới hạn riêng cho tài khoản Quản trị viên">
+        <i data-lucide="lock" class="w-4 h-4 text-rose-300"></i>
+        <span>+ Thêm Video (Dành cho Admin)</span>
+      </button>
+    `;
+  }
+}
+
 export function renderVideoList() {
+  renderAdminHeaderControls();
+
   const container = document.getElementById("videoGridContainer");
   const countBadge = document.getElementById("videoTotalCountBadge");
   if (!container) return;
 
   const allVideos = getAllClinicalVideos();
+  const admin = isUserAdmin();
 
   // Lọc theo chuyên mục và tìm kiếm
   const filtered = allVideos.filter(v => {
@@ -104,12 +163,19 @@ export function renderVideoList() {
         </div>
         <h4 class="text-base font-bold text-slate-800">Không tìm thấy video phù hợp</h4>
         <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">
-          Không có video nào khớp với điều kiện tìm kiếm hoặc bộ lọc hiện tại. Bạn có thể bấm nút tải lên để bổ sung video MP4 mới.
+          Không có video nào khớp với điều kiện tìm kiếm hoặc bộ lọc hiện tại.
         </p>
-        <button onclick="window.openVideoUploadModal()" class="mt-4 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-xs inline-flex items-center gap-2 cursor-pointer transition-all">
-          <i data-lucide="upload" class="w-4 h-4"></i>
-          <span>Tải lên Video MP4 ngay</span>
-        </button>
+        ${admin ? `
+          <button onclick="window.openVideoUploadModal()" class="mt-4 px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-xs inline-flex items-center gap-2 cursor-pointer transition-all">
+            <i data-lucide="upload" class="w-4 h-4"></i>
+            <span>Tải lên Video MP4 ngay</span>
+          </button>
+        ` : `
+          <button onclick="window.handleNonAdminUploadClick()" class="mt-4 px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold shadow-xs inline-flex items-center gap-2 cursor-pointer transition-all">
+            <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-500"></i>
+            <span>Đăng nhập Admin để thêm video</span>
+          </button>
+        `}
       </div>
     `;
     if (window.lucide) window.lucide.createIcons();
@@ -207,8 +273,8 @@ export function renderVideoList() {
                   <i data-lucide="download" class="w-4 h-4"></i>
                 </a>
               ` : ''}
-              ${!v.isBuiltin ? `
-                <button onclick="window.confirmDeleteVideo('${v.id}')" title="Xóa video này" class="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer">
+              ${(admin && !v.isBuiltin) ? `
+                <button onclick="window.confirmDeleteVideo('${v.id}')" title="Xóa video này (Quyền Admin)" class="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer">
                   <i data-lucide="trash-2" class="w-4 h-4"></i>
                 </button>
               ` : ''}
@@ -236,6 +302,7 @@ export function openVideoPlayerModal(videoId) {
   const metaEl = document.getElementById("videoPlayerMeta");
   const downloadLink = document.getElementById("videoPlayerDownloadBtn");
   const emptyPlaceholder = document.getElementById("videoPlayerEmptyNotice");
+  const adminUploadArea = document.getElementById("videoPlayerAdminUploadArea");
 
   if (!modal || !player) return;
 
@@ -275,6 +342,24 @@ export function openVideoPlayerModal(videoId) {
     player.pause();
     emptyPlaceholder.classList.remove("hidden");
     if (downloadLink) downloadLink.classList.add("hidden");
+
+    if (adminUploadArea) {
+      if (isUserAdmin()) {
+        adminUploadArea.innerHTML = `
+          <button onclick="window.closeVideoPlayerModal(); window.openVideoUploadModal();" class="mt-3 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md inline-flex items-center gap-2 cursor-pointer transition-all">
+            <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+            <span>Tải tệp MP4 cho video này (Admin)</span>
+          </button>
+        `;
+      } else {
+        adminUploadArea.innerHTML = `
+          <button onclick="window.handleNonAdminUploadClick()" class="mt-3 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-rose-200 text-xs font-bold shadow-md inline-flex items-center gap-2 cursor-pointer transition-all">
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+            <span>Đăng nhập Admin để tải tệp MP4</span>
+          </button>
+        `;
+      }
+    }
   }
 
   modal.classList.remove("hidden");
@@ -292,6 +377,12 @@ export function closeVideoPlayerModal() {
 }
 
 export function openVideoUploadModal() {
+  // Kiểm tra chặt chẽ quyền Admin
+  if (!isUserAdmin()) {
+    handleNonAdminUploadClick();
+    return;
+  }
+
   const modal = document.getElementById("videoUploadModal");
   if (!modal) return;
 
@@ -396,6 +487,12 @@ function setupUploadEvents() {
 }
 
 async function executeVideoUpload() {
+  // Xác thực quyền Admin trước khi thực hiện tải lên
+  if (!isUserAdmin()) {
+    alert("Từ chối quyền truy cập: Chỉ Quản trị viên (Admin) mới có quyền tải lên video mới!");
+    return;
+  }
+
   if (!selectedFile) {
     alert("Vui lòng chọn một tệp video MP4 trước khi bấm Tải lên!");
     return;
@@ -452,6 +549,8 @@ async function executeVideoUpload() {
 
     if (progressStatusText) progressStatusText.textContent = "Đang lưu thông tin và hoàn tất...";
 
+    const currentUser = typeof window !== "undefined" && window.getCurrentUser ? window.getCurrentUser() : null;
+
     const videoItem = {
       id: videoId,
       title: title,
@@ -466,8 +565,8 @@ async function executeVideoUpload() {
       fileUrl: uploadResult.publicUrl,
       thumbnailUrl: "",
       description: (descInput ? descInput.value : "").trim(),
-      uploaderName: (uploaderInput ? uploaderInput.value : "").trim() || "Dược sĩ Lâm sàng",
-      department: "Bệnh viện Đa khoa tỉnh Hưng Yên",
+      uploaderName: (uploaderInput ? uploaderInput.value : "").trim() || (currentUser ? currentUser.fullName : "Quản trị viên (Admin)"),
+      department: currentUser ? (currentUser.department || "Khoa Dược") : "Bệnh viện Đa khoa tỉnh Hưng Yên",
       createdAt: new Date().toISOString(),
       isBuiltin: false
     };
@@ -489,6 +588,11 @@ async function executeVideoUpload() {
 }
 
 export async function confirmDeleteVideo(videoId) {
+  if (!isUserAdmin()) {
+    alert("Từ chối quyền: Chỉ Quản trị viên (Admin) mới có quyền xóa video khỏi thư viện!");
+    return;
+  }
+
   if (!confirm("Bạn có chắc chắn muốn xóa video này khỏi Thư viện Video lâm sàng?")) {
     return;
   }
@@ -556,4 +660,7 @@ if (typeof window !== "undefined") {
   window.filterVideoCategory = filterVideoCategory;
   window.confirmDeleteVideo = confirmDeleteVideo;
   window.openDrugFromVideo = openDrugFromVideo;
+  window.renderVideoList = renderVideoList;
+  window.isUserAdmin = isUserAdmin;
+  window.handleNonAdminUploadClick = handleNonAdminUploadClick;
 }
