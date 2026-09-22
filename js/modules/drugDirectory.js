@@ -3,7 +3,7 @@
  * Hỗ trợ lọc 14 nhóm ATC, lọc chữ cái A-Z, tìm kiếm không dấu và phân trang mượt mà
  */
 
-import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260922_v43_video_upload_fix";
+import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20260922_v44_fix_drug_sync_crash";
 import {
   getPdfAttachmentById,
   getPdfAttachmentsByDrugId,
@@ -11,7 +11,7 @@ import {
   downloadPdfAttachment,
   openPdfInNewWindow,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260922_v43_video_upload_fix";
+} from "../data/pdfStorage.js?v=20260922_v44_fix_drug_sync_crash";
 
 let currentAtcGroup = "all";
 let currentLetterFilter = "all";
@@ -108,17 +108,23 @@ export function renderDrugList() {
   const normalizedQuery = removeVietnameseAccents(currentSearchQuery);
 
   const filtered = getActiveDrugsDatabase().filter(drug => {
+    if (!drug || (!drug.name && !drug.inn)) return false;
+
     // 1. Lọc theo nhóm ATC
-    const matchesAtc = currentAtcGroup === "all" || drug.atcGroup === currentAtcGroup || drug.atcCode.startsWith(currentAtcGroup);
+    const atc = drug.atcCode || "";
+    const matchesAtc = currentAtcGroup === "all" || drug.atcGroup === currentAtcGroup || atc.startsWith(currentAtcGroup);
 
     // 2. Lọc theo chữ cái A-Z (dựa trên tên INN hoặc tên thuốc)
-    const firstLetter = (drug.inn || drug.name).trim().charAt(0).toUpperCase();
+    const displayName = (drug.inn || drug.name || "").trim();
+    const firstLetter = displayName ? displayName.charAt(0).toUpperCase() : "";
     const matchesLetter = currentLetterFilter === "all" || firstLetter === currentLetterFilter;
 
     // 3. Lọc theo từ khóa tìm kiếm
     let matchesSearch = true;
     if (normalizedQuery) {
-      const targetText = `${drug.name} ${drug.inn} ${drug.brandNames.join(" ")} ${drug.atcCode} ${drug.category} ${drug.indications.join(" ")}`.toLowerCase();
+      const brandNamesStr = Array.isArray(drug.brandNames) ? drug.brandNames.join(" ") : "";
+      const indicationsStr = Array.isArray(drug.indications) ? drug.indications.join(" ") : "";
+      const targetText = `${drug.name || ""} ${drug.inn || ""} ${brandNamesStr} ${atc} ${drug.category || ""} ${indicationsStr}`.toLowerCase();
       const normalizedTarget = removeVietnameseAccents(targetText);
       matchesSearch = targetText.includes(currentSearchQuery) || normalizedTarget.includes(normalizedQuery);
     }

@@ -229,12 +229,21 @@ export async function syncCustomDrugsFromCloud() {
       }
       if (!store.addedDrugs) store.addedDrugs = [];
 
-      if (!store.modified) store.modified = {};
-      if (!store.addedDrugs) store.addedDrugs = [];
+      // Dọn dẹp cache nếu có chứa video metadata
+      if (Array.isArray(store.addedDrugs)) {
+        store.addedDrugs = store.addedDrugs.filter(ad => ad && ad.id && !ad.id.startsWith("video_") && (ad.name || ad.inn));
+      }
+      if (store.modified && typeof store.modified === "object") {
+        Object.keys(store.modified).forEach(k => {
+          if (k.startsWith("video_") || (!store.modified[k]?.name && !store.modified[k]?.inn)) {
+            delete store.modified[k];
+          }
+        });
+      }
 
       data.forEach(row => {
         const drug = row.data || row;
-        if (!drug || !drug.id) return;
+        if (!drug || !drug.id || drug.id.startsWith("video_") || (!drug.name && !drug.inn)) return;
         
         // Luôn lưu vào modified để áp dụng cho cả thuốc trong cơ sở dữ liệu gốc (như Tranexamic, Vitamin 3B)
         store.modified[drug.id] = drug;
@@ -248,7 +257,7 @@ export async function syncCustomDrugsFromCloud() {
       });
 
       localStorage.setItem(CUSTOM_DRUGS_STORAGE_KEY, JSON.stringify(store));
-      console.log(`Đã đồng bộ ${data.length} thuốc từ Supabase Cloud!`);
+      console.log(`Đã đồng bộ thuốc từ Supabase Cloud!`);
       if (window.renderDrugList) window.renderDrugList();
       return true;
     }

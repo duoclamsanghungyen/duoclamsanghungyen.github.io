@@ -2,30 +2,38 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v43_video_upload_fix";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v43_video_upload_fix";
-import { initCalculators } from "./modules/calculators.js?v=20260922_v43_video_upload_fix";
-import { initConsultationModule } from "./modules/consultation.js?v=20260922_v43_video_upload_fix";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v43_video_upload_fix";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v43_video_upload_fix";
-import { initAuthModule } from "./modules/auth.js?v=20260922_v43_video_upload_fix";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v43_video_upload_fix";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v43_video_upload_fix";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v44_fix_drug_sync_crash";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v44_fix_drug_sync_crash";
+import { initCalculators } from "./modules/calculators.js?v=20260922_v44_fix_drug_sync_crash";
+import { initConsultationModule } from "./modules/consultation.js?v=20260922_v44_fix_drug_sync_crash";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v44_fix_drug_sync_crash";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v44_fix_drug_sync_crash";
+import { initAuthModule } from "./modules/auth.js?v=20260922_v44_fix_drug_sync_crash";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v44_fix_drug_sync_crash";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v44_fix_drug_sync_crash";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");
 
-  // Khởi tạo phân hệ Xác thực & Phân quyền
-  initAuthModule();
+  // Khởi tạo các phân hệ với cơ chế tự cô lập lỗi (Fault Isolation)
+  const modules = [
+    { name: "Auth", fn: initAuthModule },
+    { name: "DrugDirectory", fn: initDrugDirectory },
+    { name: "InteractionChecker", fn: initInteractionChecker },
+    { name: "Calculators", fn: initCalculators },
+    { name: "Consultation", fn: initConsultationModule },
+    { name: "Adr", fn: initAdrModule },
+    { name: "IvCompatibility", fn: initIvCompatibilityModule },
+    { name: "VideoLibrary", fn: initVideoLibrary }
+  ];
 
-  // Khởi tạo các phân hệ chuyên môn
-  initDrugDirectory();
-  initInteractionChecker();
-  initCalculators();
-  initConsultationModule();
-  initAdrModule();
-  initIvCompatibilityModule();
-  initVideoLibrary();
+  modules.forEach(m => {
+    try {
+      m.fn();
+    } catch (err) {
+      console.error(`[Lỗi khởi tạo ${m.name}]:`, err);
+    }
+  });
 
   // Tự động đồng bộ thuốc tùy biến và chữa lành các file PDF thiếu URL từ Supabase Cloud trong nền
   setTimeout(async () => {

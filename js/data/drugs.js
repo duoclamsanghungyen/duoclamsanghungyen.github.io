@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260922_v43_video_upload_fix";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260922_v44_fix_drug_sync_crash";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -38771,25 +38771,40 @@ export function getActiveDrugsDatabase() {
           localStorage.removeItem(CUSTOM_DRUGS_STORAGE_KEY);
         } else {
           const store = JSON.parse(raw);
+
+          // Tự động dọn dẹp các mục không phải thuốc (như video metadata vô tình đồng bộ vào)
+          if (Array.isArray(store.addedDrugs)) {
+            store.addedDrugs = store.addedDrugs.filter(ad => ad && ad.id && !ad.id.startsWith("video_") && (ad.name || ad.inn));
+          }
+          if (store.modified && typeof store.modified === "object") {
+            Object.keys(store.modified).forEach(k => {
+              if (k.startsWith("video_") || (!store.modified[k]?.name && !store.modified[k]?.inn)) {
+                delete store.modified[k];
+              }
+            });
+          }
+
           // 1. Lọc bỏ các thuốc bị Quản trị viên xóa
-        if (Array.isArray(store.deletedIds) && store.deletedIds.length > 0) {
-          list = list.filter(d => !store.deletedIds.includes(d.id));
-        }
-        // 2. Cập nhật các thuốc đã được chỉnh sửa
-        if (store.modified && typeof store.modified === "object") {
-          list = list.map(d => store.modified[d.id] ? { ...d, ...store.modified[d.id] } : d);
-        }
-        // 3. Bổ sung các thuốc mới thêm
-        if (Array.isArray(store.addedDrugs) && store.addedDrugs.length > 0) {
-          // Lọc trùng ID nếu đã có trong DRUGS_DATABASE
-          const addedFiltered = store.addedDrugs.filter(ad => !list.some(d => d.id === ad.id));
-          list = [...addedFiltered, ...list];
-        }
+          if (Array.isArray(store.deletedIds) && store.deletedIds.length > 0) {
+            list = list.filter(d => !store.deletedIds.includes(d.id));
+          }
+          // 2. Cập nhật các thuốc đã được chỉnh sửa
+          if (store.modified && typeof store.modified === "object") {
+            list = list.map(d => (store.modified[d.id] && (store.modified[d.id].name || store.modified[d.id].inn)) ? { ...d, ...store.modified[d.id] } : d);
+          }
+          // 3. Bổ sung các thuốc mới thêm (loại trừ các mục video)
+          if (Array.isArray(store.addedDrugs) && store.addedDrugs.length > 0) {
+            const addedFiltered = store.addedDrugs.filter(ad => ad && ad.id && !ad.id.startsWith("video_") && (ad.name || ad.inn) && !list.some(d => d.id === ad.id));
+            list = [...addedFiltered, ...list];
+          }
         }
       } catch (parseErr) {
         console.warn("Lỗi khi giải mã localStorage custom drugs:", parseErr);
       }
     }
+
+    // Bảo đảm chỉ trả về các phần tử thuốc hợp lệ
+    list = list.filter(d => d && d.id && !d.id.startsWith("video_") && (d.name || d.inn));
 
     // 4. Bổ sung các file PDF lưu trữ vĩnh viễn trên kho GitHub (assets/pdfs) CHO MỌI THIẾT BỊ
     list.forEach(drug => {
@@ -38970,7 +38985,7 @@ export async function syncCustomDrugsFromSupabase() {
 
       data.forEach(row => {
         const drug = row.data || row;
-        if (!drug || !drug.id) return;
+        if (!drug || !drug.id || drug.id.startsWith("video_") || (!drug.name && !drug.inn)) return;
         
         // Luôn lưu vào modified để áp dụng cho cả thuốc trong cơ sở dữ liệu gốc (như Tranexamic, Vitamin 3B)
         store.modified[drug.id] = drug;
@@ -38986,7 +39001,7 @@ export async function syncCustomDrugsFromSupabase() {
 
       if (hasChanges) {
         localStorage.setItem(CUSTOM_DRUGS_STORAGE_KEY, JSON.stringify(store));
-        console.log(`Đã đồng bộ thành công ${data.length} thuốc từ Supabase Cloud!`);
+        console.log(`Đã đồng bộ thành công các thuốc từ Supabase Cloud!`);
         return true;
       }
     }
