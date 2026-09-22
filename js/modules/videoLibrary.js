@@ -12,7 +12,7 @@ import {
   uploadVideoFileToSupabase,
   syncVideosFromCloud,
   formatVideoFileSize
-} from "../data/videoStorage.js?v=20260922_v41_video_admin_only";
+} from "../data/videoStorage.js?v=20260922_v42_video_on_home";
 
 let currentCategory = "all";
 let searchQuery = "";

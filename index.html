@@ -87,7 +87,7 @@
           <button data-nav-target="adr" class="px-2.5 py-1.5 rounded-lg transition-colors hover:text-slate-900 hover:bg-slate-100 whitespace-nowrap">
             Báo cáo ADR
           </button>
-          <button data-nav-target="videos" class="px-2.5 py-1.5 rounded-lg transition-colors hover:text-slate-900 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5">
+          <button onclick="window.scrollToHomeVideoLibrary()" class="px-2.5 py-1.5 rounded-lg transition-colors hover:text-slate-900 hover:bg-slate-100 whitespace-nowrap flex items-center gap-1.5 cursor-pointer">
             <i data-lucide="video" class="w-3.5 h-3.5 text-rose-500"></i>
             <span>Video lâm sàng</span>
           </button>
@@ -140,12 +140,12 @@
       <button data-nav-target="iv" class="w-full text-left px-3 py-2 rounded-lg hover:bg-teal-50 hover:text-teal-700">Tương hợp - Tương kỵ</button>
       <button data-nav-target="consultation" class="w-full text-left px-3 py-2 rounded-lg hover:bg-teal-50 hover:text-teal-700">Hội chẩn lâm sàng</button>
       <button data-nav-target="adr" class="w-full text-left px-3 py-2 rounded-lg hover:bg-teal-50 hover:text-teal-700">Báo cáo ADR</button>
-      <button data-nav-target="videos" class="w-full text-left px-3 py-2 rounded-lg hover:bg-teal-50 hover:text-teal-700 flex items-center justify-between">
+      <button onclick="window.scrollToHomeVideoLibrary()" class="w-full text-left px-3 py-2 rounded-lg hover:bg-teal-50 hover:text-teal-700 flex items-center justify-between cursor-pointer">
         <span class="flex items-center gap-2">
           <i data-lucide="video" class="w-4 h-4 text-rose-500"></i>
           <span>Thư viện Video lâm sàng</span>
         </span>
-        <span class="px-2 py-0.5 text-[10px] font-bold bg-rose-100 text-rose-700 rounded-full">MỚI</span>
+        <span class="px-2 py-0.5 text-[10px] font-bold bg-rose-100 text-rose-700 rounded-full">Trang chủ</span>
       </button>
       <button onclick="window.openSupabaseAuthModal()" class="w-full text-left px-3 py-2 rounded-lg hover:bg-teal-50 hover:text-teal-700 flex items-center gap-2 text-teal-700 font-bold">
         <i data-lucide="database" class="w-4 h-4"></i>
@@ -512,6 +512,91 @@
         </div>
       </div>
 
+    
+      <!-- ==================== THƯ VIỆN VIDEO LÂM SÀNG TRÊN TRANG CHỦ ==================== -->
+      <div id="homeVideoLibrarySection" class="pt-6 space-y-6 border-t border-slate-200/80 scroll-mt-20">
+        
+        <!-- Video Library Hero Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white p-6 sm:p-8 shadow-xl border border-teal-800/40">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+            <div class="max-w-2xl space-y-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-400/30">
+                  <i data-lucide="video" class="w-3.5 h-3.5 text-rose-400"></i>
+                  <span>Thư Viện Video Lâm Sàng & Đào Tạo Dược</span>
+                </span>
+                <span id="videoTotalCountBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/10 text-teal-200 border border-white/15">
+                  4 video
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                  Trang chủ nội viện
+                </span>
+              </div>
+
+              <h2 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
+                Kho Video <span class="text-rose-400">Hướng Dẫn Thực Hành</span> & Thao Tác Chuẩn
+              </h2>
+
+              <p class="text-xs sm:text-sm text-teal-100/90 leading-relaxed">
+                Tập hợp các video trực quan hướng dẫn kỹ thuật sử dụng dụng cụ xịt hít hô hấp (MDI, buồng đệm, DPI), kỹ thuật tiêm dưới da (Insulin, Enoxaparin), quy trình hoàn nguyên pha truyền tĩnh mạch và tư vấn người bệnh tại Bệnh viện Đa khoa tỉnh Hưng Yên.
+              </p>
+            </div>
+
+            <!-- Nút Tải lên Video MP4 (Chỉ dành cho Admin) -->
+            <div id="videoAdminUploadBtnContainer" class="shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <button onclick="window.openVideoUploadModal()" class="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 font-bold text-xs sm:text-sm backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2" title="Chỉ Quản trị viên (Admin) mới có quyền thêm video">
+                <i data-lucide="lock" class="w-4 h-4 text-rose-300"></i>
+                <span>+ Thêm Video (Dành cho Admin)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Decorative background glow -->
+          <div class="absolute -right-10 -bottom-10 w-72 h-72 rounded-full bg-rose-500/10 blur-3xl pointer-events-none"></div>
+        </div>
+
+        <!-- Thanh Tìm Kiếm & Bộ Lọc Chuyên Mục -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
+          
+          <!-- Search bar -->
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+            <input id="videoSearchInput" type="text"
+              placeholder="Tìm kiếm video theo tên thao tác, kỹ thuật, tên thuốc (Insulin, Salbutamol, Meropenem...)..."
+              class="w-full pl-10 pr-4 py-2.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white text-slate-900 border border-slate-200 focus:border-teal-500 rounded-xl outline-none text-xs sm:text-sm transition-all">
+          </div>
+
+          <!-- Category filter tabs -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+            <button data-video-category="all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-teal-600 text-white shadow-xs cursor-pointer whitespace-nowrap">
+              Tất cả video
+            </button>
+            <button data-video-category="inhaler" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+              Dụng cụ xịt hít & Hô hấp
+            </button>
+            <button data-video-category="injection" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+              Bút tiêm & Tiêm dưới da
+            </button>
+            <button data-video-category="iv_reconstitution" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+              Tiêm truyền & Pha chế
+            </button>
+            <button data-video-category="counseling" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+              Tư vấn người bệnh
+            </button>
+            <button data-video-category="training" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+              Tập huấn & Hội thảo
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Danh Sách Lưới Video (Video Grid) -->
+        <div id="videoGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <!-- Rendered dynamically by videoLibrary.js -->
+        </div>
+
+      </div>
+
     </section>
 
 
@@ -570,7 +655,7 @@
             </select>
           
           <!-- Phân hệ 7: Thư viện Video lâm sàng -->
-          <div onclick="window.navigateToSection('videos')" 
+          <div onclick="window.scrollToHomeVideoLibrary()" 
             class="bg-white rounded-2xl border border-slate-200/90 hover:border-rose-500 hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col justify-between overflow-hidden shadow-xs hover:-translate-y-1">
             
             <!-- Banner minh họa trực quan Phân hệ 7 -->
@@ -1537,86 +1622,7 @@
     </section>
 
   
-    <!-- ==================== PHÂN HỆ 7: THƯ VIỆN VIDEO LÂM SÀNG ==================== -->
-    <section id="videos" class="app-section hidden space-y-6 animate-in fade-in duration-300">
-      
-      <!-- Video Library Hero Banner -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white p-6 sm:p-8 shadow-xl border border-teal-800/40">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-          <div class="max-w-2xl space-y-3">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-400/30">
-                <i data-lucide="video" class="w-3.5 h-3.5 text-rose-400"></i>
-                <span>Thư Viện Video Lâm Sàng & Đào Tạo Dược</span>
-              </span>
-              <span id="videoTotalCountBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/10 text-teal-200 border border-white/15">
-                4 video
-              </span>
-            </div>
-
-            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight">
-              Kho Video <span class="text-rose-400">Hướng Dẫn Thực Hành</span> & Thao Tác Chuẩn
-            </h1>
-
-            <p class="text-xs sm:text-sm text-teal-100/90 leading-relaxed">
-              Tập hợp các video trực quan hướng dẫn kỹ thuật sử dụng dụng cụ xịt hít hô hấp (MDI, buồng đệm, DPI), kỹ thuật tiêm dưới da (Insulin, Enoxaparin), quy trình hoàn nguyên pha truyền tĩnh mạch và tư vấn người bệnh tại Bệnh viện Đa khoa tỉnh Hưng Yên.
-            </p>
-          </div>
-
-          <!-- Nút Tải lên Video MP4 (Chỉ dành cho Admin) -->
-          <div id="videoAdminUploadBtnContainer" class="shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            <button onclick="window.openVideoUploadModal()" class="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-rose-200 border border-white/20 font-bold text-xs sm:text-sm backdrop-blur-md transition-all cursor-pointer flex items-center justify-center gap-2" title="Chỉ Quản trị viên (Admin) mới có quyền thêm video">
-              <i data-lucide="lock" class="w-4 h-4 text-rose-300"></i>
-              <span>+ Thêm Video (Dành cho Admin)</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Decorative background glow -->
-        <div class="absolute -right-10 -bottom-10 w-72 h-72 rounded-full bg-rose-500/10 blur-3xl pointer-events-none"></div>
-      </div>
-
-      <!-- Thanh Tìm Kiếm & Bộ Lọc Chuyên Mục -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
-        
-        <!-- Search bar -->
-        <div class="relative">
-          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
-          <input id="videoSearchInput" type="text"
-            placeholder="Tìm kiếm video theo tên thao tác, kỹ thuật, tên thuốc (Insulin, Salbutamol, Meropenem...)..."
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white text-slate-900 border border-slate-200 focus:border-teal-500 rounded-xl outline-none text-xs sm:text-sm transition-all">
-        </div>
-
-        <!-- Category filter tabs -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-          <button data-video-category="all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-teal-600 text-white shadow-xs cursor-pointer whitespace-nowrap">
-            Tất cả video
-          </button>
-          <button data-video-category="inhaler" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-            Dụng cụ xịt hít & Hô hấp
-          </button>
-          <button data-video-category="injection" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-            Bút tiêm & Tiêm dưới da
-          </button>
-          <button data-video-category="iv_reconstitution" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-            Tiêm truyền & Pha chế
-          </button>
-          <button data-video-category="counseling" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-            Tư vấn người bệnh
-          </button>
-          <button data-video-category="training" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-            Tập huấn & Hội thảo
-          </button>
-        </div>
-
-      </div>
-
-      <!-- Danh Sách Lưới Video (Video Grid) -->
-      <div id="videoGridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        <!-- Rendered dynamically by videoLibrary.js -->
-      </div>
-
-    </section>
+    
 
   </main>
 
@@ -2071,7 +2077,7 @@
   </script>
 
   <!-- Master Application Script (ES Module) -->
-  <script type="module" src="./js/app.js?v=20260922_v41_video_admin_only"></script>
+  <script type="module" src="./js/app.js?v=20260922_v42_video_on_home"></script>
 
 </body>
 </html>

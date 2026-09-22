@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v41_video_admin_only";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v41_video_admin_only";
-import { initCalculators } from "./modules/calculators.js?v=20260922_v41_video_admin_only";
-import { initConsultationModule } from "./modules/consultation.js?v=20260922_v41_video_admin_only";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v41_video_admin_only";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v41_video_admin_only";
-import { initAuthModule } from "./modules/auth.js?v=20260922_v41_video_admin_only";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v41_video_admin_only";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v41_video_admin_only";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v42_video_on_home";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v42_video_on_home";
+import { initCalculators } from "./modules/calculators.js?v=20260922_v42_video_on_home";
+import { initConsultationModule } from "./modules/consultation.js?v=20260922_v42_video_on_home";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v42_video_on_home";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v42_video_on_home";
+import { initAuthModule } from "./modules/auth.js?v=20260922_v42_video_on_home";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v42_video_on_home";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v42_video_on_home";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");
@@ -176,8 +176,30 @@ function setupBackToTop() {
   });
 }
 
+// Cuộn trực tiếp đến Thư viện Video lâm sàng trên Trang chủ
+window.scrollToHomeVideoLibrary = function() {
+  const homeBtn = document.querySelector('[data-nav-target="home"]');
+  if (homeBtn) homeBtn.click();
+
+  const drawer = document.getElementById("mobileMenuDrawer");
+  if (drawer && !drawer.classList.contains("hidden")) {
+    drawer.classList.add("hidden");
+  }
+
+  setTimeout(() => {
+    const sec = document.getElementById("homeVideoLibrarySection");
+    if (sec) {
+      sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 100);
+};
+
 // Shortcut điều hướng toàn cục
 window.navigateToSection = function(sectionId) {
+  if (sectionId === "videos") {
+    window.scrollToHomeVideoLibrary();
+    return;
+  }
   const targetLink = document.querySelector(`[data-nav-target="${sectionId}"]`);
   if (targetLink) targetLink.click();
 };
