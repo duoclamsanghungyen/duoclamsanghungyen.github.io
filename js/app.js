@@ -2,14 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260918_v39_desloratadine";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260918_v39_desloratadine";
-import { initCalculators } from "./modules/calculators.js?v=20260918_v39_desloratadine";
-import { initConsultationModule } from "./modules/consultation.js?v=20260918_v39_desloratadine";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260918_v39_desloratadine";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260918_v39_desloratadine";
-import { initAuthModule } from "./modules/auth.js?v=20260918_v39_desloratadine";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260918_v39_desloratadine";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v40_video_library";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v40_video_library";
+import { initCalculators } from "./modules/calculators.js?v=20260922_v40_video_library";
+import { initConsultationModule } from "./modules/consultation.js?v=20260922_v40_video_library";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v40_video_library";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v40_video_library";
+import { initAuthModule } from "./modules/auth.js?v=20260922_v40_video_library";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v40_video_library";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v40_video_library";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");
@@ -24,6 +25,7 @@ function initApp() {
   initConsultationModule();
   initAdrModule();
   initIvCompatibilityModule();
+  initVideoLibrary();
 
   // Tự động đồng bộ thuốc tùy biến và chữa lành các file PDF thiếu URL từ Supabase Cloud trong nền
   setTimeout(async () => {
