@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20260922_v42_video_on_home";
+} from "../data/drugs.js?v=20260922_v43_video_upload_fix";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260922_v42_video_on_home";
+} from "../data/pdfStorage.js?v=20260922_v43_video_upload_fix";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [
@@ -2386,7 +2386,7 @@ function setupGlobalWindowBindings() {
 
   window.getCurrentUser = getCurrentUser;
   window.executeLogin = executeLogin;
-  window.loginWithRole = (roleOrEmail) => {
+  window.loginWithRole = window._moduleLoginWithRole = (roleOrEmail) => {
     const acc = DEFAULT_ACCOUNTS.find(a => a.role === roleOrEmail || a.email.toLowerCase() === (roleOrEmail || "").toLowerCase());
     if (acc) executeLogin(acc);
     return acc;

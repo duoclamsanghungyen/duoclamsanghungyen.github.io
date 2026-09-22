@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v42_video_on_home";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v42_video_on_home";
-import { initCalculators } from "./modules/calculators.js?v=20260922_v42_video_on_home";
-import { initConsultationModule } from "./modules/consultation.js?v=20260922_v42_video_on_home";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v42_video_on_home";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v42_video_on_home";
-import { initAuthModule } from "./modules/auth.js?v=20260922_v42_video_on_home";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v42_video_on_home";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v42_video_on_home";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v43_video_upload_fix";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v43_video_upload_fix";
+import { initCalculators } from "./modules/calculators.js?v=20260922_v43_video_upload_fix";
+import { initConsultationModule } from "./modules/consultation.js?v=20260922_v43_video_upload_fix";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v43_video_upload_fix";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v43_video_upload_fix";
+import { initAuthModule } from "./modules/auth.js?v=20260922_v43_video_upload_fix";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v43_video_upload_fix";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v43_video_upload_fix";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

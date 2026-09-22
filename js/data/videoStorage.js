@@ -5,6 +5,7 @@
  */
 
 import { getSupabaseCredentials } from "../config.js";
+import { getSupabaseClient } from "../modules/supabaseService.js?v=20260922_v43_video_upload_fix";
 
 export const VIDEO_STORAGE_KEY = "clinicalrx_videos_store_v1";
 
@@ -21,7 +22,7 @@ export const DEFAULT_CLINICAL_VIDEOS = [
     fileSize: 12582912, // 12 MB
     fileSizeFormatted: "12.0 MB",
     fileName: "Ky_thuat_su_dung_MDI_va_Buong_dem.mp4",
-    fileUrl: "", // Sẵn sàng để cập nhật hoặc phát demo
+    fileUrl: "",
     thumbnailUrl: "",
     description: "Hướng dẫn chi tiết từng bước cho người bệnh hen phế quản và COPD: lắc bình xịt, lắp vào buồng đệm, ngậm kín ống ngậm, ấn 1 nhát xịt và hít thở chậm sâu trong 5-10 giây để lắng đọng tối đa thuốc tại phế quản ngoại vi.",
     uploaderName: "Tổ Dược lâm sàng",
@@ -170,63 +171,102 @@ export async function deleteVideoById(videoId) {
 }
 
 /**
- * Tải trực tiếp file MP4 lên Supabase Storage với thanh tiến trình
- * Bucket: 'drug-pdfs', đường dẫn: 'videos/videoId_filename.mp4'
+ * Tải trực tiếp file video lên Supabase Storage với cơ chế đa tầng (XHR + Supabase JS SDK Fallback)
+ * Bucket: 'drug-pdfs', thư mục: 'videos/videoId_cleanFileName.mp4'
  */
-export function uploadVideoFileToSupabase(file, videoId, onProgress) {
-  return new Promise((resolve, reject) => {
-    const { url, key } = getSupabaseCredentials();
-    if (!url || !key) {
-      return reject(new Error("Chưa cấu hình Supabase URL hoặc API Key."));
-    }
+export async function uploadVideoFileToSupabase(file, videoId, onProgress) {
+  const { url, key } = getSupabaseCredentials();
+  if (!url || !key) {
+    throw new Error("Chưa cấu hình thông tin kết nối Supabase Cloud.");
+  }
 
-    // Làm sạch tên file an toàn
-    const cleanFileName = file.name
-      .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
-      .replace(/[^a-zA-Z0-9._-]/g, "_");
+  // Làm sạch tên file tiếng Việt và ký tự đặc biệt
+  const cleanFileName = file.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9._-]/g, "_");
 
-    const storagePath = `videos/${videoId}_${cleanFileName}`;
-    const uploadUrl = `${url}/storage/v1/object/drug-pdfs/${encodeURIComponent(storagePath)}`;
+  const storagePath = `videos/${videoId}_${cleanFileName}`;
+  const contentType = file.type || "video/mp4";
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", uploadUrl, true);
-    xhr.setRequestHeader("apikey", key);
-    xhr.setRequestHeader("Authorization", `Bearer ${key}`);
-    xhr.setRequestHeader("Content-Type", file.type || "video/mp4");
-    xhr.setRequestHeader("x-upsert", "true");
+  // Chiến lược 1: Thử tải qua XMLHttpRequest trực tiếp (hỗ trợ báo % tiến độ mượt mà)
+  try {
+    return await new Promise((resolve, reject) => {
+      const uploadUrl = `${url}/storage/v1/object/drug-pdfs/${storagePath}`;
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", uploadUrl, true);
+      xhr.setRequestHeader("apikey", key);
+      xhr.setRequestHeader("Authorization", `Bearer ${key}`);
+      xhr.setRequestHeader("Content-Type", contentType);
+      xhr.setRequestHeader("x-upsert", "true");
 
-    if (xhr.upload && onProgress) {
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          const percent = Math.round((e.loaded / e.total) * 100);
-          onProgress(percent, e.loaded, e.total);
+      if (xhr.upload && onProgress) {
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            onProgress(percent, e.loaded, e.total);
+          }
+        };
+      }
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const publicUrl = `${url}/storage/v1/object/public/drug-pdfs/${storagePath}`;
+          resolve({
+            publicUrl,
+            storagePath,
+            fileName: cleanFileName,
+            fileSize: file.size
+          });
+        } else {
+          try {
+            const errRes = JSON.parse(xhr.responseText);
+            reject(new Error(errRes.message || `Lỗi tải lên máy chủ (${xhr.status})`));
+          } catch {
+            reject(new Error(`Lỗi máy chủ (${xhr.status}): ${xhr.statusText || xhr.responseText}`));
+          }
         }
       };
+
+      xhr.onerror = () => reject(new Error("Lỗi mạng khi kết nối Supabase Storage qua XHR."));
+      xhr.send(file);
+    });
+  } catch (xhrErr) {
+    console.warn("Tải lên qua XHR thất bại, chuyển sang phương án 2 (Supabase JS Client SDK):", xhrErr);
+
+    // Chiến lược 2: Sử dụng Supabase JS Client chính thức
+    const client = getSupabaseClient();
+    if (!client) {
+      throw xhrErr;
     }
 
-    xhr.onload = () => {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const publicUrl = `${url}/storage/v1/object/public/drug-pdfs/${storagePath}`;
-        resolve({
-          publicUrl,
-          storagePath,
-          fileName: cleanFileName,
-          fileSize: file.size
-        });
-      } else {
-        try {
-          const errRes = JSON.parse(xhr.responseText);
-          reject(new Error(errRes.message || `Lỗi tải lên máy chủ (${xhr.status})`));
-        } catch {
-          reject(new Error(`Lỗi tải lên máy chủ (${xhr.status}): ${xhr.statusText}`));
-        }
-      }
-    };
+    if (onProgress) onProgress(50, file.size / 2, file.size);
 
-    xhr.onerror = () => reject(new Error("Lỗi kết nối mạng khi tải video lên máy chủ."));
-    xhr.send(file);
-  });
+    const { data, error } = await client.storage
+      .from("drug-pdfs")
+      .upload(storagePath, file, {
+        contentType: contentType,
+        upsert: true
+      });
+
+    if (error) {
+      console.error("Lỗi Supabase Client SDK upload:", error);
+      throw new Error(error.message || xhrErr.message);
+    }
+
+    if (onProgress) onProgress(100, file.size, file.size);
+
+    const { data: publicData } = client.storage
+      .from("drug-pdfs")
+      .getPublicUrl(storagePath);
+
+    return {
+      publicUrl: publicData?.publicUrl || `${url}/storage/v1/object/public/drug-pdfs/${storagePath}`,
+      storagePath,
+      fileName: cleanFileName,
+      fileSize: file.size
+    };
+  }
 }
 
 /**
@@ -242,20 +282,24 @@ async function syncVideoToSupabase(videoItem) {
     updated_at: new Date().toISOString()
   };
 
-  const response = await fetch(`${url}/rest/v1/custom_drugs`, {
-    method: "POST",
-    headers: {
-      "apikey": key,
-      "Authorization": `Bearer ${key}`,
-      "Content-Type": "application/json",
-      "Prefer": "resolution=merge-duplicates"
-    },
-    body: JSON.stringify(payload)
-  });
+  try {
+    const response = await fetch(`${url}/rest/v1/custom_drugs`, {
+      method: "POST",
+      headers: {
+        "apikey": key,
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+        "Prefer": "resolution=merge-duplicates"
+      },
+      body: JSON.stringify(payload)
+    });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    console.warn("Không thể lưu video metadata lên Supabase:", errText);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.warn("Không thể lưu video metadata lên Supabase:", errText);
+    }
+  } catch (err) {
+    console.warn("Lỗi gọi API lưu video metadata:", err);
   }
 }
 
