@@ -653,49 +653,7 @@
             <select id="drugCategorySelect" class="w-full p-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-teal-500 text-xs sm:text-sm bg-white font-semibold text-slate-800">
               <option value="all">Tất cả 14 nhóm ATC (Dược thư 2022)</option>
             </select>
-          
-          <!-- Phân hệ 7: Thư viện Video lâm sàng -->
-          <div onclick="window.scrollToHomeVideoLibrary()" 
-            class="bg-white rounded-2xl border border-slate-200/90 hover:border-rose-500 hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col justify-between overflow-hidden shadow-xs hover:-translate-y-1">
-            
-            <!-- Banner minh họa trực quan Phân hệ 7 -->
-            <div class="h-32 w-full bg-gradient-to-br from-rose-900 via-rose-800 to-slate-900 relative overflow-hidden flex items-center justify-between px-5">
-              <div class="relative z-10 space-y-1">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-white/20 text-rose-100 backdrop-blur-xs">
-                  <i data-lucide="video" class="w-3 h-3 text-rose-300"></i> HƯỚNG DẪN THỰC HÀNH
-                </span>
-                <h4 class="text-white font-black text-base sm:text-lg leading-tight">Thư Viện Video Lâm Sàng</h4>
-                <p class="text-rose-200/90 text-xs font-medium">Kỹ thuật xịt hít, bút tiêm, tiêm truyền MP4</p>
-              </div>
-              <div class="relative z-10 w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-rose-200 shadow-inner group-hover:scale-110 group-hover:-rotate-3 transition-transform">
-                <i data-lucide="play-circle" class="w-8 h-8 text-white drop-shadow"></i>
-              </div>
-              <div class="absolute -right-6 -bottom-8 w-28 h-28 rounded-full bg-rose-400/20 blur-xl"></div>
-              <div class="absolute left-1/3 -top-6 w-20 h-20 rounded-full bg-white/5"></div>
-            </div>
-
-            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-              <div class="space-y-2">
-                <p class="text-xs text-slate-600 leading-relaxed">
-                  Kho video trực quan hướng dẫn kỹ thuật sử dụng bình xịt định liều (MDI), buồng đệm, bút tiêm Insulin, pha truyền tĩnh mạch kháng sinh và tư vấn người bệnh.
-                </p>
-                <div class="flex flex-wrap gap-1.5 pt-1">
-                  <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">Xịt hít MDI / DPI</span>
-                  <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Bút tiêm Insulin</span>
-                  <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-purple-50 text-purple-700 border border-purple-200">Pha tiêm truyền MP4</span>
-                </div>
-              </div>
-
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-rose-600 group-hover:text-rose-700">
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="upload" class="w-3.5 h-3.5"></i>
-                  <span>Xem Video Lâm Sàng</span>
-                </span>
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-              </div>
-            </div>
           </div>
-        </div>
         </div>
       </div>
 
@@ -2118,7 +2076,7 @@
   </script>
 
   <!-- Master Application Script (ES Module) -->
-  <script type="module" src="./js/app.js?v=20260922_v44_fix_drug_sync_crash"></script>
+  <script type="module" src="./js/app.js?v=20260922_v45_remove_video_from_drugs_tab"></script>
 
 </body>
 </html>

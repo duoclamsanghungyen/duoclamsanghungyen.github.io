@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20260922_v44_fix_drug_sync_crash";
+} from "../data/drugs.js?v=20260922_v45_remove_video_from_drugs_tab";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20260922_v44_fix_drug_sync_crash";
+} from "../data/pdfStorage.js?v=20260922_v45_remove_video_from_drugs_tab";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [

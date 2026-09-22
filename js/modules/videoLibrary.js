@@ -11,7 +11,7 @@ import {
   uploadVideoFileToSupabase,
   syncVideosFromCloud,
   formatVideoFileSize
-} from "../data/videoStorage.js?v=20260922_v44_fix_drug_sync_crash";
+} from "../data/videoStorage.js?v=20260922_v45_remove_video_from_drugs_tab";
 
 let currentCategory = "all";
 let searchQuery = "";

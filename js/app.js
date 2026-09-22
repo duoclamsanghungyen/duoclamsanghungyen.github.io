@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v44_fix_drug_sync_crash";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v44_fix_drug_sync_crash";
-import { initCalculators } from "./modules/calculators.js?v=20260922_v44_fix_drug_sync_crash";
-import { initConsultationModule } from "./modules/consultation.js?v=20260922_v44_fix_drug_sync_crash";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v44_fix_drug_sync_crash";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v44_fix_drug_sync_crash";
-import { initAuthModule } from "./modules/auth.js?v=20260922_v44_fix_drug_sync_crash";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v44_fix_drug_sync_crash";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v44_fix_drug_sync_crash";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initCalculators } from "./modules/calculators.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initConsultationModule } from "./modules/consultation.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initAuthModule } from "./modules/auth.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260922_v45_remove_video_from_drugs_tab";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");
