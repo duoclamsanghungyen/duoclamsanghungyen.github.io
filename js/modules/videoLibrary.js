@@ -11,7 +11,7 @@ import {
   uploadVideoFileToSupabase,
   syncVideosFromCloud,
   formatVideoFileSize
-} from "../data/videoStorage.js?v=20260922_v45_remove_video_from_drugs_tab";
+} from "../data/videoStorage.js?v=20260923_v46_remove_dummy_sample_videos";
 
 let currentCategory = "all";
 let searchQuery = "";

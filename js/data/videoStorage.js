@@ -5,96 +5,25 @@
  */
 
 import { getSupabaseCredentials } from "../config.js";
-import { getSupabaseClient } from "../modules/supabaseService.js?v=20260922_v45_remove_video_from_drugs_tab";
+import { getSupabaseClient } from "../modules/supabaseService.js?v=20260923_v46_remove_dummy_sample_videos";
 
 export const VIDEO_STORAGE_KEY = "clinicalrx_videos_store_v1";
 
-// Danh mục video hướng dẫn lâm sàng chuẩn mực ban đầu
-export const DEFAULT_CLINICAL_VIDEOS = [
-  {
-    id: "video_mdi_spacer_guide",
-    title: "Kỹ thuật sử dụng Bình xịt định liều (MDI) phối hợp Buồng đệm (Spacer)",
-    category: "inhaler",
-    categoryLabel: "Dụng cụ xịt hít & Hô hấp",
-    drugId: "salbutamol",
-    drugName: "Salbutamol (Ventolin)",
-    duration: "03:45",
-    fileSize: 12582912, // 12 MB
-    fileSizeFormatted: "12.0 MB",
-    fileName: "Ky_thuat_su_dung_MDI_va_Buong_dem.mp4",
-    fileUrl: "",
-    thumbnailUrl: "",
-    description: "Hướng dẫn chi tiết từng bước cho người bệnh hen phế quản và COPD: lắc bình xịt, lắp vào buồng đệm, ngậm kín ống ngậm, ấn 1 nhát xịt và hít thở chậm sâu trong 5-10 giây để lắng đọng tối đa thuốc tại phế quản ngoại vi.",
-    uploaderName: "Tổ Dược lâm sàng",
-    department: "Khoa Dược - Khoa Nội Hô hấp",
-    createdAt: "2026-09-22T08:00:00.000Z",
-    isBuiltin: true
-  },
-  {
-    id: "video_insulin_pen_technique",
-    title: "Quy trình tiêm Insulin bằng Bút tiêm nạp sẵn và thay kim an toàn",
-    category: "injection",
-    categoryLabel: "Bút tiêm & Tiêm dưới da",
-    drugId: "insulin_human",
-    drugName: "Insulin (Bút tiêm)",
-    duration: "04:20",
-    fileSize: 14680064, // 14 MB
-    fileSizeFormatted: "14.0 MB",
-    fileName: "Quy_trinh_tiem_Insulin_but_tiem.mp4",
-    fileUrl: "",
-    thumbnailUrl: "",
-    description: "Kỹ thuật kiểm tra lưu thông kim (prime 2 đơn vị), lấy véo da góc 90 độ hoặc 45 độ, ấn hết nút tiêm và giữ nguyên kim trong da tối thiểu 10 giây trước khi rút để tránh rò rỉ thuốc; luân chuyển vị trí tiêm chống loạn dưỡng mỡ.",
-    uploaderName: "Dược sĩ Lâm sàng",
-    department: "Khoa Dược - Khoa Nội Tiết",
-    createdAt: "2026-09-22T08:30:00.000Z",
-    isBuiltin: true
-  },
-  {
-    id: "video_meropenem_infusion",
-    title: "Kỹ thuật hoàn nguyên & Truyền kéo dài (Extended Infusion) Meropenem",
-    category: "iv_reconstitution",
-    categoryLabel: "Tiêm truyền & Pha chế",
-    drugId: "meropenem",
-    drugName: "Meropenem",
-    duration: "05:15",
-    fileSize: 18874368, // 18 MB
-    fileSizeFormatted: "18.0 MB",
-    fileName: "Ky_thuat_pha_truyen_keo_dai_Meropenem.mp4",
-    fileUrl: "",
-    thumbnailUrl: "",
-    description: "Quy trình hoàn nguyên 1g Meropenem với 20ml nước cất, pha loãng trong 100ml NaCl 0.9%, thiết lập máy truyền dịch truyền kéo dài trong 3 giờ nhằm tối ưu hóa dược động học %T > MIC trong điều trị nhiễm khuẩn huyết và sốc nhiễm khuẩn.",
-    uploaderName: "Tổ Dược lâm sàng",
-    department: "Khoa Dược - Khoa Hồi sức tích cực (ICU)",
-    createdAt: "2026-09-22T09:00:00.000Z",
-    isBuiltin: true
-  },
-  {
-    id: "video_enoxaparin_subcut",
-    title: "Kỹ thuật tiêm dưới da chống đông Enoxaparin (Lovenox) không đuổi bọt khí",
-    category: "injection",
-    categoryLabel: "Bút tiêm & Tiêm dưới da",
-    drugId: "enoxaparin",
-    drugName: "Enoxaparin (Lovenox)",
-    duration: "03:10",
-    fileSize: 9961472, // 9.5 MB
-    fileSizeFormatted: "9.5 MB",
-    fileName: "Ky_thuat_tiem_duoi_da_Enoxaparin.mp4",
-    fileUrl: "",
-    thumbnailUrl: "",
-    description: "Lưu ý quan trọng: Tuyệt đối KHÔNG đuổi bọt khí trong bơm tiêm nạp sẵn trước khi tiêm. Vị trí tiêm ở vùng bụng cách rốn 5cm, véo nếp da trong suốt quá trình tiêm và không xoa bóp vị trí tiêm để phòng tránh tụ máu bầm dưới da.",
-    uploaderName: "Tổ Dược lâm sàng",
-    department: "Khoa Dược - Khoa Tim mạch",
-    createdAt: "2026-09-22T09:30:00.000Z",
-    isBuiltin: true
-  }
-];
+// Danh mục video hướng dẫn lâm sàng ban đầu (Chỉ hiển thị các video có tệp tin MP4 thực tế)
+export const DEFAULT_CLINICAL_VIDEOS = [];
 
 export function getLocalStoredVideos() {
   try {
     const raw = localStorage.getItem(VIDEO_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    // Tự động loại bỏ hoàn toàn các video mẫu cũ không có đường dẫn tệp video (fileUrl)
+    const valid = parsed.filter(v => v && v.fileUrl && v.fileUrl.trim());
+    if (valid.length !== parsed.length) {
+      saveLocalStoredVideos(valid);
+    }
+    return valid;
   } catch (e) {
     console.warn("Lỗi đọc video từ localStorage:", e);
     return [];
@@ -103,7 +32,8 @@ export function getLocalStoredVideos() {
 
 export function saveLocalStoredVideos(videos) {
   try {
-    localStorage.setItem(VIDEO_STORAGE_KEY, JSON.stringify(videos));
+    const valid = (Array.isArray(videos) ? videos : []).filter(v => v && v.fileUrl && v.fileUrl.trim());
+    localStorage.setItem(VIDEO_STORAGE_KEY, JSON.stringify(valid));
   } catch (e) {
     console.error("Lỗi lưu video vào localStorage:", e);
   }
@@ -113,11 +43,19 @@ export function getAllClinicalVideos() {
   const localList = getLocalStoredVideos();
   const map = new Map();
 
-  // 1. Nạp danh mục mặc định
-  DEFAULT_CLINICAL_VIDEOS.forEach(v => map.set(v.id, { ...v }));
+  // 1. Nạp danh mục mặc định (chỉ lấy video có fileUrl)
+  DEFAULT_CLINICAL_VIDEOS.forEach(v => {
+    if (v && v.fileUrl && v.fileUrl.trim()) {
+      map.set(v.id, { ...v });
+    }
+  });
 
-  // 2. Ghi đè hoặc thêm video do người dùng/admin tải lên
-  localList.forEach(v => map.set(v.id, { ...v }));
+  // 2. Ghi đè hoặc thêm video do người dùng/admin tải lên (chỉ lấy video có fileUrl)
+  localList.forEach(v => {
+    if (v && v.fileUrl && v.fileUrl.trim()) {
+      map.set(v.id, { ...v });
+    }
+  });
 
   return Array.from(map.values()).sort((a, b) => {
     const timeA = new Date(a.createdAt || 0).getTime();
@@ -323,11 +261,13 @@ export async function syncVideosFromCloud() {
     const rows = await response.json();
     if (!Array.isArray(rows)) return [];
 
-    const cloudVideos = rows.map(r => r.data).filter(Boolean);
+    const cloudVideos = rows.map(r => r.data).filter(v => v && v.fileUrl && v.fileUrl.trim());
     if (cloudVideos.length > 0) {
       const localList = getLocalStoredVideos();
       const map = new Map();
-      localList.forEach(v => map.set(v.id, v));
+      localList.forEach(v => {
+        if (v && v.fileUrl && v.fileUrl.trim()) map.set(v.id, v);
+      });
       cloudVideos.forEach(v => map.set(v.id, v));
       const merged = Array.from(map.values());
       saveLocalStoredVideos(merged);
