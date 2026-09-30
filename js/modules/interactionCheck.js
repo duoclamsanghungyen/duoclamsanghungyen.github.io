@@ -4,8 +4,8 @@
  * THEO QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260923_v46_remove_dummy_sample_videos";
-import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20260923_v46_remove_dummy_sample_videos";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
 
 let selectedDrugs = [];
 let qdVisibleLimit = 50;

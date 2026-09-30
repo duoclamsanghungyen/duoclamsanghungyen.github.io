@@ -5,12 +5,119 @@
  */
 
 import { getSupabaseCredentials } from "../config.js";
-import { getSupabaseClient } from "../modules/supabaseService.js?v=20260923_v46_remove_dummy_sample_videos";
+import { getSupabaseClient } from "../modules/supabaseService.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
 
 export const VIDEO_STORAGE_KEY = "clinicalrx_videos_store_v1";
 
-// Danh mục video hướng dẫn lâm sàng ban đầu (Chỉ hiển thị các video có tệp tin MP4 thực tế)
-export const DEFAULT_CLINICAL_VIDEOS = [];
+/**
+ * Chuẩn hóa URL video, tự động chuyển về tệp nội bộ siêu tốc độ nếu đường dẫn đám mây gặp sự cố tạm dừng
+ */
+export function normalizeVideoUrl(video) {
+  if (!video) return "";
+  let url = (video.fileUrl || "").trim();
+  const text = ((video.fileName || "") + " " + (video.title || "") + " " + url).toLowerCase();
+
+  // Kiểm tra nếu là URL Supabase tạm ngưng hoặc không hợp lệ hoặc tương ứng với các video lâm sàng nội viện
+  if (!url || url.includes("supabase.co") || !url.startsWith("http")) {
+    if (text.includes("pseudomonas") || text.includes("psa") || text.includes("dtr") || text.includes("mdr")) {
+      return "./assets/videos/pseudomonas_aeruginosa_mdr_idsa_2026.mp4";
+    }
+    if (text.includes("ampc") || text.includes("cefepime")) {
+      return "./assets/videos/enterobacterales_ampc_cefepime_idsa_2026.mp4";
+    }
+    if (text.includes("esbl") || text.includes("klebsiella") || text.includes("carbapenem")) {
+      return "./assets/videos/esbl_ecoli_klebsiella_carbapenem_idsa.mp4";
+    }
+    if (text.includes("binh_xit") || text.includes("buong_dem") || text.includes("mask") || text.includes("inhaler") || text.includes("spacer")) {
+      return "./assets/videos/huong_dan_binh_xit_dinh_lieu_buong_dem.mp4";
+    }
+  }
+  return url;
+}
+
+// Danh mục video hướng dẫn lâm sàng chuẩn mực nội viện (Lưu trữ trực tiếp trên CDN website, phát tức thì 100% không phụ thuộc máy chủ bên thứ ba)
+export const DEFAULT_CLINICAL_VIDEOS = [
+  {
+    id: "video_psa_mdr_2026",
+    title: "Hướng dẫn thực hành tiếp cận và điều trị nhiễm khuẩn do Pseudomonas aeruginosa đa kháng thuốc",
+    category: "anti_infective",
+    drugGroup: "anti_infective",
+    categoryLabel: "Kháng sinh & Kháng khuẩn (ATC J)",
+    drugId: "meropenem",
+    drugName: "Meropenem",
+    duration: "18:25",
+    fileSize: 20316773,
+    fileSizeFormatted: "19.4 MB",
+    fileName: "pseudomonas_aeruginosa_mdr_idsa_2026.mp4",
+    fileUrl: "./assets/videos/pseudomonas_aeruginosa_mdr_idsa_2026.mp4",
+    thumbnailUrl: "",
+    description: "Cá thể hóa phác đồ β-lactam thế hệ mới và phối hợp kháng sinh theo khuyến cáo IDSA 2026 trong điều trị Pseudomonas aeruginosa đa kháng (MDR) và kháng trị khó (DTR).",
+    uploaderName: "Tổ Dược Lâm Sàng",
+    department: "Khoa Dược · BVĐK Tỉnh Hưng Yên",
+    createdAt: "2026-09-22T08:00:00.000Z",
+    isBuiltin: true
+  },
+  {
+    id: "video_ampc_cefepime_2026",
+    title: "Tối ưu hóa phác đồ Cefepime liều cao truyền kéo dài trong điều trị Enterobacterales sinh men AmpC",
+    category: "anti_infective",
+    drugGroup: "anti_infective",
+    categoryLabel: "Kháng sinh & Kháng khuẩn (ATC J)",
+    drugId: "cefepime",
+    drugName: "Cefepime",
+    duration: "11:40",
+    fileSize: 12776489,
+    fileSizeFormatted: "12.2 MB",
+    fileName: "enterobacterales_ampc_cefepime_idsa_2026.mp4",
+    fileUrl: "./assets/videos/enterobacterales_ampc_cefepime_idsa_2026.mp4",
+    thumbnailUrl: "",
+    description: "Chiến lược phân tầng nguy cơ lâm sàng và áp dụng chế độ liều Cefepime tối ưu PK/PD (2g mỗi 8 giờ truyền 4 giờ) theo hướng dẫn IDSA 2026.",
+    uploaderName: "Tổ Dược Lâm Sàng",
+    department: "Khoa Dược · BVĐK Tỉnh Hưng Yên",
+    createdAt: "2026-09-22T09:00:00.000Z",
+    isBuiltin: true
+  },
+  {
+    id: "video_esbl_carbapenem_idsa",
+    title: "Tối ưu hóa Carbapenems và chiến lược bảo tồn kháng sinh trong điều trị ESBL-E",
+    category: "anti_infective",
+    drugGroup: "anti_infective",
+    categoryLabel: "Kháng sinh & Kháng khuẩn (ATC J)",
+    drugId: "meropenem",
+    drugName: "Meropenem",
+    duration: "08:50",
+    fileSize: 9561467,
+    fileSizeFormatted: "9.1 MB",
+    fileName: "esbl_ecoli_klebsiella_carbapenem_idsa.mp4",
+    fileUrl: "./assets/videos/esbl_ecoli_klebsiella_carbapenem_idsa.mp4",
+    thumbnailUrl: "",
+    description: "Tiếp cận điều trị Escherichia coli và Klebsiella pneumoniae sinh men ESBL: Lựa chọn Carbapenem hợp lý và các phác đồ thay thế tiết kiệm carbapenem theo IDSA.",
+    uploaderName: "Tổ Dược Lâm Sàng",
+    department: "Khoa Dược · BVĐK Tỉnh Hưng Yên",
+    createdAt: "2026-09-23T08:00:00.000Z",
+    isBuiltin: true
+  },
+  {
+    id: "video_mdi_spacer_copd",
+    title: "Kỹ thuật sử dụng bình xịt định liều qua buồng đệm cho bệnh nhân Hen và COPD",
+    category: "respiratory",
+    drugGroup: "respiratory",
+    categoryLabel: "Hô hấp & Dụng cụ xịt hít (ATC R)",
+    drugId: "salbutamol",
+    drugName: "Salbutamol",
+    duration: "03:45",
+    fileSize: 4010316,
+    fileSizeFormatted: "3.8 MB",
+    fileName: "huong_dan_binh_xit_dinh_lieu_buong_dem.mp4",
+    fileUrl: "./assets/videos/huong_dan_binh_xit_dinh_lieu_buong_dem.mp4",
+    thumbnailUrl: "",
+    description: "Video hướng dẫn thao tác chuẩn kỹ thuật xịt hít bằng buồng đệm không mask: Các bước chuẩn bị, phối hợp nhịp thở, nín thở và vệ sinh buồng đệm sau khi dùng.",
+    uploaderName: "Tổ Dược Lâm Sàng",
+    department: "Khoa Dược · BVĐK Tỉnh Hưng Yên",
+    createdAt: "2026-09-22T10:00:00.000Z",
+    isBuiltin: true
+  }
+];
 
 export function getLocalStoredVideos() {
   try {
@@ -18,9 +125,19 @@ export function getLocalStoredVideos() {
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    // Tự động loại bỏ hoàn toàn các video mẫu cũ không có đường dẫn tệp video (fileUrl)
-    const valid = parsed.filter(v => v && v.fileUrl && v.fileUrl.trim());
-    if (valid.length !== parsed.length) {
+    // Tự động chuẩn hóa và khôi phục các video bị link Supabase tạm ngưng
+    let modified = false;
+    const valid = parsed.map(v => {
+      if (v) {
+        const norm = normalizeVideoUrl(v);
+        if (norm && norm !== v.fileUrl) {
+          v.fileUrl = norm;
+          modified = true;
+        }
+      }
+      return v;
+    }).filter(v => v && v.fileUrl && v.fileUrl.trim());
+    if (modified || valid.length !== parsed.length) {
       saveLocalStoredVideos(valid);
     }
     return valid;

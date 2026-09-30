@@ -517,16 +517,17 @@
       <div id="homeVideoLibrarySection" class="pt-6 space-y-6 border-t border-slate-200/80 scroll-mt-20">
         
         <!-- Video Library Hero Banner -->
+        <!-- Header Banner Thư viện Video -->
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white p-6 sm:p-8 shadow-xl border border-teal-800/40">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div class="max-w-2xl space-y-3">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-400/30">
                   <i data-lucide="video" class="w-3.5 h-3.5 text-rose-400"></i>
-                  <span>Thư Viện Video Lâm Sàng & Đào Tạo Dược</span>
+                  <span>Thư Viện Video Lâm Sàng Theo Nhóm Thuốc</span>
                 </span>
                 <span id="videoTotalCountBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-white/10 text-teal-200 border border-white/15">
-                  4 video
+                  3 video
                 </span>
                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
                   Trang chủ nội viện
@@ -534,11 +535,11 @@
               </div>
 
               <h2 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-                Kho Video <span class="text-rose-400">Hướng Dẫn Thực Hành</span> & Thao Tác Chuẩn
+                Kho Video Hướng Dẫn Thực Hành Theo <span class="text-rose-400">Từng Nhóm Thuốc</span>
               </h2>
 
               <p class="text-xs sm:text-sm text-teal-100/90 leading-relaxed">
-                Tập hợp các video trực quan hướng dẫn kỹ thuật sử dụng dụng cụ xịt hít hô hấp (MDI, buồng đệm, DPI), kỹ thuật tiêm dưới da (Insulin, Enoxaparin), quy trình hoàn nguyên pha truyền tĩnh mạch và tư vấn người bệnh tại Bệnh viện Đa khoa tỉnh Hưng Yên.
+                Phân loại bài giảng và video kỹ thuật thao tác lâm sàng theo các nhóm thuốc điều trị: Kháng sinh & Kháng khuẩn, Hô hấp & Dụng cụ xịt hít, Tim mạch & Chống đông, Nội tiết & Bút tiêm Insulin, Tiêu hóa, Thần kinh, Ung thư...
               </p>
             </div>
 
@@ -555,37 +556,56 @@
           <div class="absolute -right-10 -bottom-10 w-72 h-72 rounded-full bg-rose-500/10 blur-3xl pointer-events-none"></div>
         </div>
 
-        <!-- Thanh Tìm Kiếm & Bộ Lọc Chuyên Mục -->
+        <!-- Thanh Tìm Kiếm & Bộ Lọc Nhóm Thuốc -->
         <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
           
           <!-- Search bar -->
           <div class="relative">
             <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
             <input id="videoSearchInput" type="text"
-              placeholder="Tìm kiếm video theo tên thao tác, kỹ thuật, tên thuốc (Insulin, Salbutamol, Meropenem...)..."
+              placeholder="Tìm kiếm video theo tên nhóm thuốc, hoạt chất (Meropenem, Cefepime, Salbutamol...), bệnh lý..."
               class="w-full pl-10 pr-4 py-2.5 bg-slate-50 hover:bg-slate-100/80 focus:bg-white text-slate-900 border border-slate-200 focus:border-teal-500 rounded-xl outline-none text-xs sm:text-sm transition-all">
           </div>
 
-          <!-- Category filter tabs -->
-          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-            <button data-video-category="all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-teal-600 text-white shadow-xs cursor-pointer whitespace-nowrap">
-              Tất cả video
-            </button>
-            <button data-video-category="inhaler" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-              Dụng cụ xịt hít & Hô hấp
-            </button>
-            <button data-video-category="injection" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-              Bút tiêm & Tiêm dưới da
-            </button>
-            <button data-video-category="iv_reconstitution" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-              Tiêm truyền & Pha chế
-            </button>
-            <button data-video-category="counseling" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-              Tư vấn người bệnh
-            </button>
-            <button data-video-category="training" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
-              Tập huấn & Hội thảo
-            </button>
+          <!-- Category filter tabs by Drug Group -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] font-bold text-slate-500 px-1">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-teal-600"></i>
+                <span>Phân loại video theo nhóm thuốc điều trị:</span>
+              </span>
+              <span class="text-slate-400 font-normal italic">Cuộn ngang để xem đủ các nhóm</span>
+            </div>
+
+            <div id="videoCategoryFilterContainer" class="flex items-center gap-1.5 overflow-x-auto pb-1.5 pt-0.5 touch-scroll hide-scrollbar">
+              <button data-video-category="all" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-teal-600 text-white shadow-xs cursor-pointer whitespace-nowrap">
+                Tất cả nhóm thuốc
+              </button>
+              <button data-video-category="anti_infective" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Kháng sinh & Kháng khuẩn (ATC J)
+              </button>
+              <button data-video-category="respiratory" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Hô hấp & Dụng cụ xịt hít (ATC R)
+              </button>
+              <button data-video-category="cardiovascular" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Tim mạch & Chống đông (ATC B/C)
+              </button>
+              <button data-video-category="endocrine" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Nội tiết & Bút tiêm Insulin (ATC A/H)
+              </button>
+              <button data-video-category="gastrointestinal" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Tiêu hóa & Chuyển hóa (ATC A)
+              </button>
+              <button data-video-category="neurology" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Thần kinh & Giảm đau (ATC N)
+              </button>
+              <button data-video-category="oncology" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Chống ung thư & Miễn dịch (ATC L)
+              </button>
+              <button data-video-category="general_clinical" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer whitespace-nowrap">
+                Tập huấn & Kỹ thuật chung
+              </button>
+            </div>
           </div>
 
         </div>
@@ -1865,13 +1885,16 @@
         <!-- Chuyên mục và Thuốc liên quan -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Phân loại chuyên mục:</label>
+            <label class="block font-bold text-slate-700 mb-1">Nhóm thuốc điều trị (*):</label>
             <select id="videoUploadCategory" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 focus:border-teal-500 rounded-xl outline-none text-xs sm:text-sm font-medium">
-              <option value="inhaler">Dụng cụ xịt hít & Hô hấp</option>
-              <option value="injection">Bút tiêm & Tiêm dưới da</option>
-              <option value="iv_reconstitution">Tiêm truyền & Pha chế</option>
-              <option value="counseling">Tư vấn người bệnh</option>
-              <option value="training">Tập huấn & Hội thảo</option>
+              <option value="anti_infective">Kháng sinh & Kháng khuẩn (ATC J)</option>
+              <option value="respiratory">Thuốc Hô hấp & Dụng cụ xịt hít (ATC R)</option>
+              <option value="cardiovascular">Tim mạch & Chống đông máu (ATC B/C)</option>
+              <option value="endocrine">Nội tiết & Bút tiêm Insulin (ATC A/H)</option>
+              <option value="gastrointestinal">Tiêu hóa & Chuyển hóa (ATC A)</option>
+              <option value="neurology">Thần kinh & Giảm đau (ATC N)</option>
+              <option value="oncology">Chống ung thư & Miễn dịch (ATC L)</option>
+              <option value="general_clinical">Tập huấn & Quy trình kỹ thuật chung</option>
             </select>
           </div>
 
@@ -2076,7 +2099,7 @@
   </script>
 
   <!-- Master Application Script (ES Module) -->
-  <script type="module" src="./js/app.js?v=20260923_v46_remove_dummy_sample_videos"></script>
+  <script type="module" src="./js/app.js?v=20260930_v47_restore_clinical_videos_and_drug_groups"></script>
 
 </body>
 </html>

@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initCalculators } from "./modules/calculators.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initConsultationModule } from "./modules/consultation.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initAuthModule } from "./modules/auth.js?v=20260923_v46_remove_dummy_sample_videos";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260923_v46_remove_dummy_sample_videos";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260923_v46_remove_dummy_sample_videos";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initCalculators } from "./modules/calculators.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initConsultationModule } from "./modules/consultation.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initAdrModule } from "./modules/adrReporting.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initAuthModule } from "./modules/auth.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");
