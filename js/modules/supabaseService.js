@@ -520,6 +520,24 @@ export function openSupabaseModal() {
             </div>
           </div>
 
+          <!-- Khối Cơ chế Tự động Giữ nhịp 24/7 (Keep-Alive) -->
+          <div class="bg-teal-50 border border-teal-200 rounded-xl p-3.5 space-y-1.5 text-xs text-teal-900">
+            <div class="flex items-center gap-2 font-bold text-teal-950">
+              <i data-lucide="shield-check" class="w-4 h-4 text-teal-600"></i>
+              <span>Cơ chế Tự Động Giữ Nhịp 24/7 (Anti-Sleep Keep-Alive)</span>
+            </div>
+            <p class="text-[11px] text-teal-800 leading-relaxed">
+              Hệ thống đã được tích hợp GitHub Actions tự động kiểm tra định kỳ mỗi 2 ngày để giữ máy chủ Supabase luôn thức vĩnh viễn, không bị tạm ngưng sau 7 ngày.
+            </p>
+            <div class="flex items-center gap-2 pt-0.5 text-[11px]">
+              <span>Kiểm tra hoặc đánh thức thủ công:</span>
+              <a href="https://supabase.com/dashboard/project/xhhlhrenrxviksknpvck" target="_blank" class="inline-flex items-center gap-1 font-bold text-teal-700 hover:text-teal-950 underline">
+                <span>Supabase Dashboard</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+
           <!-- Khối hướng dẫn Khởi tạo SQL 1-Click -->
           <div class="bg-amber-50/60 border border-amber-200 rounded-xl p-4 space-y-2.5">
             <div class="flex items-center gap-2 text-amber-900 font-bold text-xs">
@@ -559,8 +577,42 @@ export function openSupabaseModal() {
   if (window.lucide) window.lucide.createIcons();
 }
 
+/**
+ * Tự động gửi tín hiệu giữ nhịp (Keep-Alive) cho Supabase định kỳ khi người dùng duyệt web
+ * Chống tạm ngưng 7 ngày (7-day inactivity pause)
+ */
+export async function autoKeepAliveSupabase() {
+  if (typeof window === "undefined") return;
+  const LAST_PING_KEY = "clinicalrx_supabase_last_ping";
+  const now = Date.now();
+  const lastPing = parseInt(localStorage.getItem(LAST_PING_KEY) || "0", 10);
+
+  // Chỉ ping tối đa 1 lần mỗi 4 tiếng để tiết kiệm tài nguyên mạng
+  if (now - lastPing < 4 * 3600 * 1000) return;
+
+  const { url, key } = getSupabaseCredentials();
+  if (!url || !key) return;
+
+  try {
+    const res = await fetch(`${url}/rest/v1/custom_drugs?select=id&limit=1`, {
+      method: "GET",
+      headers: {
+        "apikey": key,
+        "Authorization": `Bearer ${key}`
+      }
+    });
+    if (res.ok) {
+      localStorage.setItem(LAST_PING_KEY, now.toString());
+      console.log("⚡ [Supabase Keep-Alive] Đã gửi tín hiệu giữ nhịp thành công. Bộ đếm 7 ngày đã được làm mới!");
+    }
+  } catch (err) {
+    console.debug("[Supabase Keep-Alive] Đang chờ kết nối:", err);
+  }
+}
+
 // Window global helper bindings
 if (typeof window !== "undefined") {
+  window.autoKeepAliveSupabase = autoKeepAliveSupabase;
   window.openSupabaseAuthModal = openSupabaseModal;
   window.openSupabaseModal = openSupabaseModal;
   window.closeSupabaseAuthModal = function() {

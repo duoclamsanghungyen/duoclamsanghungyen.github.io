@@ -10,7 +10,7 @@ import { initAdrModule } from "./modules/adrReporting.js?v=20260930_v47_restore_
 import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
 import { initAuthModule } from "./modules/auth.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
 import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { syncCustomDrugsFromCloud, openSupabaseModal } from "./modules/supabaseService.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");
@@ -35,9 +35,12 @@ function initApp() {
     }
   });
 
-  // Tự động đồng bộ thuốc tùy biến và chữa lành các file PDF thiếu URL từ Supabase Cloud trong nền
+  // Tự động giữ nhịp Supabase và đồng bộ thuốc tùy biến từ Supabase Cloud trong nền
   setTimeout(async () => {
     try {
+      if (typeof autoKeepAliveSupabase === "function") {
+        await autoKeepAliveSupabase();
+      }
       await syncCustomDrugsFromCloud();
       if (window.autoHealMissingCloudPdfs) {
         await window.autoHealMissingCloudPdfs();
