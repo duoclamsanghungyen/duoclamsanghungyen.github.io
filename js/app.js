@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initCalculators } from "./modules/calculators.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initConsultationModule } from "./modules/consultation.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initAdrModule } from "./modules/adrReporting.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initAuthModule } from "./modules/auth.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
-import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initCalculators } from "./modules/calculators.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initConsultationModule } from "./modules/consultation.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initAdrModule } from "./modules/adrReporting.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initAuthModule } from "./modules/auth.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20261021_v48_add_ceftizoxime_monograph";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

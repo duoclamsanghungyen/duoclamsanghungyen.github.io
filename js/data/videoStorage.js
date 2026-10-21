@@ -5,7 +5,7 @@
  */
 
 import { getSupabaseCredentials } from "../config.js";
-import { getSupabaseClient } from "../modules/supabaseService.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { getSupabaseClient } from "../modules/supabaseService.js?v=20261021_v48_add_ceftizoxime_monograph";
 
 export const VIDEO_STORAGE_KEY = "clinicalrx_videos_store_v1";
 

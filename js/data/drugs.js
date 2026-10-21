@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20260930_v47_restore_clinical_videos_and_drug_groups";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261021_v48_add_ceftizoxime_monograph";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -7960,6 +7960,105 @@ export const DRUGS_DATABASE = [
     "lactation": "Tương thích khi cho con bú.",
     "tdmTarget": "Không đo nồng độ.",
     "clinicalPearls": "Ưu điểm lớn nhất là dùng 1 lần/ngày và không cần chỉnh liều ở bệnh nhân suy thận đơn thuần."
+  },
+  {
+    "id": "ceftizoxime",
+    "name": "Ceftizoxim (Ceftizoxime natri)",
+    "inn": "Ceftizoxime sodium",
+    "atcGroup": "J",
+    "brandNames": [
+      "Cefizox",
+      "Ceftizox",
+      "Epocelin",
+      "Cefozim",
+      "Zoxicef",
+      "Ceftizoxime 1g"
+    ],
+    "atcCode": "J01DD07",
+    "category": "Kháng sinh Cephalosporin thế hệ 3 (Đường tiêm truyền)",
+    "dosageForm": "Lọ bột đông khô pha tiêm bắp / tiêm truyền tĩnh mạch 500mg, 1g, 2g",
+    "indications": [
+      "Nhiễm khuẩn đường hô hấp dưới: Viêm phổi thùy, viêm phế quản phổi, viêm phổi mắc phải cộng đồng nặng, đợt cấp viêm phế quản mạn do vi khuẩn nhạy cảm.",
+      "Nhiễm khuẩn đường tiết niệu có biến chứng và không biến chứng: Viêm đài bể thận cấp, viêm bàng quang cấp/mạn, viêm niệu đạo do lậu cầu (Neisseria gonorrhoeae).",
+      "Nhiễm khuẩn trong ổ bụng & vùng chậu: Viêm phúc mạc, áp xe trong ổ bụng, viêm phần phụ, viêm nội mạc tử cung (có hoạt tính phối hợp tốt trên cả trực khuẩn Gram âm và vi khuẩn kỵ khí ruột).",
+      "Nhiễm khuẩn huyết và nhiễm khuẩn huyết do trực khuẩn Gram âm đường ruột (Enterobacterales).",
+      "Nhiễm khuẩn da, mô mềm, cơ - xương - khớp nặng do liên cầu khuẩn, tụ cầu nhạy cảm methicillin hoặc vi khuẩn Gram âm.",
+      "Viêm màng não mủ do vi khuẩn Gram âm nhạy cảm (H. influenzae, N. meningitidis, E. coli) nhờ khả năng thâm nhập tốt qua hàng rào máu não khi màng não bị viêm.",
+      "Dự phòng nhiễm khuẩn trong phẫu thuật (phẫu thuật đường tiêu hóa, sản phụ khoa, niệu khoa)."
+    ],
+    "contraindications": [
+      "Tiền sử quá mẫn nặng (sốc phản vệ, phù mạch, hội chứng Stevens-Johnson) với Ceftizoxim hoặc bất kỳ kháng sinh nhóm Cephalosporin nào.",
+      "Tiền sử phản ứng dị ứng tức thì typ I (qua trung gian IgE) với Penicillin."
+    ],
+    "standardDosage": {
+      "adult": "Nhiễm khuẩn nhẹ đến vừa (hô hấp, tiết niệu không biến chứng): 1g - 2g tiêm/truyền TM mỗi 8 - 12 giờ (tổng liều 2g - 4g/ngày). Nhiễm khuẩn nặng, nhiễm trùng huyết: 2g - 3g mỗi 8 giờ hoặc 2g mỗi 4 giờ (tổng liều 6g - 12g/ngày). Lậu cầu không biến chứng: 1g tiêm bắp liều duy nhất. Dự phòng phẫu thuật: 1g tiêm TM 30 - 60 phút trước khi rạch da.",
+      "pediatric": "Trẻ em > 6 tháng tuổi: 50 mg/kg mỗi 8 giờ hoặc 33 - 50 mg/kg mỗi 6 giờ (tổng liều 100 - 150 mg/kg/ngày). Nhiễm khuẩn nặng/viêm màng não: 200 mg/kg/ngày chia 3 - 4 lần (tối đa không quá 12g/ngày). Trẻ sơ sinh < 6 tháng: Thận trọng theo chỉ định hội chẩn chuyên khoa nhi.",
+      "elderly": "Dùng liều người lớn thông thường nhưng bắt buộc hiệu chỉnh theo CrCl do chức năng thận giảm tự nhiên theo tuổi tác."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": "> 50",
+        "dose": "Không cần chỉnh liều: Dùng liều tiêu chuẩn 1g - 2g mỗi 8 - 12 giờ."
+      },
+      {
+        "crcl": "30 - 50",
+        "dose": "500mg - 1g mỗi 12 giờ (hoặc giảm 50% liều tiêu chuẩn)."
+      },
+      {
+        "crcl": "10 - 29",
+        "dose": "500mg - 1g mỗi 24 giờ (hoặc giảm 75% liều, khoảng cách liều mỗi 24 giờ)."
+      },
+      {
+        "crcl": "< 10",
+        "dose": "500mg mỗi 24 - 48 giờ hoặc 1g mỗi 48 giờ."
+      },
+      {
+        "crcl": "Thẩm phân máu (Hemodialysis)",
+        "dose": "Lọc máu đào thải 30 - 50% thuốc: Bổ sung 500mg - 1g ngay sau mỗi buổi lọc máu."
+      },
+      {
+        "crcl": "Lọc màng bụng (CAPD)",
+        "dose": "500mg mỗi 24 - 48 giờ."
+      }
+    ],
+    "hepaticAdjustment": "Không cần hiệu chỉnh liều ở bệnh nhân suy gan đơn thuần (thuốc bài tiết chủ yếu qua thận dưới dạng không đổi).",
+    "administration": "Tiêm tĩnh mạch trực tiếp: Pha 1g trong 10ml nước cất, tiêm chậm 3 - 5 phút. Truyền tĩnh mạch ngắt quãng: Pha trong 50 - 100ml NaCl 0.9% hoặc Glucose 5%, truyền trong 30 - 60 phút (có thể truyền kéo dài 3 - 4 giờ để tối ưu PK/PD %fT>MIC). Tiêm bắp sâu: Pha với nước cất hoặc Lidocain 0.5 - 1% (tối đa 1g tại một vị trí tiêm). Tuyệt đối không pha chung với Aminoglycosid.",
+    "blackBoxWarning": "Không có cảnh báo hộp đen.",
+    "adr": {
+      "common": "Đau và viêm tĩnh mạch tại vị trí tiêm; tiêu chảy, buồn nôn, nôn; phát ban dát sần, ngứa, mày đay; tăng bạch cầu ái toan, tăng men gan thoáng qua (AST, ALT, phosphatase kiềm), nghiệm pháp Coombs trực tiếp dương tính giả.",
+      "serious": "Viêm đại tràng màng giả do Clostridioides difficile, co giật/độc thần kinh (khi dùng liều cao ở bệnh nhân suy thận không chỉnh liều), sốc phản vệ, giảm bạch cầu hạt, giảm tiểu cầu, suy thận cấp tăng creatinine thoáng qua, hội chứng Stevens-Johnson."
+    },
+    "pregnancyCategory": "B - Có thể sử dụng trong thai kỳ khi có chỉ định nhiễm khuẩn rõ ràng (qua nhau thai nhưng không ghi nhận độc tính quái thai).",
+    "lactation": "Tương thích khi cho con bú (bài tiết lượng rất nhỏ vào sữa mẹ, cần theo dõi tiêu chảy hoặc tưa miệng ở trẻ bú).",
+    "tdmTarget": "Không cần đo nồng độ thường quy. Theo dõi đáp ứng lâm sàng, công thức máu và Creatinine huyết thanh.",
+    "clinicalPearls": [
+      "Khác biệt nổi bật về phổ kỵ khí: Khác với Ceftriaxone và Cefotaxime có tác dụng kỵ khí rất yếu, Ceftizoxim có hoạt tính in vitro tương đối tốt trên vi khuẩn kỵ khí ruột (như Bacteroides fragilis), thích hợp trong nhiễm khuẩn hỗn hợp ổ bụng và vùng chậu.",
+      "Cảnh báo độc thần kinh ở suy thận: Hoạt chất thải trừ 80 - 90% qua nước tiểu dưới dạng không đổi (T1/2 kéo dài tới 15 - 30 giờ khi vô niệu). Bắt buộc phải tính CrCl và giảm liều khi CrCl < 50 ml/phút để tránh tích lũy gây co giật, giật cơ não bộ.",
+      "Không chứa chuỗi bên NMTT: Ceftizoxim không chứa chuỗi N-methylthiotetrazole nên không gây phản ứng disulfiram khi uống rượu và không ức chế tổng hợp vitamin K gây rối loạn đông máu như Cefoperazone.",
+      "Nghiệm pháp Coombs: Có thể gây dương tính giả nghiệm pháp Coombs trực tiếp và gây dương tính giả khi xét nghiệm glucose niệu bằng phản ứng khử đồng (Benedict/Fehling)."
+    ],
+    "attachments": [
+      {
+        "id": "att-ceftizoxime-dav-spc",
+        "drugId": "ceftizoxime",
+        "title": "Chuyên luận Dược thư & Hướng dẫn sử dụng Ceftizoxim (Cục Quản lý Dược)",
+        "fileName": "Huong_dan_su_dung_Ceftizoxime.pdf",
+        "fileSize": 1250000,
+        "fileType": "application/pdf",
+        "fileUrl": "https://dav.gov.vn/upload_files/product/ceftizoxime-spc.pdf",
+        "uploadedAt": "21/10/2026"
+      },
+      {
+        "id": "att-ceftizoxime-byt-guideline",
+        "drugId": "ceftizoxime",
+        "title": "Hướng dẫn sử dụng kháng sinh trong bệnh viện (Bộ Y tế - QĐ 708/QĐ-BYT)",
+        "fileName": "Huong_dan_su_dung_khang_sinh_BYT.pdf",
+        "fileSize": 2680000,
+        "fileType": "application/pdf",
+        "fileUrl": "https://kcb.vn/upload/tailieu/2020/12/Huong-dan-su-dung-khang-sinh.pdf",
+        "uploadedAt": "21/10/2026"
+      }
+    ]
   },
   {
     "id": "cefuroxime",
