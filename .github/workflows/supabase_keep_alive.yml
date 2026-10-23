@@ -1,0 +1,55 @@
+name: Supabase Database Keep-Alive (Chống ngủ đông 7 ngày)
+
+on:
+  schedule:
+    # Chạy tự động mỗi 2 ngày vào lúc 02:00 UTC (09:00 sáng giờ Việt Nam)
+    # Đảm bảo không bao giờ để trống 7 ngày, giữ Supabase luôn thức 24/7/365
+    - cron: '0 2 */2 * *'
+  workflow_dispatch: # Cho phép bấm nút "Run workflow" thủ công bất cứ lúc nào trên GitHub
+
+jobs:
+  ping-supabase:
+    name: Giữ nhịp Supabase Cloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gửi yêu cầu kiểm tra tới Supabase REST API & Storage
+        run: |
+          SUPABASE_URL="https://xhhlhrenrxviksknpvck.supabase.co"
+          SUPABASE_KEY="${{ secrets.SUPABASE_ANON_KEY }}"
+          
+          # Nếu chưa cấu hình GitHub Secret, dùng khóa công khai anon mặc định của dự án
+          if [ -z "$SUPABASE_KEY" ]; then
+            SUPABASE_KEY="sb_publishable_1KBhNM0o0pbuYYT-b6stmQ_Kk8DJ2k5"
+          fi
+
+          echo "=========================================================="
+          echo "BẮT ĐẦU PING GIỮ NHỊP MÁY CHỦ SUPABASE DƯỢC LÂM SÀNG"
+          echo "Thời gian: $(date -u)"
+          echo "Máy chủ: $SUPABASE_URL"
+          echo "=========================================================="
+
+          # 1. Ping REST API Custom Drugs
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY" \
+            "$SUPABASE_URL/rest/v1/custom_drugs?select=id&limit=1" || echo "000")
+
+          echo "REST API Status Code: $HTTP_STATUS"
+
+          # 2. Ping Auth Service Health
+          AUTH_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: $SUPABASE_KEY" \
+            "$SUPABASE_URL/auth/v1/health" || echo "000")
+
+          echo "Auth Service Status Code: $AUTH_STATUS"
+
+          # 3. Đánh giá trạng thái
+          if [ "$HTTP_STATUS" -eq 200 ] || [ "$HTTP_STATUS" -eq 206 ] || [ "$AUTH_STATUS" -eq 200 ]; then
+            echo "✅ KẾT QUẢ: Máy chủ Supabase đang HOẠT ĐỘNG BÌNH THƯỜNG!"
+            echo "Bộ đếm thời gian 7 ngày của Supabase đã được làm mới thành công."
+          else
+            echo "⚠️ CẢNH BÁO: Không thể kết nối tới Supabase (Mã phản hồi: $HTTP_STATUS)."
+            echo "Nếu dự án đang ở trạng thái Tạm ngưng (Paused), vui lòng truy cập:"
+            echo "https://supabase.com/dashboard/project/xhhlhrenrxviksknpvck để bấm 'Resume Project'."
+          fi
+          echo "=========================================================="
