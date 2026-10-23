@@ -3,7 +3,7 @@
  * Hỗ trợ lọc 14 nhóm ATC, lọc chữ cái A-Z, tìm kiếm không dấu và phân trang mượt mà
  */
 
-import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { getActiveDrugsDatabase, ATC_CATEGORIES } from "../data/drugs.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 import {
   getPdfAttachmentById,
   getPdfAttachmentsByDrugId,
@@ -11,7 +11,7 @@ import {
   downloadPdfAttachment,
   openPdfInNewWindow,
   formatFileSize
-} from "../data/pdfStorage.js?v=20261021_v48_add_ceftizoxime_monograph";
+} from "../data/pdfStorage.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 
 let currentAtcGroup = "all";
 let currentLetterFilter = "all";
@@ -755,7 +755,7 @@ export function openDrugModal(drugId) {
                       </div>
 
                       <div class="flex items-center justify-end gap-2 mt-3 pt-2.5 border-t border-slate-100 text-xs">
-                        <button onclick="window.viewDrugPdfInModal('${att.id}', '${escapeHtml(att.title)}')" 
+                        <button onclick="window.viewDrugPdfInModal('${att.id}', '${escapeHtml(att.title)}', '${escapeHtml(att.fileName)}')" 
                           class="inline-flex items-center gap-1 text-teal-700 hover:text-teal-900 bg-teal-50 hover:bg-teal-100 px-2.5 py-1 rounded-lg font-bold transition-colors cursor-pointer"
                           title="Xem tài liệu trong khung xem bên dưới">
                           <i data-lucide="eye" class="w-3.5 h-3.5"></i>
@@ -794,6 +794,25 @@ export function openDrugModal(drugId) {
                         class="text-slate-300 hover:text-white px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors text-xs flex items-center gap-1 cursor-pointer">
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
                         <span>Mở toàn trang</span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- Thanh tiện ích hỗ trợ đọc trực tiếp trên di động -->
+                  <div class="px-4 py-2 bg-slate-800/90 border-b border-slate-700/60 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-300">
+                    <span class="text-[11px] text-slate-400 flex items-center gap-1">
+                      <i data-lucide="info" class="w-3.5 h-3.5 text-teal-400"></i>
+                      Nếu trình duyệt không tự nạp được PDF trong khung bên dưới, vui lòng bấm:
+                    </span>
+                    <div class="flex items-center gap-2">
+                      <button onclick="window.openPdfInNewWindow('${drug.attachments[0].id}')"
+                        id="modalPdfBarOpenBtn"
+                        class="px-2.5 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer shadow-xs">
+                        <i data-lucide="external-link" class="w-3 h-3"></i> Mở tab mới
+                      </button>
+                      <button onclick="window.downloadPdfAttachment('${drug.attachments[0].id}', '${escapeHtml(drug.attachments[0].fileName)}')"
+                        id="modalPdfBarDownBtn"
+                        class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer">
+                        <i data-lucide="download" class="w-3 h-3"></i> Tải file
                       </button>
                     </div>
                   </div>
@@ -909,10 +928,12 @@ export function switchDrugTab(tabName) {
   if (window.lucide) window.lucide.createIcons();
 }
 
-export async function viewDrugPdfInModal(pdfId, title = "") {
+export async function viewDrugPdfInModal(pdfId, title = "", fileName = "") {
   const iframe = document.getElementById("modalPdfIframe");
   const titleEl = document.getElementById("modalPdfViewerTitle");
   const extBtn = document.getElementById("modalPdfHeaderExtBtn");
+  const barOpenBtn = document.getElementById("modalPdfBarOpenBtn");
+  const barDownBtn = document.getElementById("modalPdfBarDownBtn");
   const loading = document.getElementById("pdfViewerLoading");
 
   if (title && titleEl) {
@@ -920,6 +941,12 @@ export async function viewDrugPdfInModal(pdfId, title = "") {
   }
   if (extBtn) {
     extBtn.onclick = () => openPdfInNewWindow(pdfId);
+  }
+  if (barOpenBtn) {
+    barOpenBtn.onclick = () => openPdfInNewWindow(pdfId);
+  }
+  if (barDownBtn) {
+    barDownBtn.onclick = () => downloadPdfAttachment(pdfId, fileName || "document.pdf");
   }
 
   if (loading) loading.classList.remove("hidden");

@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -76,28 +76,6 @@ export const DRUGS_DATABASE = [
       "QUY TẮC CỨU SỐNG KHI BỊ HẠ ĐƯỜNG HUYẾT: Nếu bệnh nhân dùng Acarbose phối hợp cùng Sulfonylurea hoặc Insulin bị hạ đường huyết, BẮT BUỘC PHẢI DÙNG ĐƯỜNG GLUCOSE TINH KHIẾT (viên nén glucose, nước đường glucose) ĐỂ CẤP CỨU. KHÔNG ĐƯỢC DÙNG ĐƯỜNG MÍA (Sucrose/đường kính thông thường) HOẶC BÁNH KẸO vì Acarbose đã ức chế hoàn toàn enzyme tiêu hóa đường đa thành đường đơn tại ruột, uống đường mía vào sẽ không hấp thu được!",
       "Tác dụng phụ đầy hơi trung tiện rất phổ biến do tinh bột không tiêu hóa bị vi khuẩn đại tràng lên men sinh khí; thường giảm dần sau vài tuần.",
       "Hoàn toàn không gây hạ đường huyết khi dùng đơn độc và không gây tăng cân."
-    ],
-    "attachments": [
-      {
-        "id": "att-acarbose-byt-dt2",
-        "drugId": "acarbose",
-        "title": "Hướng dẫn chẩn đoán và điều trị Đái tháo đường týp 2 (Bộ Y tế)",
-        "fileName": "Huong_dan_dieu_tri_DTĐ2_BYT.pdf",
-        "fileSize": 1845000,
-        "fileType": "application/pdf",
-        "fileUrl": "https://kcb.vn/upload/tailieu/2020/12/Huong-dan-chan-doan-va-dieu-tri-dai-thao-duong-typ-2.pdf",
-        "uploadedAt": "09/09/2026"
-      },
-      {
-        "id": "att-acarbose-spc-bayer",
-        "drugId": "acarbose",
-        "title": "Tờ hướng dẫn sử dụng Glucobay (Acarbose 50mg / 100mg)",
-        "fileName": "Huong_dan_su_dung_Glucobay_Acarbose.pdf",
-        "fileSize": 435000,
-        "fileType": "application/pdf",
-        "fileUrl": "https://dav.gov.vn/upload_files/product/glucobay-acarbose-spc.pdf",
-        "uploadedAt": "09/09/2026"
-      }
     ]
   },
   {
@@ -170,28 +148,6 @@ export const DRUGS_DATABASE = [
       "XỬ TRÍ QUÁ LIỀU / INR TĂNG CAO: INR 4.5 - 10 không chảy máu: Ngừng hoặc giảm liều, theo dõi INR hàng ngày; INR > 10 không chảy máu: Ngừng thuốc, uống Vitamin K1 2.5 - 5mg; XUẤT HUYẾT NẶNG: Tiêm tĩnh mạch chậm Vitamin K1 5 - 10mg + Truyền phức hợp Prothrombin cô đặc (PCC) 25 - 50 IU/kg hoặc Huyết tương tươi đông lạnh (FFP).",
       "CHẾ ĐỘ ĂN & VITAMIN K: Dặn bệnh nhân GIỮ CHẾ ĐỘ ĂN RAU XANH ỔN ĐỊNH. Không được kiêng khem đột ngột hoặc ăn quá nhiều thực phẩm giàu vitamin K (rau cải bó xôi, rau bina, súp lơ xanh, mùi tàu, bắp cải, trà xanh) vì sẽ làm giảm tác dụng chống đông làm tụt INR.",
       "BẮC CẦU ĐÔNG MÁU (BRIDGING): Khi chuẩn bị phẫu thuật/thủ thuật có nguy cơ chảy máu, ngừng Sintrom trước mổ 3 ngày (khi INR về < 1.5). Dùng Heparin trọng lượng phân tử thấp (LMWH - Enoxaparin) bắc cầu nếu bệnh nhân có nguy cơ thuyên tắc cao (van cơ học, rung nhĩ điểm CHA2DS2-VASc cao)."
-    ],
-    "attachments": [
-      {
-        "id": "att-sintrom-byt-hdsd",
-        "drugId": "acenocoumarol",
-        "title": "Tờ Hướng dẫn sử dụng Sintrom 4mg (Acenocoumarol) - Cục Quản Lý Dược Bộ Y Tế",
-        "fileName": "To_huong_dan_su_dung_Sintrom_4mg_BYT.pdf",
-        "fileSize": 1250000,
-        "fileType": "application/pdf",
-        "fileUrl": "https://dav.gov.vn/upload_files/product/sintrom-4mg-acenocoumarol-hdsd.pdf",
-        "uploadedAt": "09/09/2026"
-      },
-      {
-        "id": "att-sintrom-phac-do-tim-mach",
-        "drugId": "acenocoumarol",
-        "title": "Phác đồ Quản lý Thuốc chống đông kháng Vitamin K trong Rung nhĩ & Bệnh van tim (Hội Tim Mạch VN)",
-        "fileName": "Phac_do_khang_vitamin_K_VNHA.pdf",
-        "fileSize": 2180000,
-        "fileType": "application/pdf",
-        "fileUrl": "http://vnha.org.vn/upload/khuyen-cao-thuoc-chong-dong-khang-vitamin-K.pdf",
-        "uploadedAt": "09/09/2026"
-      }
     ]
   },
   {
@@ -386,18 +342,6 @@ export const DRUGS_DATABASE = [
     "tdmTarget": null,
     "clinicalPearls": [
       "Uống nhiều nước ấm trong ngày để tăng hiệu quả làm loãng đờm của thuốc tiêu chất nhầy."
-    ],
-    "attachments": [
-      {
-        "id": "att-nac-hdsd",
-        "drugId": "acetylcysteine_sachet",
-        "title": "Tờ hướng dẫn sử dụng Fluimucil 200mg / 600mg (Zambon Thụy Sĩ)",
-        "fileName": "Huong_dan_su_dung_Fluimucil_Zambon.pdf",
-        "fileSize": 320000,
-        "fileType": "application/pdf",
-        "fileUrl": "https://dav.gov.vn/upload_files/product/fluimucil-acetylcysteine.pdf",
-        "uploadedAt": "09/09/2026"
-      }
     ]
   },
   {
@@ -8036,28 +7980,6 @@ export const DRUGS_DATABASE = [
       "Cảnh báo độc thần kinh ở suy thận: Hoạt chất thải trừ 80 - 90% qua nước tiểu dưới dạng không đổi (T1/2 kéo dài tới 15 - 30 giờ khi vô niệu). Bắt buộc phải tính CrCl và giảm liều khi CrCl < 50 ml/phút để tránh tích lũy gây co giật, giật cơ não bộ.",
       "Không chứa chuỗi bên NMTT: Ceftizoxim không chứa chuỗi N-methylthiotetrazole nên không gây phản ứng disulfiram khi uống rượu và không ức chế tổng hợp vitamin K gây rối loạn đông máu như Cefoperazone.",
       "Nghiệm pháp Coombs: Có thể gây dương tính giả nghiệm pháp Coombs trực tiếp và gây dương tính giả khi xét nghiệm glucose niệu bằng phản ứng khử đồng (Benedict/Fehling)."
-    ],
-    "attachments": [
-      {
-        "id": "att-ceftizoxime-dav-spc",
-        "drugId": "ceftizoxime",
-        "title": "Chuyên luận Dược thư & Hướng dẫn sử dụng Ceftizoxim (Cục Quản lý Dược)",
-        "fileName": "Huong_dan_su_dung_Ceftizoxime.pdf",
-        "fileSize": 1250000,
-        "fileType": "application/pdf",
-        "fileUrl": "https://dav.gov.vn/upload_files/product/ceftizoxime-spc.pdf",
-        "uploadedAt": "21/10/2026"
-      },
-      {
-        "id": "att-ceftizoxime-byt-guideline",
-        "drugId": "ceftizoxime",
-        "title": "Hướng dẫn sử dụng kháng sinh trong bệnh viện (Bộ Y tế - QĐ 708/QĐ-BYT)",
-        "fileName": "Huong_dan_su_dung_khang_sinh_BYT.pdf",
-        "fileSize": 2680000,
-        "fileType": "application/pdf",
-        "fileUrl": "https://kcb.vn/upload/tailieu/2020/12/Huong-dan-su-dung-khang-sinh.pdf",
-        "uploadedAt": "21/10/2026"
-      }
     ]
   },
   {
@@ -38589,36 +38511,7 @@ export const DRUGS_DATABASE = [
     "pregnancyCategory": "C",
     "lactation": "Thận trọng, theo dõi sát trẻ bú mẹ.",
     "tdmTarget": "Theo dõi lâm sàng",
-    "clinicalPearls": "Thuốc được cập nhật bởi Quản trị viên Khoa Dược BVĐK tỉnh Hưng Yên.",
-    "attachments": [
-      {
-        "id": "pdf_1789110076064_1v1yvt",
-        "drugId": "vitamin_3b",
-        "title": "3B (Cosyndo B)",
-        "fileName": "3B (Cosyndo B).pdf",
-        "fileUrl": "./assets/pdfs/3B (Cosyndo B).pdf",
-        "fileSize": 974226,
-        "fileType": "application/pdf"
-      },
-      {
-        "id": "pdf_1789110081648_731n2f",
-        "drugId": "vitamin_3b",
-        "title": "3B (Dubemin inj 3ml)",
-        "fileName": "3B (Dubemin inj 3ml).pdf",
-        "fileUrl": "./assets/pdfs/3B (Dubemin inj 3ml).pdf",
-        "fileSize": 570315,
-        "fileType": "application/pdf"
-      },
-      {
-        "id": "pdf_1789110087805_6ixor1",
-        "drugId": "vitamin_3b",
-        "title": "3B Medi",
-        "fileName": "3B-Medi.pdf",
-        "fileUrl": "./assets/pdfs/3B-Medi.pdf",
-        "fileSize": 612710,
-        "fileType": "application/pdf"
-      }
-    ]
+    "clinicalPearls": "Thuốc được cập nhật bởi Quản trị viên Khoa Dược BVĐK tỉnh Hưng Yên."
   },
   {
     "id": "acetyl_dl_leucine",

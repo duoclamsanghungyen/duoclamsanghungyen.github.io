@@ -4,7 +4,7 @@
  * Tích hợp lưu trữ vĩnh viễn trong kho GitHub (assets/pdfs/) và bộ nhớ IndexedDB
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 
 const DB_NAME = "ClinicalRx_PDF_Store_v1";
 const DB_VERSION = 1;
@@ -153,7 +153,7 @@ export async function getPdfBlobUrl(attachmentOrId) {
 
   // File lưu trong GitHub (assets/pdfs/...) hoặc link URL online
   if (att.fileUrl) {
-    return att.fileUrl;
+    return encodeURI(att.fileUrl);
   }
 
   // File lưu dạng Base64 trong IndexedDB
@@ -177,7 +177,7 @@ export async function downloadPdfAttachment(pdfId, fallbackName = "document.pdf"
   // Tải file trực tiếp từ GitHub repo
   if (att.fileUrl) {
     const a = document.createElement("a");
-    a.href = att.fileUrl;
+    a.href = encodeURI(att.fileUrl);
     a.download = att.fileName || fallbackName;
     a.target = "_blank";
     document.body.appendChild(a);
@@ -223,7 +223,7 @@ export async function openPdfInNewWindow(pdfId) {
 
   // Mở file trực tiếp từ đường dẫn GitHub repo hoặc URL online
   if (att.fileUrl) {
-    window.open(att.fileUrl, "_blank");
+    window.open(encodeURI(att.fileUrl), "_blank");
     return;
   }
 

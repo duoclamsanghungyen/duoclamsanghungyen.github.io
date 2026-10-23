@@ -12,7 +12,7 @@ import {
   syncVideosFromCloud,
   formatVideoFileSize,
   normalizeVideoUrl
-} from "../data/videoStorage.js?v=20261021_v48_add_ceftizoxime_monograph";
+} from "../data/videoStorage.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 
 let currentCategory = "all";
 let searchQuery = "";

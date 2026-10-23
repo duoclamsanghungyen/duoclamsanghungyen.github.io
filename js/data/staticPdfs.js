@@ -78,12 +78,57 @@ export const STATIC_PDF_CATALOG = [
     "fileType": "application/pdf"
   },
   {
+    "id": "pdf_adrenalin_epinephrine",
+    "drugId": "adrenaline",
+    "title": "Tờ Hướng dẫn sử dụng Adrenalin 1mg/1ml (Epinephrine)",
+    "fileName": "Adrenalin.pdf",
+    "fileUrl": "./assets/pdfs/Adrenalin.pdf",
+    "fileSize": 1623236,
+    "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_adrenalin_iv_epinephrine",
+    "drugId": "adrenalin_iv",
+    "title": "Tờ Hướng dẫn sử dụng Adrenalin 1mg/1ml (Epinephrine)",
+    "fileName": "Adrenalin.pdf",
+    "fileUrl": "./assets/pdfs/Adrenalin.pdf",
+    "fileSize": 1623236,
+    "fileType": "application/pdf"
+  },
+  {
     "id": "pdf_1788924993207_po67ui",
     "drugId": "amlodipine",
     "title": "Apitim 10mg - Amlodipin",
     "fileName": "Apitim 10mg - Amlodipin.pdf",
     "fileUrl": "./assets/pdfs/Apitim 10mg - Amlodipin.pdf",
     "fileSize": 2307022,
+    "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_ceftizoxime_monograph",
+    "drugId": "ceftizoxime",
+    "title": "Chuyên luận Dược lâm sàng Ceftizoxim (Ceftizoxime natri J01DD07)",
+    "fileName": "Ceftizoxim (Ceftizoxime natri).pdf",
+    "fileUrl": "./assets/pdfs/Ceftizoxim (Ceftizoxime natri).pdf",
+    "fileSize": 84112,
+    "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_meropenem_mizapenem",
+    "drugId": "meropenem",
+    "title": "Tờ Hướng dẫn sử dụng Mizapenem 1g (Meropenem)",
+    "fileName": "Meropenem (MIZAPENEM 1G).pdf",
+    "fileUrl": "./assets/pdfs/Meropenem (MIZAPENEM 1G).pdf",
+    "fileSize": 3992966,
+    "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_meropenem_anfarm",
+    "drugId": "meropenem",
+    "title": "Tờ Hướng dẫn sử dụng Meropenem Anfarm 500mg",
+    "fileName": "Meropenem anfarm 500mg.pdf",
+    "fileUrl": "./assets/pdfs/Meropenem anfarm 500mg.pdf",
+    "fileSize": 3147331,
     "fileType": "application/pdf"
   },
   {

@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initCalculators } from "./modules/calculators.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initConsultationModule } from "./modules/consultation.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initAdrModule } from "./modules/adrReporting.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initAuthModule } from "./modules/auth.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initCalculators } from "./modules/calculators.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initConsultationModule } from "./modules/consultation.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initAdrModule } from "./modules/adrReporting.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initAuthModule } from "./modules/auth.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

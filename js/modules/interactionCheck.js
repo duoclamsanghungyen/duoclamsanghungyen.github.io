@@ -4,8 +4,8 @@
  * THEO QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=20261021_v48_add_ceftizoxime_monograph";
-import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20261021_v48_add_ceftizoxime_monograph";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
 
 let selectedDrugs = [];
 let qdVisibleLimit = 50;
