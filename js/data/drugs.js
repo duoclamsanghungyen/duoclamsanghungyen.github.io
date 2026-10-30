@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v50_add_papaverine_monograph";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -25,6 +25,87 @@ export const ATC_CATEGORIES = [
 ];
 
 export const DRUGS_DATABASE = [
+  {
+    "id": "papaverin",
+    "name": "Papaverin (Papaverine hydroclorid)",
+    "inn": "Papaverine",
+    "atcGroup": "A",
+    "atcCode": "A03AD01",
+    "category": "Thuốc chống co thắt cơ trơn hướng cơ (Ức chế Phosphodiesterase - PDE)",
+    "brandNames": [
+      "Papaverin 40mg",
+      "Papaverine HCl",
+      "Papaverin Vinphaco 40mg/2ml",
+      "Pavabid",
+      "Papaverin 100mg"
+    ],
+    "dosageForm": "Viên nén 40 mg, 100 mg; Dung dịch tiêm 40 mg/2 ml, 50 mg/1 ml, 100 mg/2 ml (tiêm bắp, tiêm tĩnh mạch chậm)",
+    "indications": [
+      "Chống co thắt cơ trơn đường tiêu hóa và đường mật: Cơn đau quặn gan, cơn đau quặn mật do sỏi, viêm đường mật, viêm túi mật; co thắt dạ dày - ruột, hội chứng ruột kích thích (IBS).",
+      "Chống co thắt đường tiết niệu: Cơn đau quặn thận, đau do sỏi niệu quản, sỏi bàng quang, co thắt niệu đạo khi can thiệp nội soi.",
+      "Chống co thắt mạch máu não và ngoại vi: Cơn thiếu máu não thoáng qua (TIA), đau nửa đầu, co thắt động mạch ngoại vi (bệnh Raynaud, tắc động mạch cấp).",
+      "Chống co thắt mạch vành: Đau thắt ngực do co thắt mạch vành (phối hợp trong điều trị chuyên khoa).",
+      "Co thắt tử cung trong sản phụ khoa: Đau bụng kinh nguyên phát (thống kinh), dọa sảy thai co thắt tử cung (theo dõi sát chỉ định chuyên khoa).",
+      "Ứng dụng chuyên khoa Nam học: Tiêm trực tiếp vào thể hang (Intracavernosal injection) để chẩn đoán và điều trị rối loạn cương dương (Erectile Dysfunction)."
+    ],
+    "contraindications": [
+      "Quá mẫn với papaverin hoặc bất kỳ thành phần nào của thuốc.",
+      "Block nhĩ - thất (AV block) hoàn toàn hoặc rối loạn dẫn truyền tim nặng (nguy cơ ức chế dẫn truyền cơ tim nặng thêm).",
+      "Bệnh nhân glôcôm góc đóng hoặc tăng nhãn áp chưa kiểm soát.",
+      "Suy gan nặng hoặc tiền sử mẫn cảm độc tính gan do papaverin (tăng men gan, vàng da ứ mật do phản ứng dị ứng miễn dịch).",
+      "Tình trạng xuất huyết nội sọ cấp tính, phù não hoặc tăng áp lực nội sọ tiến triển.",
+      "Bệnh nhân Parkinson đang điều trị bằng Levodopa đơn thuần (papaverin đối kháng làm mất hoàn toàn tác dụng của levodopa)."
+    ],
+    "standardDosage": {
+      "adult": "UỐNG: 40 mg – 100 mg mỗi lần, ngày 2 – 3 lần (uống cùng hoặc sau bữa ăn, nuốt nguyên viên). Liều tối đa 300 mg/ngày. TIÊM BẮP (IM) / TIÊM DƯỚI DA: 30 mg – 120 mg mỗi 3 – 4 giờ khi cần thiết. TIÊM TĨNH MẠCH CHẬM (IV): 30 mg – 65 mg, TIÊM CỰC KỲ CHẬM TRONG 1 – 2 PHÚT (hoặc pha loãng với 10 - 20 mL NaCl 0.9% hoặc Glucose 5%); lặp lại sau 3 – 4 giờ nếu cần thiết. TIÊM THỂ HANG (Nam học): Khởi đầu 2.5 – 5 mg, chỉnh liều từng bước tới 30 – 60 mg tùy đáp ứng (chỉ thực hiện bởi bác sĩ chuyên khoa).",
+      "pediatric": "Trẻ em 1 – 12 tuổi: 1.5 – 2 mg/kg/ngày chia 3 – 4 lần (uống) hoặc 4 – 6 mg/kg/ngày chia nhiều lần; đường tiêm chỉ dùng khi có chỉ định hồi sức cấp cứu của bác sĩ nhi khoa.",
+      "elderly": "Người cao tuổi: Khởi đầu bằng liều thấp nhất có hiệu quả (40 mg/lần uống hoặc 30 mg tiêm); thận trọng do nguy cơ tụt huyết áp tư thế, chóng mặt và độc tính trên gan."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": ">= 50 mL/phút",
+        "dose": "Không cần hiệu chỉnh liều thường quy"
+      },
+      {
+        "crcl": "10 - 50 mL/phút",
+        "dose": "Thận trọng, theo dõi huyết áp và nhịp tim"
+      },
+      {
+        "crcl": "< 10 mL/phút",
+        "dose": "Giảm 25 - 50% liều, theo dõi sát độc tính thần kinh và tim mạch"
+      },
+      {
+        "crcl": "Lọc máu ngắt quãng (HD)",
+        "dose": "Papaverin liên kết protein huyết tương cao (~90%), không bị thẩm tách qua màng lọc máu; dùng liều theo CrCl < 10, không cần liều bổ sung sau lọc."
+      }
+    ],
+    "hepaticAdjustment": "Chống chỉ định ở suy gan nặng. Thuốc chuyển hóa chủ yếu qua gan (CYP450). Thận trọng tối đa và theo dõi định kỳ men gan (AST, ALT, Bilirubin, Phosphatase kiềm) vì papaverin có nguy cơ gây viêm gan nhiễm độc quá mẫn, vàng da ứ mật.",
+    "administration": "• Đường uống: Uống cùng hoặc sau bữa ăn với một cốc nước đầy để giảm kích ứng dạ dày. Nuốt nguyên viên.
+• Đường tiêm tĩnh mạch (IV): PHẢI TIÊM CỰC KỲ CHẬM TRONG VÒNG 1 ĐẾN 2 PHÚT, tốt nhất pha loãng với 10 - 20 mL dung dịch tiêm NaCl 0.9% hoặc Glucose 5%. TUYỆT ĐỐI KHÔNG TIÊM IV NHANH vì có thể gây loạn nhịp thất chết người, block tim, ngừng thở đột ngột và trụy mạch tử vong.
+• Đường tiêm bắp (IM): Tiêm sâu vào khối cơ lớn (cơ delta hoặc cơ mông), hút thử pít-tông kiểm tra để tránh vô tình tiêm vào mạch máu.",
+    "blackBoxWarning": "CẢNH BÁO ĐỘC TÍNH GAN & NGUY CƠ TRỤY TIM MẠCH KHI TIÊM TĨNH MẠCH NHANH: 1) ĐỘC TÍNH TRÊN GAN: Papaverin có thể gây tổn thương gan thể ứ mật hoặc hoại tử tế bào gan do cơ chế dị ứng miễn dịch; cần ngừng thuốc ngay lập tức nếu men gan tăng cao hoặc xuất hiện vàng da. 2) NGUY HIỂM KHI TIÊM IV: Tiêm tĩnh mạch nhanh có thể gây ức chế dẫn truyền cơ tim cấp tính, rung thất hoặc ngừng thở. Luôn tiêm rất chậm trong ít nhất 1 - 2 phút kèm theo dõi monitor huyết áp và nhịp tim.",
+    "adr": {
+      "common": [
+        "Hạ huyết áp, đỏ bừng mặt, nhịp tim nhanh thoáng qua",
+        "Rối loạn tiêu hóa: buồn nôn, nôn, táo bón hoặc tiêu chảy, khô miệng",
+        "Thần kinh: chóng mặt, đau đầu, buồn ngủ, an thần nhẹ, toát mồ hôi"
+      ],
+      "serious": [
+        "Độc tính gan: viêm gan nhiễm độc, vàng da ứ mật, tăng transaminase và phosphatase kiềm (do quá mẫn)",
+        "Tim mạch: ngừng thở đột ngột, block nhĩ thất hoàn toàn, ngoại tâm thu thất, rung thất, trụy tim mạch (khi tiêm IV nhanh)",
+        "Nam học: Cương đau dương vật kéo dài (Priapism > 4 giờ) khi tiêm thể hang, nguy cơ hoại tử và xơ hóa thể hang nếu không cấp cứu kịp thời"
+      ]
+    },
+    "pregnancyCategory": "C - Chưa có đầy đủ nghiên cứu kiểm soát tốt trên phụ nữ có thai. Chỉ sử dụng trong thai kỳ khi lợi ích điều trị của người mẹ vượt trội nguy cơ đối với thai nhi.",
+    "lactation": "Chưa rõ thuốc có bài tiết qua sữa mẹ hay không. Thận trọng và cân nhắc tạm ngừng cho con bú trong thời gian dùng thuốc.",
+    "tdmTarget": "Theo dõi lâm sàng: Monitor huyết áp, điện tâm đồ (ECG) khi tiêm tĩnh mạch; xét nghiệm chức năng gan (AST, ALT, Bilirubin) định kỳ nếu điều trị kéo dài > 2 tuần; kiểm tra thời gian cương cứng nếu tiêm thể hang (< 4 giờ).",
+    "clinicalPearls": [
+      "TƯƠNG TÁC ĐỐI KHÁNG ĐẶC BIỆT VỚI LEVODOPA: Papaverin ức chế tác dụng điều trị Parkinson của Levodopa do đối kháng thụ thể dopamine ở thể vân. TUYỆT ĐỐI TRÁNH PHỐI HỢP ở bệnh nhân Parkinson đang dùng Levodopa.",
+      "CƠ CHẾ TÁC DỤNG KHÁC BIỆT (HƯỚNG CƠ TRỰC TIẾP): Khác với Atropin hay Drotaverin/Hyoscine (tác dụng kháng cholinergic), Papaverin tác dụng trực tiếp lên sợi cơ trơn thông qua ức chế men phosphodiesterase (PDE) làm tích lũy cAMP nội bào. Do đó, thuốc ít gây tác dụng phụ kháng cholinergic (như bí tiểu, tăng nhãn áp nặng, liệt ruột) nhưng có phổ giãn cơ rộng hơn (cả mạch máu và cơ nội tạng).",
+      "XỬ TRÍ CƯƠNG ĐAU DƯƠNG VẬT KÉO DÀI (PRIAPISM) DO TIÊM THỂ HANG: Nếu tình trạng cương cứng kéo dài trên 4 giờ, đây là tình trạng cấp cứu nam khoa khẩn cấp. Xử trí bằng cách hút máu thể hang và tiêm tĩnh mạch thể hang thuốc chủ vận alpha-adrenergic (như Phenylephrine 100 - 500 mcg pha loãng) để gây co mạch.",
+      "XỬ TRÍ QUÁ LIỀU / TỤT HUYẾT ÁP DO PAPAVERIN: Ngừng thuốc ngay lập tức. Bệnh nhân nằm đầu thấp, truyền dịch hồi sức đẳng trương NaCl 0.9%, dùng thuốc vận mạch (Noradrenalin, Dopamin) nếu huyết áp không đáp ứng. Không có thuốc giải độc đặc hiệu; thẩm tách máu không hiệu quả."
+    ]
+  },
   {
     "id": "acarbose",
     "name": "Acarbose",

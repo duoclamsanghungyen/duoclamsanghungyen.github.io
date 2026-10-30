@@ -4,7 +4,7 @@
  * Tích hợp lưu trữ vĩnh viễn trong kho GitHub (assets/pdfs/) và bộ nhớ IndexedDB
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v50_add_papaverine_monograph";
 
 const DB_NAME = "ClinicalRx_PDF_Store_v1";
 const DB_VERSION = 1;

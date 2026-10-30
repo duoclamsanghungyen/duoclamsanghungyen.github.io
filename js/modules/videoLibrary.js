@@ -12,7 +12,7 @@ import {
   syncVideosFromCloud,
   formatVideoFileSize,
   normalizeVideoUrl
-} from "../data/videoStorage.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+} from "../data/videoStorage.js?v=20261030_v50_add_papaverine_monograph";
 
 let currentCategory = "all";
 let searchQuery = "";

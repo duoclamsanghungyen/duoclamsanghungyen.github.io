@@ -5,7 +5,7 @@
  */
 
 import { getSupabaseCredentials } from "../config.js";
-import { getSupabaseClient } from "../modules/supabaseService.js?v=20261023_v49_fix_all_pdf_viewing_and_catalogs";
+import { getSupabaseClient } from "../modules/supabaseService.js?v=20261030_v50_add_papaverine_monograph";
 
 export const VIDEO_STORAGE_KEY = "clinicalrx_videos_store_v1";
 

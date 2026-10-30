@@ -139,5 +139,14 @@ export const STATIC_PDF_CATALOG = [
     "fileUrl": "./assets/pdfs/Sympal (Dexketoprofen) 25mg.pdf",
     "fileSize": 1966642,
     "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_papaverin_monograph",
+    "drugId": "papaverin",
+    "title": "Chuyên luận Dược lâm sàng Papaverin (Papaverine hydroclorid A03AD01)",
+    "fileName": "Papaverin (Papaverine hydroclorid).pdf",
+    "fileUrl": "./assets/pdfs/Papaverin (Papaverine hydroclorid).pdf",
+    "fileSize": 82463,
+    "fileType": "application/pdf"
   }
 ];
