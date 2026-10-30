@@ -80,9 +80,7 @@ export const DRUGS_DATABASE = [
       }
     ],
     "hepaticAdjustment": "Chống chỉ định ở suy gan nặng. Thuốc chuyển hóa chủ yếu qua gan (CYP450). Thận trọng tối đa và theo dõi định kỳ men gan (AST, ALT, Bilirubin, Phosphatase kiềm) vì papaverin có nguy cơ gây viêm gan nhiễm độc quá mẫn, vàng da ứ mật.",
-    "administration": "• Đường uống: Uống cùng hoặc sau bữa ăn với một cốc nước đầy để giảm kích ứng dạ dày. Nuốt nguyên viên.
-• Đường tiêm tĩnh mạch (IV): PHẢI TIÊM CỰC KỲ CHẬM TRONG VÒNG 1 ĐẾN 2 PHÚT, tốt nhất pha loãng với 10 - 20 mL dung dịch tiêm NaCl 0.9% hoặc Glucose 5%. TUYỆT ĐỐI KHÔNG TIÊM IV NHANH vì có thể gây loạn nhịp thất chết người, block tim, ngừng thở đột ngột và trụy mạch tử vong.
-• Đường tiêm bắp (IM): Tiêm sâu vào khối cơ lớn (cơ delta hoặc cơ mông), hút thử pít-tông kiểm tra để tránh vô tình tiêm vào mạch máu.",
+    "administration": "• Đường uống: Uống cùng hoặc sau bữa ăn với một cốc nước đầy để giảm kích ứng dạ dày. Nuốt nguyên viên.\\n• Đường tiêm tĩnh mạch (IV): PHẢI TIÊM CỰC KỲ CHẬM TRONG VÒNG 1 ĐẾN 2 PHÚT, tốt nhất pha loãng với 10 - 20 mL dung dịch tiêm NaCl 0.9% hoặc Glucose 5%. TUYỆT ĐỐI KHÔNG TIÊM IV NHANH vì có thể gây loạn nhịp thất chết người, block tim, ngừng thở đột ngột và trụy mạch tử vong.\\n• Đường tiêm bắp (IM): Tiêm sâu vào khối cơ lớn (cơ delta hoặc cơ mông), hút thử pít-tông kiểm tra để tránh vô tình tiêm vào mạch máu.",
     "blackBoxWarning": "CẢNH BÁO ĐỘC TÍNH GAN & NGUY CƠ TRỤY TIM MẠCH KHI TIÊM TĨNH MẠCH NHANH: 1) ĐỘC TÍNH TRÊN GAN: Papaverin có thể gây tổn thương gan thể ứ mật hoặc hoại tử tế bào gan do cơ chế dị ứng miễn dịch; cần ngừng thuốc ngay lập tức nếu men gan tăng cao hoặc xuất hiện vàng da. 2) NGUY HIỂM KHI TIÊM IV: Tiêm tĩnh mạch nhanh có thể gây ức chế dẫn truyền cơ tim cấp tính, rung thất hoặc ngừng thở. Luôn tiêm rất chậm trong ít nhất 1 - 2 phút kèm theo dõi monitor huyết áp và nhịp tim.",
     "adr": {
       "common": [
