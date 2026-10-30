@@ -12,7 +12,7 @@ import {
   deleteDrugById, 
   resetCustomDrugsDatabase, 
   ATC_CATEGORIES 
-} from "../data/drugs.js?v=20261030_v50_add_papaverine_monograph";
+} from "../data/drugs.js?v=20261030_v51_add_papaverine_monograph";
 import {
   savePdfAttachment,
   getPdfAttachmentById,
@@ -20,7 +20,7 @@ import {
   deletePdfAttachmentById,
   getPdfBlobUrl,
   formatFileSize
-} from "../data/pdfStorage.js?v=20261030_v50_add_papaverine_monograph";
+} from "../data/pdfStorage.js?v=20261030_v51_add_papaverine_monograph";
 
 // Danh sách tài khoản nội viện mặc định
 export const DEFAULT_ACCOUNTS = [
