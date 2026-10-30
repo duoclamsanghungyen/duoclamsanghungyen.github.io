@@ -12,7 +12,7 @@ import {
   syncVideosFromCloud,
   formatVideoFileSize,
   normalizeVideoUrl
-} from "../data/videoStorage.js?v=20261030_v51_add_papaverine_monograph";
+} from "../data/videoStorage.js?v=20261030_v52_add_cefalothin_monograph";
 
 let currentCategory = "all";
 let searchQuery = "";

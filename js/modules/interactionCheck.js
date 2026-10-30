@@ -4,8 +4,8 @@
  * THEO QUYẾT ĐỊNH SỐ 5948/QĐ-BYT (30/12/2021) CỦA BỘ Y TẾ
  */
 
-import { getActiveDrugsDatabase } from "../data/drugs.js?v=20261030_v51_add_papaverine_monograph";
-import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20261030_v51_add_papaverine_monograph";
+import { getActiveDrugsDatabase } from "../data/drugs.js?v=20261030_v52_add_cefalothin_monograph";
+import { DRUG_INTERACTIONS, QD_5948_METADATA, QD_5948_633_INTERACTIONS } from "../data/interactions.js?v=20261030_v52_add_cefalothin_monograph";
 
 let selectedDrugs = [];
 let qdVisibleLimit = 50;

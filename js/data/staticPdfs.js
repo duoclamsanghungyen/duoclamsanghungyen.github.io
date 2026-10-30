@@ -148,5 +148,14 @@ export const STATIC_PDF_CATALOG = [
     "fileUrl": "./assets/pdfs/Papaverin (Papaverine hydroclorid).pdf",
     "fileSize": 82463,
     "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_cefalothin_monograph",
+    "drugId": "cefalothin",
+    "title": "Chuyên luận Dược lâm sàng Cefalothin (Cefalothin natri J01DB03)",
+    "fileName": "Cefalothin (Cephalothin natri).pdf",
+    "fileUrl": "./assets/pdfs/Cefalothin (Cephalothin natri).pdf",
+    "fileSize": 86938,
+    "fileType": "application/pdf"
   }
 ];

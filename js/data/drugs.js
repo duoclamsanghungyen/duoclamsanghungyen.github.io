@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v51_add_papaverine_monograph";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v52_add_cefalothin_monograph";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -25,6 +25,82 @@ export const ATC_CATEGORIES = [
 ];
 
 export const DRUGS_DATABASE = [
+  {
+    "id": "cefalothin",
+    "name": "Cefalothin (Cefalothin natri)",
+    "inn": "Cefalothin sodium (Cephalothin)",
+    "atcGroup": "J",
+    "brandNames": [
+      "Keflin",
+      "Cefalotin",
+      "Cephation",
+      "Keflin Neutral",
+      "Cefalothin 1g",
+      "Cefalothin VNP"
+    ],
+    "atcCode": "J01DB03",
+    "category": "Kháng sinh Cephalosporin thế hệ 1 (Đường tiêm truyền)",
+    "dosageForm": "Lọ bột vô khuẩn pha tiêm 1g, 2g (kèm dung môi hoặc pha dịch truyền)",
+    "indications": [
+      "Dự phòng nhiễm khuẩn trong phẫu thuật (đặc biệt là phẫu thuật tim mạch, chỉnh hình, xương khớp, can thiệp đặt dụng cụ nhân tạo hoặc phẫu thuật sạch/sạch-nhiễm).",
+      "Nhiễm khuẩn da và mô mềm: Viêm mô tế bào, chốc lở, áp xe, vết thương nhiễm trùng do Streptococcus hoặc Staphylococcus aureus nhạy cảm methicillin (MSSA).",
+      "Nhiễm khuẩn xương khớp: Viêm tủy xương cấp/mạn tính, viêm khớp nhiễm khuẩn do tụ cầu nhạy cảm.",
+      "Nhiễm khuẩn đường hô hấp dưới: Viêm phế quản phổi, viêm phổi thùy do phế cầu (Streptococcus pneumoniae) hoặc liên cầu nhóm A.",
+      "Nhiễm khuẩn đường tiết niệu: Viêm đài bể thận, viêm bàng quang cấp do E. coli, Proteus mirabilis hoặc Klebsiella spp. nhạy cảm.",
+      "Nhiễm khuẩn huyết và viêm nội tâm mạc nhiễm khuẩn do tụ cầu hoặc liên cầu khuẩn nhạy cảm methicillin."
+    ],
+    "contraindications": [
+      "Tiền sử quá mẫn hoặc sốc phản vệ với Cefalothin hoặc bất kỳ kháng sinh nhóm Cephalosporin nào khác.",
+      "Tiền sử có phản ứng dị ứng tức thì typ I (qua trung gian IgE) nặng với Penicillin (sốc phản vệ, phù mạch, mày đay cấp tính)."
+    ],
+    "standardDosage": {
+      "adult": "Nhiễm khuẩn thông thường (nhẹ đến vừa): 500mg - 1g tiêm tĩnh mạch chậm hoặc tiêm bắp sâu mỗi 4 - 6 giờ (tổng liều 2g - 6g/ngày). Nhiễm khuẩn nặng đe dọa tính mạng: 2g mỗi 4 giờ (tổng liều lên tới 12g/ngày). Dự phòng phẫu thuật: 1g - 2g tiêm TM chậm trước khi rạch da 30 - 60 phút; trong phẫu thuật kéo dài (> 2 - 3 giờ) bổ sung tiếp 1g mỗi 4 giờ trong mổ; sau mổ dùng 1g mỗi 6 giờ trong 24 giờ.",
+      "pediatric": "Trẻ em: 80 - 160 mg/kg/ngày chia làm 3 - 4 lần (mỗi 6 - 8 giờ). Nhiễm khuẩn nặng: có thể dùng liều tối đa đến 160 mg/kg/ngày (không vượt quá liều người lớn 12g/ngày). Trẻ sơ sinh: 20 - 30 mg/kg mỗi 12 giờ (trẻ <= 7 ngày tuổi) hoặc mỗi 8 giờ (trẻ > 7 ngày tuổi).",
+      "elderly": "Sử dụng liều thông thường nếu chức năng thận bình thường. Cần đánh giá CrCl và hiệu chỉnh liều giảm do chức năng lọc thận thường suy giảm ở người cao tuổi."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": "> 50",
+        "dose": "Không cần chỉnh liều: Dùng liều tiêu chuẩn 1g - 2g mỗi 4 - 6 giờ."
+      },
+      {
+        "crcl": "30 - 50",
+        "dose": "1g - 2g mỗi 6 - 8 giờ (liều tối đa 8g/ngày)."
+      },
+      {
+        "crcl": "10 - 29",
+        "dose": "500mg - 1g mỗi 8 - 12 giờ (liều tối đa 4g/ngày)."
+      },
+      {
+        "crcl": "< 10",
+        "dose": "500mg mỗi 12 - 24 giờ (liều tối đa 2g/ngày)."
+      },
+      {
+        "crcl": "Thẩm phân máu (Hemodialysis)",
+        "dose": "Lọc máu đào thải một phần thuốc: Liều bổ sung 500mg - 1g sau mỗi buổi lọc máu."
+      },
+      {
+        "crcl": "Lọc màng bụng (CAPD)",
+        "dose": "500mg mỗi 12 - 24 giờ (có thể pha bổ sung vào dịch lọc 15 - 30 mg/lít dịch lọc màng bụng điều trị viêm phúc mạc)."
+      }
+    ],
+    "hepaticAdjustment": "Một phần Cefalothin (khoảng 20 - 30%) được khử acetyl tại gan thành desacetylcefalothin có hoạt tính kháng khuẩn yếu hơn. Không cần giảm liều thường quy ở bệnh nhân suy gan đơn thuần, nhưng cần thận trọng khi suy gan nặng kèm theo suy thận.",
+    "administration": "Tiêm tĩnh mạch chậm (IV push): Hòa tan 1g trong ít nhất 10ml nước cất pha tiêm, tiêm chậm trong 3 - 5 phút (tránh tiêm nhanh gây kích ứng nội mạc và viêm tĩnh mạch huyết khối). Truyền tĩnh mạch ngắt quãng (IV infusion): Hòa tan 1g - 2g trong 50 - 100ml dung dịch NaCl 0.9% hoặc Glucose 5%, truyền tĩnh mạch trong 30 - 60 phút. Tiêm bắp sâu (IM): Hòa tan 1g trong 4ml nước cất pha tiêm, tiêm bắp sâu vào khối cơ lớn (cơ mông); do thuốc gây đau buốt nhiều tại chỗ tiêm nên đường tĩnh mạch được ưu tiên hơn trong lâm sàng. Không trộn chung lọ hoặc đường truyền với Aminoglycosid (tạo phức tủa vô hoạt).",
+    "blackBoxWarning": "Không có cảnh báo hộp đen.",
+    "adr": {
+      "common": "Đau, kích ứng và viêm tĩnh mạch tại vị trí tiêm truyền tĩnh mạch; đau buốt và chai cứng sau khi tiêm bắp; rối loạn tiêu hóa nhẹ (buồn nôn, nôn, tiêu chảy); phát ban dát sần, mày đay, ngứa; tăng bạch cầu ái toan, tăng men gan (AST, ALT) thoáng qua.",
+      "serious": "Độc tính trên thận (hoại tử ống thận cấp, viêm thận kẽ cấp, đặc biệt tăng mạnh khi phối hợp với Aminoglycosid hoặc thuốc lợi tiểu quai Furosemid); co giật, giật cơ hoặc độc thần kinh trung ương (khi dùng liều rất cao ở bệnh nhân suy thận không giảm liều); phản ứng phản vệ/sốc phản vệ đe dọa tính mạng; viêm đại tràng giả mạc do Clostridioides difficile; thiếu máu tan máu miễn dịch (nghiệm pháp Coombs dương tính); giảm bạch cầu trung tính hạt có hồi phục."
+    },
+    "pregnancyCategory": "B - An toàn tương đối trong thai kỳ. Thuốc qua được hàng rào nhau thai nhưng các nghiên cứu không cho thấy bằng chứng quái thai hay dị tật bẩm sinh; chỉ sử dụng khi thật sự có chỉ định.",
+    "lactation": "Tương thích khi cho con bú. Cefalothin bài tiết vào sữa mẹ với nồng độ thấp (dưới 1 - 2 microgam/ml), nhìn chung ít gây nguy cơ toàn thân cho trẻ bú mẹ, cần theo dõi nguy cơ tiêu chảy hoặc tưa miệng do thay đổi khuẩn chí ruột.",
+    "tdmTarget": "Không cần đo nồng độ thuốc trong máu thường quy. Cần theo dõi chặt chẽ chức năng thận (Creatinine huyết thanh, CrCl, lượng nước tiểu) nhất là khi dùng kéo dài hoặc phối hợp thuốc độc thận, công thức máu và vị trí tiêm truyền.",
+    "clinicalPearls": [
+      "Cephalosporin thế hệ 1 tiêm tĩnh mạch kinh điển: Cefalothin là kháng sinh Cephalosporin đầu tiên được đưa vào sử dụng lâm sàng, có hoạt tính rất mạnh trên tụ cầu vàng nhạy methicillin (MSSA) và liên cầu khuẩn sinh mủ, tương đương Cefazolin.",
+      "Nguy cơ viêm tĩnh mạch huyết khối cao: Cefalothin gây kích ứng nội mạc mạch máu mạnh hơn nhiều so với Cefazolin. Khi truyền tĩnh mạch cần pha loãng thích hợp (nồng độ <= 20 mg/ml), truyền chậm và luân chuyển vị trí đặt catheter tĩnh mạch mỗi 48 - 72 giờ để giảm thiểu viêm tĩnh mạch.",
+      "Hiệp đồng độc tính thận với Aminoglycosid: Khi dùng phối hợp Cefalothin với Gentamicin, Tobramycin hoặc Amikacin, nguy cơ hoại tử ống thận cấp và suy thận tăng vọt rõ rệt so với đơn trị liệu. Cần bắt buộc theo dõi sát nồng độ creatinine huyết thanh hàng ngày.",
+      "Nghiệm pháp Coombs và đường huyết giả tạo: Thuốc có thể gây dương tính giả nghiệm pháp Coombs trực tiếp (gây khó khăn cho xét nghiệm hòa hợp nhóm máu truyền máu) và gây phản ứng dương tính giả khi xét nghiệm đường niệu bằng phương pháp khử đồng (thuốc thử Benedict hoặc Fehling)."
+    ]
+  },
   {
     "id": "papaverin",
     "name": "Papaverin (Papaverine hydroclorid)",
