@@ -157,5 +157,14 @@ export const STATIC_PDF_CATALOG = [
     "fileUrl": "./assets/pdfs/Cefalothin (Cephalothin natri).pdf",
     "fileSize": 86938,
     "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_cefotiam_monograph",
+    "drugId": "cefotiam",
+    "title": "Chuyên luận Dược lâm sàng Cefotiam (Cefotiam hydroclorid J01DC07)",
+    "fileName": "Cefotiam (Cefotiam hydroclorid).pdf",
+    "fileUrl": "./assets/pdfs/Cefotiam (Cefotiam hydroclorid).pdf",
+    "fileSize": 86578,
+    "fileType": "application/pdf"
   }
 ];

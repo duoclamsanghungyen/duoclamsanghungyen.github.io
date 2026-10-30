@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v52_add_cefalothin_monograph";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v53_add_cefotiam_monograph";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -25,6 +25,83 @@ export const ATC_CATEGORIES = [
 ];
 
 export const DRUGS_DATABASE = [
+  {
+    "id": "cefotiam",
+    "name": "Cefotiam (Cefotiam hydroclorid)",
+    "inn": "Cefotiam hydrochloride / Cefotiam hexetil",
+    "atcGroup": "J",
+    "brandNames": [
+      "Halospor",
+      "Pansporin",
+      "Ceradolan",
+      "Spizef",
+      "Cefotiam 1g",
+      "Cefotiam Hexetil"
+    ],
+    "atcCode": "J01DC07",
+    "category": "Kháng sinh Cephalosporin thế hệ 2 (Đường tiêm truyền & đường uống)",
+    "dosageForm": "Lọ bột vô khuẩn pha tiêm 500mg, 1g, 2g (Cefotiam HCl); Viên nén/viên bao phim 100mg, 200mg (Cefotiam hexetil)",
+    "indications": [
+      "Nhiễm khuẩn đường mật & ổ bụng: Viêm túi mật cấp/mạn, viêm đường mật, áp xe gan đường mật (đặc biệt ưu thế do thuốc bài tiết và đạt nồng độ rất cao trong dịch mật).",
+      "Nhiễm khuẩn đường hô hấp dưới và trên: Viêm phổi thùy, viêm phế quản phổi, áp xe phổi, viêm mủ màng phổi; đợt cấp viêm phế quản mạn; viêm xoang mủ, viêm amidan mủ nặng.",
+      "Nhiễm khuẩn đường tiết niệu - sinh dục: Viêm đài bể thận cấp/mạn tính, viêm bàng quang cấp, viêm niệu đạo, viêm tuyến tiền liệt do vi khuẩn nhạy cảm.",
+      "Nhiễm khuẩn da, mô mềm và cơ quan vận động: Viêm mô tế bào, chốc lở, áp xe sâu, vết thương nhiễm trùng sau phẫu thuật, viêm tủy xương, viêm khớp nhiễm khuẩn do tụ cầu hoặc liên cầu.",
+      "Nhiễm khuẩn sản phụ khoa: Viêm nội mạc tử cung, viêm phần phụ, viêm mô tế bào vùng chậu, nhiễm khuẩn hậu sản.",
+      "Nhiễm khuẩn huyết và viêm nội tâm mạc nhiễm khuẩn do vi khuẩn Gram âm hoặc Gram dương nhạy cảm.",
+      "Dự phòng nhiễm khuẩn trong phẫu thuật (đặc biệt là phẫu thuật ổ bụng, phẫu thuật đường mật - tiêu hóa, sản phụ khoa)."
+    ],
+    "contraindications": [
+      "Tiền sử quá mẫn hoặc sốc phản vệ với Cefotiam hoặc bất kỳ kháng sinh nhóm Cephalosporin nào.",
+      "Tiền sử có phản ứng dị ứng tức thì typ I (qua trung gian IgE) nặng với Penicillin (sốc phản vệ, phù mạch, mày đay cấp tính)."
+    ],
+    "standardDosage": {
+      "adult": "ĐƯỜNG TIÊM (Cefotiam HCl): Nhiễm khuẩn nhẹ đến vừa: 1g – 2g/ngày chia làm 2 – 4 lần (tiêm TM chậm hoặc truyền TM 500mg – 1g mỗi 6 – 12 giờ). Nhiễm khuẩn nặng, nhiễm trùng huyết hoặc nhiễm khuẩn đường mật: Có thể tăng liều lên 3g – 4g/ngày (chia 2 – 4 lần; tối đa 4g/ngày). ĐƯỜNG UỐNG (Cefotiam hexetil): 200mg – 400mg mỗi lần, ngày 2 – 3 lần sau bữa ăn (tổng liều 400mg – 1200mg/ngày tùy mức độ nhiễm khuẩn).",
+      "pediatric": "Trẻ em (đường tiêm): 40 – 80 mg/kg/ngày chia làm 3 – 4 lần (tiêm tĩnh mạch chậm hoặc truyền tĩnh mạch). Trong nhiễm khuẩn nặng hoặc nhiễm trùng huyết, có thể tăng liều lên tới 100 mg/kg/ngày (không vượt quá tổng liều người lớn 4g/ngày).",
+      "elderly": "Sử dụng liều thông thường nếu chức năng thận bình thường. Cần đánh giá CrCl và hiệu chỉnh liều giảm do chức năng lọc thận thường suy giảm theo sinh lý tuổi già."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": "> 50",
+        "dose": "Không cần chỉnh liều: Dùng liều tiêu chuẩn 500mg – 1g mỗi 6 – 8 giờ."
+      },
+      {
+        "crcl": "30 - 50",
+        "dose": "500mg – 1g mỗi 8 – 12 giờ (giảm khoảng 25 - 30% tổng liều hàng ngày)."
+      },
+      {
+        "crcl": "10 - 29",
+        "dose": "500mg – 1g mỗi 12 – 24 giờ (giảm khoảng 50% tổng liều hàng ngày)."
+      },
+      {
+        "crcl": "< 10",
+        "dose": "250mg – 500mg mỗi 24 – 48 giờ."
+      },
+      {
+        "crcl": "Thẩm phân máu (Hemodialysis)",
+        "dose": "Lọc máu đào thải một phần thuốc: Liều bổ sung 250mg – 500mg ngay sau mỗi buổi lọc máu."
+      },
+      {
+        "crcl": "Lọc màng bụng (CAPD)",
+        "dose": "250mg – 500mg mỗi 24 – 48 giờ (có thể bổ sung vào dịch lọc 15 - 30 mg/lít dịch lọc màng bụng)."
+      }
+    ],
+    "hepaticAdjustment": "Không cần hiệu chỉnh liều ở bệnh nhân suy gan đơn thuần do thuốc bài tiết chủ yếu qua thận và đường mật dưới dạng còn hoạt tính.",
+    "administration": "Tiêm tĩnh mạch chậm: Hòa tan lọ 1g trong ít nhất 10 - 20ml nước cất pha tiêm hoặc Glucose 5%, tiêm chậm trong 3 - 5 phút (tránh tiêm nhanh gây kích ứng mạch máu). Truyền tĩnh mạch ngắt quãng: Hòa tan 1g - 2g trong 100ml dung dịch NaCl 0.9% hoặc Glucose 5%, truyền tĩnh mạch trong 30 - 60 phút. Tiêm bắp sâu: Hòa tan 1g trong 3 - 4ml nước cất pha tiêm hoặc dung dịch Lidocain 0.5% (để giảm đau buốt), tiêm sâu vào cơ mông lớn. Đường uống (Cefotiam hexetil): Uống sau bữa ăn để tăng sinh khả dụng hấp thu. Tuyệt đối không trộn lẫn lọ tiêm hoặc đường truyền với kháng sinh Aminoglycosid.",
+    "blackBoxWarning": "Không có cảnh báo hộp đen.",
+    "adr": {
+      "common": "Đau, kích ứng hoặc viêm tĩnh mạch tại vị trí tiêm; rối loạn tiêu hóa nhẹ (buồn nôn, nôn, tiêu chảy, đau bụng âm ỉ); phát ban dạng sởi, mày đay, ngứa; tăng nhẹ men gan (AST, ALT) và phosphatase kiềm thoáng qua, tăng bạch cầu ái toan.",
+      "serious": "Độc tính thần kinh (co giật, giật cơ não bộ, lú lẫn khi dùng liều cao ở bệnh nhân suy thận không chỉnh liều); phản ứng phản vệ hoặc sốc phản vệ đe dọa tính mạng; viêm đại tràng giả mạc do Clostridioides difficile; thiếu máu tán huyết miễn dịch (nghiệm pháp Coombs trực tiếp dương tính); giảm bạch cầu hạt hoặc giảm tiểu cầu có hồi phục; suy giảm chức năng thận cấp tính (tăng creatinine máu)."
+    },
+    "pregnancyCategory": "B - Có thể sử dụng trong thai kỳ khi có chỉ định nhiễm khuẩn rõ ràng. Thuốc qua được hàng rào nhau thai nhưng các dữ liệu thực nghiệm không ghi nhận độc tính quái thai hay dị tật bào thai.",
+    "lactation": "Tương thích khi cho con bú. Cefotiam bài tiết vào sữa mẹ ở nồng độ rất thấp, nhìn chung an toàn cho trẻ bú mẹ; cần theo dõi các dấu hiệu tiêu chảy hoặc tưa lưỡi ở trẻ nhỏ.",
+    "tdmTarget": "Không cần theo dõi nồng độ thuốc trong máu thường quy. Cần theo dõi đáp ứng lâm sàng, thân nhiệt, công thức bạch cầu, chức năng thận (Creatinine huyết thanh, CrCl) và chức năng gan định kỳ.",
+    "clinicalPearls": [
+      "Ưu thế vượt trội trong nhiễm khuẩn đường mật: Cefotiam là một trong những cephalosporin thế hệ 2 đạt nồng độ trong mật cao nhất (có thể gấp hàng chục lần nồng độ huyết tương khi đường mật thông suốt), rất hiệu quả trong điều trị viêm túi mật cấp và sỏi mật nhiễm khuẩn.",
+      "Cầu nối Gram dương và Gram âm: So với Cephalosporin thế hệ 1 (như Cefazolin, Cefalothin), Cefotiam mở rộng đáng kể phổ trên các trực khuẩn Gram âm đường ruột (E. coli, K. pneumoniae, Proteus mirabilis, Citrobacter, Enterobacter cloacae, H. influenzae) mà vẫn giữ được hoạt lực diệt tụ cầu vàng nhạy methicillin (MSSA) rất tốt.",
+      "Cấu trúc không chứa chuỗi bên NMTT tự do: Khác với Cefamandol hoặc Cefoperazon, Cefotiam không chứa gốc N-methylthiotetrazole tự do nên không gây hạ prothrombin máu / chảy máu và không gây hội chứng cai rượu disulfiram khi uống rượu.",
+      "Phản ứng xét nghiệm giả tạo: Thuốc có thể gây dương tính giả nghiệm pháp Coombs trực tiếp và gây kết quả dương tính giả khi xét nghiệm đường niệu bằng phương pháp khử đồng (Fehling hoặc Benedict)."
+    ]
+  },
   {
     "id": "cefalothin",
     "name": "Cefalothin (Cefalothin natri)",

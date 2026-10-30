@@ -5,7 +5,7 @@
  */
 
 import { getSupabaseCredentials } from "../config.js";
-import { getSupabaseClient } from "../modules/supabaseService.js?v=20261030_v52_add_cefalothin_monograph";
+import { getSupabaseClient } from "../modules/supabaseService.js?v=20261030_v53_add_cefotiam_monograph";
 
 export const VIDEO_STORAGE_KEY = "clinicalrx_videos_store_v1";
 
