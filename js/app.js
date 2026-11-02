@@ -2,15 +2,15 @@
  * PHARMAVITA / CLINICALRX - CORE APPLICATION ENTRY POINT
  */
 
-import { initDrugDirectory } from "./modules/drugDirectory.js?v=20261030_v53_add_cefotiam_monograph";
-import { initInteractionChecker } from "./modules/interactionCheck.js?v=20261030_v53_add_cefotiam_monograph";
-import { initCalculators } from "./modules/calculators.js?v=20261030_v53_add_cefotiam_monograph";
-import { initConsultationModule } from "./modules/consultation.js?v=20261030_v53_add_cefotiam_monograph";
-import { initAdrModule } from "./modules/adrReporting.js?v=20261030_v53_add_cefotiam_monograph";
-import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20261030_v53_add_cefotiam_monograph";
-import { initAuthModule } from "./modules/auth.js?v=20261030_v53_add_cefotiam_monograph";
-import { initVideoLibrary } from "./modules/videoLibrary.js?v=20261030_v53_add_cefotiam_monograph";
-import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20261030_v53_add_cefotiam_monograph";
+import { initDrugDirectory } from "./modules/drugDirectory.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initInteractionChecker } from "./modules/interactionCheck.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initCalculators } from "./modules/calculators.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initConsultationModule } from "./modules/consultation.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initAdrModule } from "./modules/adrReporting.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initIvCompatibilityModule } from "./modules/ivCheck.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initAuthModule } from "./modules/auth.js?v=20261102_v54_add_cefoperazone_monograph";
+import { initVideoLibrary } from "./modules/videoLibrary.js?v=20261102_v54_add_cefoperazone_monograph";
+import { syncCustomDrugsFromCloud, openSupabaseModal, autoKeepAliveSupabase } from "./modules/supabaseService.js?v=20261102_v54_add_cefoperazone_monograph";
 
 function initApp() {
   console.log("Khởi động ClinicalRx - Nền tảng Thông tin Thuốc & Dược Lâm Sàng (Mobile Optimized)");

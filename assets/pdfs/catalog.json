@@ -160,5 +160,14 @@
     "fileUrl": "./assets/pdfs/Cefotiam (Cefotiam hydroclorid).pdf",
     "fileSize": 86578,
     "fileType": "application/pdf"
+  },
+  {
+    "id": "pdf_cefoperazone_monograph",
+    "drugId": "cefoperazone",
+    "title": "Chuyên luận Dược lâm sàng Cefoperazon (Cefoperazone natri J01DD12)",
+    "fileName": "Cefoperazone (Cefoperazone natri).pdf",
+    "fileUrl": "./assets/pdfs/Cefoperazone (Cefoperazone natri).pdf",
+    "fileSize": 87121,
+    "fileType": "application/pdf"
   }
 ]

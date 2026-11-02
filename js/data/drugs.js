@@ -4,7 +4,7 @@
  * Phân loại theo 14 nhóm giải phẫu - điều trị - hóa học (ATC Code A - V)
  */
 
-import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261030_v53_add_cefotiam_monograph";
+import { STATIC_PDF_CATALOG } from "./staticPdfs.js?v=20261102_v54_add_cefoperazone_monograph";
 
 export const ATC_CATEGORIES = [
   { code: "all", name: "Tất cả 14 nhóm ATC (Dược thư 2022)" },
@@ -25,6 +25,84 @@ export const ATC_CATEGORIES = [
 ];
 
 export const DRUGS_DATABASE = [
+  {
+    "id": "cefoperazone",
+    "name": "Cefoperazon (Cefoperazone natri)",
+    "inn": "Cefoperazone sodium",
+    "atcGroup": "J",
+    "brandNames": [
+      "Cefobid",
+      "Sulperazon (phối hợp Sulbactam)",
+      "Cefoperazone 1g",
+      "Bacticef",
+      "Cefazone",
+      "Zonacef"
+    ],
+    "atcCode": "J01DD12",
+    "category": "Kháng sinh Cephalosporin thế hệ 3 kháng Trực khuẩn mủ xanh (Đường tiêm truyền)",
+    "dosageForm": "Lọ bột đông khô vô khuẩn pha tiêm 1g, 2g (Cefoperazone natri đơn chất hoặc phối hợp với Sulbactam natri tỷ lệ 1:1, 2:1)",
+    "indications": [
+      "Nhiễm khuẩn đường mật và trong ổ bụng nặng: Viêm túi mật cấp/mạn, viêm đường mật sỏi, áp xe gan mật, viêm phúc mạc, áp xe ổ bụng (đặc biệt ưu thế do thuốc thải trừ và đạt nồng độ cực cao trong dịch mật).",
+      "Nhiễm khuẩn đường hô hấp dưới nặng: Viêm phổi mắc phải bệnh viện (HAP), viêm phổi thở máy (VAP), đợt bùng phát giãn phế quản mủ, viêm mủ màng phổi do trực khuẩn mủ xanh (Pseudomonas aeruginosa) hoặc Enterobacterales đa kháng.",
+      "Nhiễm trùng huyết và sốc nhiễm khuẩn có nguồn gốc từ ổ bụng, đường mật hoặc đường tiết niệu.",
+      "Nhiễm khuẩn đường tiết niệu có biến chứng và không biến chứng: Viêm đài bể thận cấp nặng, viêm bàng quang có tắc nghẽn hoặc sau can thiệp niệu khoa.",
+      "Nhiễm khuẩn da, mô mềm và cơ quan vận động nặng: Viêm mô tế bào lan tỏa, nhiễm trùng bàn chân đái tháo đường biến chứng, hoại thư, vết thương bỏng nhiễm khuẩn.",
+      "Nhiễm khuẩn sản phụ khoa: Viêm nội mạc tử cung, viêm phần phụ, viêm vùng chậu cấp tính, nhiễm trùng hậu phẫu.",
+      "Nhiễm khuẩn ở bệnh nhân giảm bạch cầu trung tính có sốt (Febrile Neutropenia): Thường dùng phối hợp với Aminoglycosid hoặc dạng phối hợp Cefoperazone/Sulbactam."
+    ],
+    "contraindications": [
+      "Tiền sử quá mẫn nặng hoặc sốc phản vệ với Cefoperazon hoặc bất kỳ kháng sinh nào thuộc nhóm Cephalosporin.",
+      "Tiền sử phản ứng dị ứng tức thì typ I (qua trung gian IgE) nặng với Penicillin hoặc các kháng sinh beta-lactam khác.",
+      "Trẻ sơ sinh thiếu tháng hoặc trẻ sơ sinh có tăng bilirubin máu tự do (do nguy cơ cạnh tranh vị trí gắn albumin gây vàng da nhân não)."
+    ],
+    "standardDosage": {
+      "adult": "Liều thông thường (nhiễm khuẩn nhẹ đến vừa): 2g – 4g/ngày chia làm 2 lần (tiêm tĩnh mạch chậm hoặc truyền tĩnh mạch ngắt quãng 1g – 2g mỗi 12 giờ). Nhiễm khuẩn nặng, nhiễm trùng huyết hoặc nhiễm P. aeruginosa: 6g – 8g/ngày chia 2 – 4 lần (mỗi 6 – 12 giờ). Nhiễm khuẩn đe dọa tính mạng ở người gan bình thường có thể dùng liều tối đa lên tới 12g – 16g/ngày (chia 2 – 4 lần). Dạng phối hợp Cefoperazone/Sulbactam 1:1: 2g – 4g/ngày chia 2 lần (tính theo tổng hoạt chất, liều tối đa của Sulbactam không quá 4g/ngày).",
+      "pediatric": "Trẻ em: 50 – 200 mg/kg/ngày chia làm 2 – 4 lần (mỗi 6 – 12 giờ) tiêm tĩnh mạch chậm hoặc truyền tĩnh mạch. Nhiễm khuẩn rất nặng có thể tăng lên đến 300 mg/kg/ngày (không vượt quá tổng liều người lớn tối đa).",
+      "elderly": "Sử dụng liều thông thường nếu chức năng gan bình thường. Cần theo dõi chặt chẽ vì người cao tuổi thường giảm chức năng bài tiết mật và có nguy cơ cao thiếu hụt vitamin K gây rối loạn đông máu."
+    },
+    "renalAdjustment": [
+      {
+        "crcl": ">= 50 mL/phút",
+        "dose": "Không cần hiệu chỉnh liều: Dùng liều tiêu chuẩn 1g – 2g mỗi 12 giờ."
+      },
+      {
+        "crcl": "15 - 49 mL/phút",
+        "dose": "Không cần hiệu chỉnh liều thường quy (thuốc thải trừ chủ yếu qua mật 70 - 80%). Liều tối đa 2g - 4g/ngày chia 2 lần."
+      },
+      {
+        "crcl": "< 15 mL/phút",
+        "dose": "Liều tối đa không quá 2g/ngày (hoặc 1g mỗi 12 giờ) để dự phòng quá tải bài tiết."
+      },
+      {
+        "crcl": "Thẩm phân máu (Hemodialysis)",
+        "dose": "Lọc máu làm giảm T1/2 huyết tương của Cefoperazon. Nên bổ sung 1 liều sau khi kết thúc buổi lọc máu (hoặc điều chỉnh giờ dùng thuốc vào sau buổi lọc)."
+      },
+      {
+        "crcl": "Lọc màng bụng (CAPD)",
+        "dose": "1g – 2g mỗi 12 – 24 giờ. Có thể bổ sung trực tiếp vào dịch lọc màng bụng điều trị viêm phúc mạc."
+      },
+      {
+        "crcl": "Suy gan kèm suy thận phối hợp",
+        "dose": "BẮT BUỘC GIẢM LIỀU NGHIÊM NGẶT: Liều tối đa 1g – 2g/ngày và phải theo dõi nồng độ thuốc trong huyết tương nếu có điều kiện."
+      }
+    ],
+    "hepaticAdjustment": "ĐẶC BIỆT QUAN TRỌNG: Do khoảng 70 - 80% Cefoperazon thải trừ qua đường mật vào phân, bệnh nhân suy gan hoặc tắc mật sẽ bị kéo dài thời gian bán thải từ 2 - 4 lần (T1/2 lên tới 8 - 12 giờ). Liều dùng tối đa KHÔNG ĐƯỢC VƯỢT QUÁ 2g – 4g/ngày ở bệnh nhân có tổn thương gan hoặc tắc mật nặng. Nếu suy gan kết hợp suy thận, liều tối đa không quá 1g – 2g/ngày.",
+    "administration": "Tiêm tĩnh mạch chậm: Hòa tan 1g trong ít nhất 10ml nước cất pha tiêm, tiêm chậm trong 3 – 5 phút. Truyền tĩnh mạch ngắt quãng: Hòa tan 1g – 2g trong 50 – 100ml dung dịch NaCl 0.9%, Glucose 5% hoặc Ringer Lactat, truyền tĩnh mạch trong 30 – 60 phút. Tiêm bắp sâu: Hòa tan 1g với nước cất pha tiêm kèm dung dịch Lidocain 0.5% để giảm buốt cơ (chỉ dùng khi không có đường truyền tĩnh mạch). Tuyệt đối không pha trộn chung hoặc tiêm cùng đường truyền với Aminoglycosid (tạo phức kết tủa bất hoạt).",
+    "blackBoxWarning": "Không có cảnh báo hộp đen chính thức của FDA, tuy nhiên có CẢNH BÁO NGUY HIỂM VỀ CHẢY MÁU DO HẠ PROTHROMBIN VÀ PHẢN ỨNG SỢ RƯỢU (DISULFIRAM-LIKE REACTION).",
+    "adr": {
+      "common": "Rối loạn tiêu hóa (tiêu chảy, phân lỏng - tần suất khá cao do nồng độ thuốc trong mật và ruột lớn; buồn nôn, nôn); phát ban da dát sần, mày đay, ngứa; tăng nhẹ men gan (AST, ALT) và phosphatase kiềm; viêm tĩnh mạch tại vị trí tiêm truyền; tăng bạch cầu ái toan.",
+      "serious": "Chảy máu do hạ prothrombin máu / thiếu hụt vitamin K (do chuỗi bên NMTT ức chế vitamin K epoxide reductase); phản ứng phản vệ hoặc sốc phản vệ; viêm đại tràng giả mạc do Clostridioides difficile (nguy cơ cao); giảm bạch cầu trung tính hạt có hồi phục, giảm tiểu cầu; phản ứng kiểu Disulfiram khi dùng chung với rượu (đỏ bừng mặt, nhịp tim nhanh, tụt huyết áp, vã mồ hôi, nôn mửa)."
+    },
+    "pregnancyCategory": "B - Các nghiên cứu sinh sản trên động vật không cho thấy bằng chứng quái thai hay tổn hại phôi thai. Thuốc qua được hàng rào nhau thai; chỉ nên sử dụng cho phụ nữ mang thai khi thật sự cần thiết và có chỉ định của bác sĩ.",
+    "lactation": "Tương thích khi cho con bú. Cefoperazon bài tiết vào sữa mẹ với nồng độ rất thấp (khoảng 0.9 microgam/ml), an toàn cho trẻ bú mẹ; cần theo dõi các tác dụng phụ trên hệ tiêu hóa (tiêu chảy, thay đổi khuẩn chí đường ruột, tưa miệng).",
+    "tdmTarget": "Không cần theo dõi nồng độ thuốc trong máu thường quy. Cần theo dõi thời gian đông máu (Prothrombin time - PT/INR) định kỳ, nồng độ hemoglobin/hematocrit, chức năng gan (Bilirubin, men gan), công thức bạch cầu và theo dõi xuất huyết lâm sàng.",
+    "clinicalPearls": [
+      "Chuỗi bên NMTT & Nguy cơ chảy máu: Cefoperazon chứa gốc N-methylthiotetrazole (NMTT) ở vị trí C-3, ức chế enzym vitamin K epoxide reductase. Những bệnh nhân suy dinh dưỡng, ăn uống kém, nằm hồi sức tích cực (ICU), xơ gan hoặc điều trị kéo dài > 7 ngày có nguy cơ rất cao bị hạ prothrombin và xuất huyết tiêu hóa. Khuyến cáo dự phòng bổ sung Vitamin K1 (10mg tiêm bắp hoặc tiêm TM mỗi tuần).",
+      "Phản ứng cai rượu Disulfiram: Do chuỗi bên NMTT ức chế enzym aldehyde dehydrogenase trong chu trình chuyển hóa cồn. Nếu bệnh nhân uống rượu bia hoặc sử dụng các chế phẩm chứa cồn (kể cả cồn trong dịch truyền hoặc siro), chất acetaldehyde sẽ tích tụ gây đỏ bừng mặt, đau đầu dữ dội, hồi hộp, nôn mửa, tụt huyết áp nghiêm trọng. TUYỆT ĐỐI KHÔNG UỐNG RƯỢU trong quá trình dùng thuốc và ít nhất 5 ngày sau khi ngừng Cefoperazon.",
+      "Dược động học đường mật độc đáo: Khác với hầu hết các Cephalosporin khác (thải trừ qua thận), Cefoperazon thải trừ 70 - 80% qua đường mật vào phân dưới dạng còn hoạt tính. Do đó, người suy thận không cần giảm liều, nhưng bắt buộc phải giảm liều ở người suy gan hoặc tắc mật (tối đa không quá 2g - 4g/ngày).",
+      "Hoạt tính kháng Pseudomonas aeruginosa: Cefoperazon là một trong số ít Cephalosporin thế hệ 3 có hoạt lực tốt trên Trực khuẩn mủ xanh. Khi phối hợp với Sulbactam (chất ức chế beta-lactamase), phức hợp này mở rộng hoạt phổ rất mạnh bao phủ được cả Acinetobacter baumannii và Enterobacterales kháng thuốc sinh ESBL."
+    ]
+  },
   {
     "id": "cefotiam",
     "name": "Cefotiam (Cefotiam hydroclorid)",
